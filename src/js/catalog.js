@@ -1,0 +1,127 @@
+import { FABRICS, FABRIC_CATEGORIES } from '../data/fabrics.js';
+
+let currentCategory = 'all';
+let searchQuery = '';
+
+document.addEventListener('DOMContentLoaded', () => {
+  renderCategoryFilterTabs();
+  renderCatalogGrid();
+  setupSearchAndFilters();
+});
+
+function renderCategoryFilterTabs() {
+  const tabsContainer = document.getElementById('catalog-filter-tabs');
+  if (!tabsContainer) return;
+
+  tabsContainer.innerHTML = FABRIC_CATEGORIES.map(cat => `
+    <button class="filter-tab-btn ${cat.id === currentCategory ? 'active' : ''}" 
+            data-category="${cat.id}">
+      ${cat.name}
+    </button>
+  `).join('');
+
+  tabsContainer.querySelectorAll('.filter-tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      tabsContainer.querySelectorAll('.filter-tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentCategory = btn.getAttribute('data-category');
+      renderCatalogGrid();
+    });
+  });
+}
+
+function renderCatalogGrid() {
+  const gridContainer = document.getElementById('catalog-items-grid');
+  const countBadge = document.getElementById('catalog-items-count');
+  if (!gridContainer) return;
+
+  const filtered = FABRICS.filter(item => {
+    const matchesCategory = currentCategory === 'all' || item.category === currentCategory;
+    const matchesSearch = searchQuery === '' || 
+      item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.composition.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
+
+  if (countBadge) {
+    countBadge.textContent = `${filtered.length} مجموعة متوفرة`;
+  }
+
+  if (filtered.length === 0) {
+    gridContainer.innerHTML = `
+      <div style="grid-column: 1 / -1; text-align: center; padding: 4rem 1rem; color: var(--color-chocolate-medium);">
+        <p style="font-size: 1.2rem; font-weight: 700;">عذراً، لم نجد أقمشة تطابق بحثك الحالي.</p>
+        <p style="font-size: 0.95rem;">يمكنكم التواصل مع الأتيليه مباشرة لتوفير خامات مخصصة حسب طلبكم.</p>
+        <button class="btn btn-primary" onclick="window.openConsultationModal('طلب خامة خاصة')">
+          طلب خامة مخصصة
+        </button>
+      </div>
+    `;
+    return;
+  }
+
+  gridContainer.innerHTML = filtered.map(fabric => {
+    const swatchesHtml = fabric.swatches.map(swatch => `
+      <span class="card-swatch-dot" 
+            style="background-color: ${swatch.colorHex};" 
+            title="${swatch.name}"
+            data-img="${swatch.image}"
+            data-fabric-id="${fabric.id}">
+      </span>
+    `).join('');
+
+    return `
+      <article class="catalog-card" id="catalog-card-${fabric.id}">
+        <div class="card-media-wrapper">
+          <img src="${fabric.mainImage}" alt="${fabric.title}" class="card-img" id="cat-img-${fabric.id}" loading="lazy" />
+          <span class="card-tag">${fabric.badge || fabric.categoryArabic}</span>
+        </div>
+        <div class="card-content">
+          <span class="card-category">${fabric.categoryArabic}</span>
+          <h3 class="card-title">${fabric.title}</h3>
+          <p class="card-desc">${fabric.description}</p>
+          
+          <div class="card-swatches">
+            <span style="font-size: 0.75rem; color: var(--color-chocolate-medium); margin-left: 6px;">درجات الألوان:</span>
+            ${swatchesHtml}
+          </div>
+
+          <div style="font-size: 0.8rem; color: var(--color-laurel-olive); font-weight: 600; margin-bottom: 0.75rem;">
+            ✓ ${fabric.composition.split('،')[0]}
+          </div>
+
+          <div class="card-footer">
+            <span class="card-price-hint">${fabric.weight}</span>
+            <a href="product.html?id=${fabric.id}" class="btn btn-secondary-bespoke" style="padding: 0.45rem 1rem; font-size: 0.85rem;">
+              استعراض وتفصيل
+            </a>
+          </div>
+        </div>
+      </article>
+    `;
+  }).join('');
+
+  // Attach swatch preview click
+  gridContainer.querySelectorAll('.card-swatch-dot').forEach(dot => {
+    dot.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const fabricId = dot.getAttribute('data-fabric-id');
+      const imgUrl = dot.getAttribute('data-img');
+      const cardImg = document.getElementById(`cat-img-${fabricId}`);
+      if (cardImg && imgUrl) {
+        cardImg.src = imgUrl;
+      }
+    });
+  });
+}
+
+function setupSearchAndFilters() {
+  const searchInput = document.getElementById('catalog-search-input');
+  if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+      searchQuery = e.target.value.trim();
+      renderCatalogGrid();
+    });
+  }
+}
