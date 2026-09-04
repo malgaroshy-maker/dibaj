@@ -842,7 +842,11 @@ textarea.form-control {
 }
 
 .studio-filter-btn {
-  padding: 0.4rem 1rem;
+  padding: 0.5rem 1.1rem;
+  min-height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 999px;
   font-size: 0.85rem;
   font-weight: 700;
@@ -1080,5 +1084,63 @@ textarea.form-control {
   color: #1b5e20;
   font-weight: 700;
 }
+
+/* --------------------------------------------------------------------------
+   14. Responsive Mobile Optimization Helpers
+   -------------------------------------------------------------------------- */
+.hero-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-top: var(--space-2xl);
+  border-top: 1px solid var(--border-gold-subtle);
+  padding-top: var(--space-lg);
+}
+
+.hero-stat-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.hero-stat-value {
+  display: block;
+  font-size: 1.3rem;
+  font-weight: 900;
+  color: var(--color-gold-deep);
+  line-height: 1.25;
+}
+
+.hero-stat-label {
+  font-size: 0.8rem;
+  color: var(--color-chocolate-medium);
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+@media (max-width: 768px) {
+  .hero-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.2rem 1rem;
+    margin-top: var(--space-xl);
+    padding-top: var(--space-md);
+  }
+
+  .hero-stat-value {
+    font-size: 1.15rem;
+  }
+
+  .hero-stat-label {
+    font-size: 0.78rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .hero-stats-grid {
+    grid-template-columns: 1fr;
+    gap: 0.85rem;
+  }
+}
+
 
 
