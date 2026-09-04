@@ -1,0 +1,1339 @@
+/* ==========================================================================
+   شركة الديباج — Main Stylesheet
+   Specification: dibaj-rebuild-brief.md
+   Zero-build, Pure CSS, Arabic RTL First
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Self-Hosted Fonts
+   -------------------------------------------------------------------------- */
+@font-face {
+  font-family: 'Amiri';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../fonts/amiri-400.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Amiri';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../fonts/amiri-700.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'IBM Plex Sans Arabic';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../fonts/ibm-plex-sans-arabic-400.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'IBM Plex Sans Arabic';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('../fonts/ibm-plex-sans-arabic-600.woff2') format('woff2');
+}
+
+/* --------------------------------------------------------------------------
+   2. Design Tokens
+   -------------------------------------------------------------------------- */
+:root {
+  /* Structural Palette */
+  --ink:        #221C16;  /* espresso brown-black, body text */
+  --ivory:      #F2EAD8;  /* damask ground — تراثي surfaces only */
+  --stone:      #EDEAE4;  /* cool pale grey — عصري surfaces only */
+  --gold:       #C9A227;  /* antique gold — frames, hairlines, marks */
+  --gold-deep:  #9A7A18;  /* gold text on light backgrounds for 4.5:1 contrast */
+  --white:      #FFFFFF;
+  --border-subtle: rgba(34, 28, 22, 0.12);
+
+  /* Fabric Colours (Full strength for Colour Rail and accents) */
+  --emerald:    #0F6B4F;
+  --mint:       #7FC4B4;
+  --magenta:    #A8114A;
+  --royal:      #1B3A8C;
+  --sage:       #9FB0A3;
+  --terracotta: #B45A3C;
+  --charcoal:   #3A3A38;
+  --sand:       #A89684;
+
+  /* Typography */
+  --font-heritage: 'Amiri', serif;
+  --font-body:     'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* Spacing */
+  --space-xs: 0.5rem;
+  --space-sm: 0.75rem;
+  --space-md: 1.25rem;
+  --space-lg: 2rem;
+  --space-xl: 3.5rem;
+  --space-2xl: 5.5rem;
+
+  /* Container */
+  --container-max: 1240px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --shadow-subtle: 0 4px 20px rgba(34, 28, 22, 0.06);
+}
+
+/* --------------------------------------------------------------------------
+   3. CSS Reset & Non-Negotiable Arabic Typesetting
+   -------------------------------------------------------------------------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 18px;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  font-weight: 400;
+  color: var(--ink);
+  background-color: var(--white);
+  line-height: 1.85; /* Arabic requires extra leading for descenders */
+  direction: rtl;
+  text-align: start; /* Never justify Arabic body text */
+  overflow-x: hidden;
+}
+
+/* Strict Arabic Rules */
+body, h1, h2, h3, h4, p, span, a, button, input, select, textarea {
+  letter-spacing: 0 !important; /* Never apply letter-spacing to Arabic script */
+  font-style: normal !important;  /* Never synthesize italic in Arabic */
+  text-transform: none !important;
+}
+
+h1, h2, h3, h4 {
+  color: var(--ink);
+  line-height: 1.3;
+}
+
+h1 {
+  font-family: var(--font-heritage);
+  font-size: clamp(2rem, 5vw, 2.75rem);
+  font-weight: 700;
+}
+
+h2 {
+  font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+  font-weight: 700;
+  margin-block-end: var(--space-md);
+}
+
+h2.heritage-heading {
+  font-family: var(--font-heritage);
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
+}
+
+h2.modern-heading {
+  font-family: var(--font-body);
+  font-weight: 600;
+}
+
+h3 {
+  font-size: 1.35rem;
+  font-weight: 600;
+  margin-block-end: var(--space-xs);
+}
+
+p {
+  font-size: 1rem;
+  color: var(--ink);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+main {
+  position: relative;
+  z-index: 1;
+}
+
+/* ==========================================================================
+   Luxury Brand Watermark Seal (NA Royal Crest)
+   ========================================================================== */
+.site-watermark-bg {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(840px, 85vw);
+  height: min(840px, 85vw);
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+  opacity: 0.045;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.3s ease;
+}
+
+.site-watermark-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 20px 40px rgba(192, 139, 62, 0.3));
+}
+
+.banner-watermark {
+  position: absolute;
+  top: 50%;
+  left: -50px;
+  transform: translateY(-50%);
+  width: min(420px, 60vw);
+  height: min(420px, 60vw);
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+  opacity: 0.08;
+  filter: brightness(1.25) drop-shadow(0 10px 30px rgba(201, 162, 39, 0.4));
+}
+
+.banner-watermark img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Container Utility */
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--space-md);
+}
+
+/* --------------------------------------------------------------------------
+   4. Navigation & Site Header
+   -------------------------------------------------------------------------- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(10px);
+  border-block-end: 1px solid var(--border-subtle);
+  transition: background-color 0.2s ease;
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: 0.9rem;
+  gap: var(--space-md);
+}
+
+.brand-identity {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.brand-crest {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-name {
+  font-family: var(--font-heritage);
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.15;
+}
+
+.brand-subtitle {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--gold-deep);
+  line-height: 1.2;
+}
+
+.nav-desktop {
+  display: none;
+}
+
+@media (min-width: 960px) {
+  .nav-desktop {
+    display: flex;
+    align-items: center;
+    gap: 1.6rem;
+    list-style: none;
+  }
+}
+
+.nav-link {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--ink);
+  position: relative;
+  padding-block: 0.4rem;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: var(--gold-deep);
+}
+
+.nav-link.active::after {
+  content: '';
+  position: absolute;
+  inset-inline-start: 0;
+  inset-inline-end: 0;
+  bottom: 0;
+  height: 2px;
+  background-color: var(--gold);
+}
+
+.header-cta-group {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.4rem;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn-gold {
+  background-color: var(--gold);
+  color: #110E0A;
+  border-color: var(--gold);
+}
+
+.btn-gold:hover {
+  background-color: var(--gold-deep);
+  color: #FFF;
+  border-color: var(--gold-deep);
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: var(--ink);
+  border-color: var(--ink);
+}
+
+.btn-outline:hover {
+  background-color: var(--ink);
+  color: var(--white);
+}
+
+.btn-whatsapp {
+  background-color: #25D366;
+  color: #FFF;
+}
+
+.btn-whatsapp:hover {
+  background-color: #1EBE5D;
+}
+
+.btn-messenger {
+  background-color: #0084FF;
+  color: #FFF;
+}
+
+.btn-messenger:hover {
+  background-color: #0074E0;
+}
+
+.mobile-toggle {
+  display: inline-flex;
+  background: transparent;
+  border: none;
+  color: var(--ink);
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+@media (min-width: 960px) {
+  .mobile-toggle {
+    display: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   5. Hero Section & Macro Choreography
+   -------------------------------------------------------------------------- */
+.hero-section {
+  position: relative;
+  min-height: 85vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-color: #0A3D2D; /* fallback dark emerald */
+}
+
+.hero-backdrop-container {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.hero-frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+/* Initial static state */
+.hero-frame.frame-emerald {
+  opacity: 1;
+}
+
+/* 3-second choreographed cross-fade on page load */
+.hero-animated .hero-frame.frame-emerald {
+  animation: heroEmeraldAnim 3.2s forwards ease-in-out;
+}
+.hero-animated .hero-frame.frame-magenta {
+  animation: heroMagentaAnim 3.2s forwards ease-in-out;
+}
+.hero-animated .hero-frame.frame-damask {
+  animation: heroDamaskAnim 3.2s forwards ease-in-out;
+}
+
+@keyframes heroEmeraldAnim {
+  0%   { opacity: 1; }
+  25%  { opacity: 0; }
+  75%  { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes heroMagentaAnim {
+  0%   { opacity: 0; }
+  25%  { opacity: 1; }
+  55%  { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+@keyframes heroDamaskAnim {
+  0%   { opacity: 0; }
+  50%  { opacity: 1; }
+  80%  { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-animated .hero-frame.frame-emerald {
+    animation: none;
+    opacity: 1;
+  }
+  .hero-animated .hero-frame.frame-magenta,
+  .hero-animated .hero-frame.frame-damask {
+    animation: none;
+    opacity: 0;
+  }
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: radial-gradient(circle at center, rgba(15, 20, 18, 0.45) 0%, rgba(15, 20, 18, 0.75) 100%);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 3;
+  text-align: center;
+  max-width: 860px;
+  margin-inline: auto;
+  padding-block: var(--space-2xl);
+  color: var(--white);
+}
+
+.hero-title {
+  font-family: var(--font-heritage);
+  font-size: clamp(2.4rem, 6vw, 3.8rem);
+  font-weight: 700;
+  color: #FFFFFF;
+  margin-block-end: 1rem;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.6);
+}
+
+.hero-subtitle {
+  font-size: clamp(1.05rem, 2.5vw, 1.35rem);
+  font-weight: 400;
+  color: #EDEAE4;
+  margin-block-end: var(--space-lg);
+  line-height: 1.8;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
+}
+
+.hero-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.hero-ctas .btn-primary {
+  background-color: var(--gold);
+  color: #110E0A;
+  font-size: 1.05rem;
+  padding: 0.85rem 1.9rem;
+}
+
+.hero-ctas .btn-primary:hover {
+  background-color: #E2BC3E;
+}
+
+.hero-ctas .btn-secondary {
+  background-color: rgba(255, 255, 255, 0.15);
+  color: var(--white);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(8px);
+  font-size: 1.05rem;
+  padding: 0.85rem 1.9rem;
+}
+
+.hero-ctas .btn-secondary:hover {
+  background-color: var(--white);
+  color: var(--ink);
+}
+
+/* --------------------------------------------------------------------------
+   6. Full-Bleed Colour Rail
+   -------------------------------------------------------------------------- */
+.colour-rail-section {
+  position: relative;
+  background-color: var(--ink);
+  color: var(--white);
+  padding-block-start: var(--space-lg);
+}
+
+.colour-rail-header {
+  text-align: center;
+  margin-block-end: var(--space-md);
+}
+
+.colour-rail-header h2 {
+  font-family: var(--font-heritage);
+  color: var(--gold);
+  font-size: 1.8rem;
+  margin: 0;
+}
+
+.colour-rail-header p {
+  color: #A89684;
+  font-size: 0.95rem;
+}
+
+.colour-rail-track {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .colour-rail-track {
+    grid-template-columns: repeat(8, 1fr);
+  }
+}
+
+.colour-tile {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: flex-end;
+  padding: 0.75rem;
+  overflow: hidden;
+  text-decoration: none;
+  transition: transform 0.25s ease;
+}
+
+.colour-tile img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.colour-tile:hover img {
+  transform: scale(1.08);
+}
+
+.colour-tile-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0) 55%);
+}
+
+.colour-tile-name {
+  position: relative;
+  z-index: 2;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--white);
+}
+
+/* --------------------------------------------------------------------------
+   7. The Split Gateway (عصري vs تراثي)
+   -------------------------------------------------------------------------- */
+.split-gateway-section {
+  padding-block: var(--space-2xl);
+  background-color: transparent;
+}
+
+.split-cards-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-lg);
+}
+
+@media (min-width: 840px) {
+  .split-cards-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.gateway-card {
+  position: relative;
+  border-radius: var(--radius-md);
+  padding: var(--space-xl) var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 480px;
+  overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.gateway-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-subtle);
+}
+
+/* عصري card: cool pale stone ground */
+.gateway-card.card-asri {
+  background-color: var(--stone);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.gateway-card.card-asri h3 {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 1.8rem;
+  color: var(--ink);
+}
+
+.gateway-card.card-asri .card-badge {
+  color: #555;
+}
+
+/* تراثي card: warm ivory ground with thin gold hairline frame */
+.gateway-card.card-turathi {
+  background-color: var(--ivory);
+  border: 1px solid var(--gold);
+  box-shadow: inset 0 0 0 4px rgba(201, 162, 39, 0.15);
+}
+
+.gateway-card.card-turathi h3 {
+  font-family: var(--font-heritage);
+  font-size: 2.1rem;
+  color: var(--ink);
+}
+
+.gateway-card.card-turathi .card-badge {
+  color: var(--gold-deep);
+}
+
+.card-badge {
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-block-end: 0.5rem;
+}
+
+.card-copy {
+  font-size: 1.05rem;
+  color: var(--ink);
+  margin-block-end: var(--space-lg);
+}
+
+.card-image-preview {
+  margin-block-end: var(--space-lg);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.card-image-preview img {
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+}
+
+/* --------------------------------------------------------------------------
+   8. 3-Step Sequence: على مقاس بيتك
+   -------------------------------------------------------------------------- */
+.made-to-order-section {
+  padding-block: var(--space-2xl);
+  background-color: rgba(250, 250, 250, 0.78);
+  border-block: 1px solid var(--border-subtle);
+}
+
+.steps-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-lg);
+  margin-block-start: var(--space-xl);
+}
+
+@media (min-width: 768px) {
+  .steps-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.step-card {
+  background: var(--white);
+  padding: var(--space-lg);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-subtle);
+  position: relative;
+}
+
+.step-num {
+  font-family: var(--font-heritage);
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--gold-deep);
+  line-height: 1;
+  margin-block-end: 0.75rem;
+}
+
+.step-title {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-block-end: 0.5rem;
+}
+
+.step-text {
+  font-size: 0.95rem;
+  color: #555;
+}
+
+/* --------------------------------------------------------------------------
+   9. Payment Banner: بنفس القيمة بدون أي زيادة
+   -------------------------------------------------------------------------- */
+.payment-section {
+  position: relative;
+  overflow: hidden;
+  padding-block: var(--space-xl);
+  background: linear-gradient(135deg, #1C1712 0%, #29221C 100%);
+  color: var(--white);
+  border-block: 1px solid rgba(201, 162, 39, 0.3);
+}
+
+.payment-inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-md);
+}
+
+@media (min-width: 840px) {
+  .payment-inner {
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: start;
+  }
+}
+
+.payment-title {
+  font-family: var(--font-heritage);
+  font-size: 1.7rem;
+  color: var(--gold);
+}
+
+.payment-desc {
+  font-size: 1.05rem;
+  color: #EDEAE4;
+  max-width: 650px;
+}
+
+.payment-highlight {
+  font-weight: 600;
+  color: #FFF;
+  text-decoration: underline;
+  text-decoration-color: var(--gold);
+}
+
+/* --------------------------------------------------------------------------
+   10. Showcase Grid: أعمالنا
+   -------------------------------------------------------------------------- */
+.showcase-section {
+  padding-block: var(--space-2xl);
+  background-color: transparent;
+}
+
+.showcase-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-lg);
+  margin-block-start: var(--space-xl);
+}
+
+@media (min-width: 640px) {
+  .showcase-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.showcase-card {
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background-color: var(--white);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.showcase-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-subtle);
+}
+
+.showcase-img-wrap {
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background-color: var(--stone);
+}
+
+.showcase-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.showcase-card:hover .showcase-img-wrap img {
+  transform: scale(1.03);
+}
+
+.showcase-body {
+  padding: var(--space-md);
+}
+
+.showcase-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-block-start: 0.5rem;
+}
+
+.showcase-category {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--gold-deep);
+}
+
+/* --------------------------------------------------------------------------
+   11. Locations: محلّاتنا في سوق أبوسليم
+   -------------------------------------------------------------------------- */
+.locations-section {
+  padding-block: var(--space-2xl);
+  background-color: var(--stone);
+}
+
+.shops-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-lg);
+  margin-block-start: var(--space-lg);
+}
+
+@media (min-width: 768px) {
+  .shops-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.shop-card {
+  background: var(--white);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: var(--space-lg);
+}
+
+.shop-card h3 {
+  font-family: var(--font-heritage);
+  color: var(--ink);
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.shop-badge {
+  display: inline-block;
+  background-color: var(--ivory);
+  color: var(--gold-deep);
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+}
+
+.shop-info-list {
+  list-style: none;
+  margin-block: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+}
+
+/* --------------------------------------------------------------------------
+   12. Universal Quote Modal
+   -------------------------------------------------------------------------- */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background-color: rgba(18, 14, 10, 0.7);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-md);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-dialog {
+  background-color: #FFFFFF;
+  border-radius: var(--radius-md);
+  max-width: 540px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: var(--space-xl) var(--space-lg);
+  position: relative;
+  box-shadow: 0 16px 50px rgba(0, 0, 0, 0.35);
+  transform: translateY(12px);
+  transition: transform 0.25s ease;
+}
+
+.modal-overlay.active .modal-dialog {
+  transform: translateY(0);
+}
+
+.modal-close {
+  position: absolute;
+  top: 1rem;
+  inset-inline-start: 1rem;
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--ink);
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  line-height: 1;
+}
+
+.form-group {
+  margin-block-end: 1.1rem;
+}
+
+.form-label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin-block-end: 0.35rem;
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.7rem 0.9rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  background-color: #FAF9F7;
+  color: var(--ink);
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--gold-deep);
+  background-color: var(--white);
+}
+
+.modal-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-block-start: var(--space-lg);
+}
+
+/* --------------------------------------------------------------------------
+   13. Footer & Legal
+   -------------------------------------------------------------------------- */
+.site-footer {
+  background-color: var(--ink);
+  color: #EDEAE4;
+  padding-block: var(--space-2xl) var(--space-lg);
+  border-block-start: 1px solid rgba(201, 162, 39, 0.25);
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-xl);
+  margin-block-end: var(--space-xl);
+}
+
+@media (min-width: 840px) {
+  .footer-grid {
+    grid-template-columns: 2fr 1fr 1fr;
+  }
+}
+
+.footer-brand h4 {
+  font-family: var(--font-heritage);
+  color: var(--gold);
+  font-size: 1.6rem;
+  margin-block-end: 0.5rem;
+}
+
+.footer-brand p {
+  color: #A89684;
+  font-size: 0.95rem;
+}
+
+.footer-nav-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--white);
+  margin-block-end: 0.75rem;
+}
+
+.footer-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  font-size: 0.9rem;
+}
+
+.footer-links a {
+  color: #A89684;
+}
+
+.footer-links a:hover {
+  color: var(--gold);
+}
+
+.footer-legal-bar {
+  border-block-start: 1px solid rgba(255, 255, 255, 0.08);
+  padding-block-start: var(--space-md);
+  font-size: 0.8rem;
+  color: #777;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+@media (min-width: 768px) {
+  .footer-legal-bar {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+/* Mobile Drawer */
+.mobile-drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 998;
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+.mobile-drawer-backdrop.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.mobile-drawer {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  inset-inline-start: 0;
+  width: 290px;
+  max-width: 85vw;
+  background-color: var(--white);
+  z-index: 999;
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  visibility: hidden;
+  transition: transform 0.25s ease, visibility 0.25s ease;
+  box-shadow: -4px 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.mobile-drawer.active {
+  transform: translateX(0);
+  visibility: visible;
+}
+
+.mobile-drawer-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  margin-block-start: var(--space-xl);
+}
+
+.mobile-drawer-links a {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+/* --------------------------------------------------------------------------
+   14. Subpage Header & Catalog Grid Components
+   -------------------------------------------------------------------------- */
+.page-header {
+  padding-block: var(--space-xl) var(--space-lg);
+  background-color: rgba(250, 249, 247, 0.85);
+  backdrop-filter: blur(6px);
+  border-block-end: 1px solid var(--border-subtle);
+  text-align: center;
+}
+
+.page-header h1 {
+  font-family: var(--font-heritage);
+  font-size: clamp(2rem, 5vw, 2.8rem);
+  margin-block-end: 0.5rem;
+}
+
+.page-header p {
+  color: #666;
+  max-width: 680px;
+  margin-inline: auto;
+  font-size: 1.05rem;
+}
+
+.catalog-section {
+  padding-block: var(--space-xl) var(--space-2xl);
+  background-color: transparent;
+}
+
+.catalog-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-block-end: var(--space-xl);
+  flex-wrap: wrap;
+}
+
+.tab-btn {
+  background: transparent;
+  border: 1px solid var(--border-subtle);
+  padding: 0.55rem 1.4rem;
+  border-radius: 30px;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--ink);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tab-btn:hover {
+  border-color: var(--gold-deep);
+  color: var(--gold-deep);
+}
+
+.tab-btn.active {
+  background-color: var(--ink);
+  color: var(--white);
+  border-color: var(--ink);
+}
+
+.catalog-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-lg);
+}
+
+@media (min-width: 640px) {
+  .catalog-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .catalog-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.product-card {
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  background-color: var(--white);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-subtle);
+}
+
+.product-card.hidden {
+  display: none !important;
+}
+
+.product-img-wrap {
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background-color: var(--stone);
+  position: relative;
+}
+
+.product-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.35s ease;
+}
+
+.product-card:hover .product-img-wrap img {
+  transform: scale(1.04);
+}
+
+.product-tag {
+  position: absolute;
+  top: 0.75rem;
+  inset-inline-start: 0.75rem;
+  background-color: rgba(34, 28, 22, 0.85);
+  color: var(--white);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25rem 0.65rem;
+  border-radius: 4px;
+  backdrop-filter: blur(4px);
+}
+
+.product-tag.tag-heritage {
+  background-color: rgba(154, 122, 24, 0.9);
+}
+
+.product-body {
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.product-title {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-block-end: 0.4rem;
+  color: var(--ink);
+}
+
+.product-desc {
+  font-size: 0.9rem;
+  color: #666;
+  margin-block-end: 0.8rem;
+  line-height: 1.6;
+  flex-grow: 1;
+}
+
+.product-colors-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-block-end: 1rem;
+  padding-block-start: 0.6rem;
+  border-block-start: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.color-dots-label {
+  font-size: 0.8rem;
+  color: #888;
+}
+
+.color-dots {
+  display: flex;
+  gap: 0.35rem;
+}
+
+.color-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  display: inline-block;
+}
+
+.product-card .btn {
+  width: 100%;
+}

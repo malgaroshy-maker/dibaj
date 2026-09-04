@@ -94,27 +94,28 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 92px;
-  gap: var(--space-md);
+  height: 88px;
+  gap: clamp(0.5rem, 1.2vw, 1.5rem);
 }
 
 .brand-identity {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.75rem;
   text-decoration: none;
+  flex-shrink: 0;
 }
 
 .brand-crest {
-  width: 68px;
-  height: 68px;
+  width: 58px;
+  height: 58px;
   object-fit: contain;
   filter: drop-shadow(0 4px 10px rgba(90, 58, 34, 0.2));
   transition: transform var(--transition-fast);
 }
 
 .brand-identity:hover .brand-crest {
-  transform: scale(1.05);
+  transform: scale(1.04);
 }
 
 .brand-text {
@@ -124,60 +125,100 @@
 
 .brand-title {
   font-family: var(--font-arabic-heading);
-  font-size: 1.45rem;
+  font-size: 1.3rem;
   font-weight: 900;
   color: var(--color-chocolate-dark);
-  line-height: 1.15;
+  line-height: 1.2;
+  white-space: nowrap;
 }
 
 .brand-tagline {
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   color: var(--color-gold-deep);
   font-weight: 600;
   letter-spacing: 0.02em;
+  white-space: nowrap;
 }
 
 .nav-menu {
   display: flex;
   align-items: center;
-  gap: var(--space-lg);
+  gap: clamp(0.35rem, 0.9vw, 0.95rem);
   list-style: none;
+  margin: 0;
+  padding: 0;
+  flex-shrink: 1;
+}
+
+.nav-menu li {
+  list-style: none;
+  display: flex;
+  align-items: center;
 }
 
 .nav-link {
-  font-size: 1.05rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  font-family: var(--font-arabic-heading);
+  font-size: 0.94rem;
   font-weight: 600;
   color: var(--color-chocolate-dark);
-  padding: 0.4rem 0.2rem;
+  padding: 0.45rem 0.65rem;
   position: relative;
-  transition: color var(--transition-fast);
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+  transition: color var(--transition-fast), background-color var(--transition-fast);
 }
 
 .nav-link::after {
   content: '';
   position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 0%;
-  height: 2px;
-  background: var(--color-gold-imperial);
-  transition: width var(--transition-smooth);
+  bottom: 0px;
+  left: 0.5rem;
+  right: 0.5rem;
+  height: 2.5px;
+  background: linear-gradient(90deg, var(--color-gold-deep), var(--color-gold-imperial));
+  border-radius: 2px;
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform var(--transition-smooth), opacity var(--transition-fast);
+  opacity: 0;
 }
 
-.nav-link:hover,
-.nav-link.active {
+.nav-link:hover {
   color: var(--color-gold-deep);
+  background-color: rgba(192, 139, 62, 0.06);
 }
 
-.nav-link.active::after,
 .nav-link:hover::after {
-  width: 100%;
+  transform: scaleX(0.5);
+  opacity: 0.7;
+}
+
+.nav-link.active {
+  color: var(--color-chocolate-dark);
+  font-weight: 800;
+  background-color: rgba(192, 139, 62, 0.09);
+}
+
+.nav-link.active::after {
+  transform: scaleX(1);
+  opacity: 1;
 }
 
 .header-actions {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.65rem;
+  flex-shrink: 0;
+}
+
+.header-actions .btn {
+  white-space: nowrap;
+  padding: 0.6rem 1.25rem;
+  font-size: 0.92rem;
 }
 
 .mobile-toggle {
@@ -189,7 +230,7 @@
   color: var(--color-chocolate-dark);
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1100px) {
   .nav-menu {
     display: none;
   }
@@ -197,7 +238,39 @@
     display: block;
   }
   .site-header {
+    height: auto;
+  }
+  .header-inner {
     height: 72px;
+  }
+  .brand-crest {
+    width: 50px;
+    height: 50px;
+  }
+  .brand-title {
+    font-size: 1.18rem;
+  }
+  .brand-tagline {
+    font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 580px) {
+  .header-actions .btn {
+    display: none;
+  }
+  .header-inner {
+    height: 64px;
+  }
+  .brand-crest {
+    width: 42px;
+    height: 42px;
+  }
+  .brand-title {
+    font-size: 1.05rem;
+  }
+  .brand-tagline {
+    font-size: 0.65rem;
   }
 }
 
@@ -233,6 +306,24 @@
   box-shadow: var(--shadow-warm-lg);
   transform: translateX(100%);
   transition: transform var(--transition-smooth);
+}
+
+.mobile-drawer-content .nav-link {
+  width: 100%;
+  justify-content: flex-start;
+  padding: 0.75rem 1rem;
+  font-size: 1.1rem;
+  border-radius: var(--radius-md);
+}
+
+.mobile-drawer-content .nav-link::after {
+  display: none;
+}
+
+.mobile-drawer-content .nav-link.active {
+  background-color: rgba(192, 139, 62, 0.14);
+  color: var(--color-chocolate-dark);
+  font-weight: 800;
 }
 
 .mobile-drawer.open .mobile-drawer-content {

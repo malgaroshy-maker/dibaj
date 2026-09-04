@@ -51,10 +51,10 @@ function renderCatalogGrid() {
   if (filtered.length === 0) {
     gridContainer.innerHTML = `
       <div style="grid-column: 1 / -1; text-align: center; padding: 4rem 1rem; color: var(--color-chocolate-medium);">
-        <p style="font-size: 1.2rem; font-weight: 700;">عذراً، لم نجد أقمشة تطابق بحثك الحالي.</p>
-        <p style="font-size: 0.95rem;">يمكنكم التواصل مع الأتيليه مباشرة لتوفير خامات مخصصة حسب طلبكم.</p>
-        <button class="btn btn-primary" onclick="window.openConsultationModal('طلب خامة خاصة')">
-          طلب خامة مخصصة
+        <p style="font-size: 1.2rem; font-weight: 700;">عذراً، لم نجد تشكيلات تطابق بحثك الحالي.</p>
+        <p style="font-size: 0.95rem;">يمكنكم التواصل مع فريق الديباج مباشرة لتفصيل صالون أو مجلس مخصص حسب طلبكم ومقاساتكم.</p>
+        <button class="btn btn-primary" onclick="window.openConsultationModal('طلب تفصيل خاص')">
+          طلب تفصيل مخصص
         </button>
       </div>
     `;

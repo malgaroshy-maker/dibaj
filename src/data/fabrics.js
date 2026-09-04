@@ -1,247 +1,325 @@
 /**
- * Dibaj Luxury Textile Catalog Dataset
- * Curated for high-end North African craft, bespoke curtains, and Arabic majlis upholstery.
+ * Dibaj Luxury Furniture & Salons Dataset
+ * شركة الديباج لصناعة وتفصيل الصالونات والمجالس الفاخرة — طرابلس، سوق أبوسليم
+ * 100% High-Resolution Studio Assets • Authentic Libyan Specs
  */
 
 export const FABRIC_CATEGORIES = [
   { id: 'all', name: 'جميع التشكيلات' },
-  { id: 'curtains', name: 'الستائر الفاخرة' },
-  { id: 'majlis', name: 'الجلسات العربية' },
-  { id: 'velvet', name: 'الصالونات المنجدة' },
-  { id: 'jacquard', name: 'صناعة المنسوجات والدمقس' },
-  { id: 'linen', name: 'الكتان المتوسطي' }
+  { id: 'salons', name: 'صالونات عصرية وفاخرة' },
+  { id: 'majlis', name: 'مجالس وجلسات عربية' },
+  { id: 'corners', name: 'ركنيات تفصيل' },
+  { id: 'curtains', name: 'ستائر مكملة للصالونات' }
 ];
 
 export const FABRICS = [
   {
-    id: 'imperial-damask-gold',
-    title: 'ديباج إمبراطوري مذهب - نقشة التراث الفاخر',
-    category: 'jacquard',
-    categoryArabic: 'الدمقس والجاكار',
-    badge: 'الأكثر طلباً للأتيليه',
-    description: 'قماش ديباج دمشقي استثنائي منسوج بخيوط البرونز الذهبي مع قاعدة عاجية دافئة. صُمم خصيصاً لصالونات الاستقبال الراقية وستائر الفلل والقصور الكبرى.',
-    composition: '70% حرير طبيعي معالج، 30% خيوط قطنية مذهبة',
-    weight: '520 جم / م²',
-    width: '300 سم (ارتفاع كامل للمباني الشاهقة)',
-    origin: 'نسيج إيطالي خاص - تفصيل يدوي بأتيليه طرابلس',
-    abrasionResistance: '45,000 دورة مارتنديل (مقاومة فائقة للاستخدام اليومي)',
-    mainImage: './assets/fabric_rolls_samples.jpg',
+    id: 'salon-emerald-velvet',
+    title: 'صالون المخمل الزمردي المضلع',
+    category: 'salons',
+    categoryArabic: 'صالونات عصرية وفاخرة',
+    badge: 'الأكثر طلباً',
+    description: 'صالون فاخر بتنجيد مضلع عميق من المخمل الإيطالي الزمردي الغني، مع كراسي ونجباك مريحة وأرجل ميتاليك مذهبة متينة تدوم لسنوات.',
+    composition: 'مخمل إيطالي ناعم، هيكل خشب زان طبيعي مصمت، أرجل ميتاليك مذهبة',
+    weight: 'إسفنج ضغط عالي 35 D ممتاز',
+    width: 'تفصيل حسب مقاس صالتك',
+    origin: 'ورش ومصنع الديباج — طرابلس',
+    abrasionResistance: '65,000 دورة مارتنديل (مقاومة فائقة للاستخدام العائلي)',
+    mainImage: './assets/salon-emerald-velvet.webp',
     featured: true,
     swatches: [
       {
-        id: 'gold-bronze',
-        name: 'الذهب الإمبراطوري والبرونز',
-        colorHex: '#c08b3e',
-        textureDesc: 'خيوط برونزية متلألئة مع نقشة أرابيسك بارزة',
-        image: './assets/fabric_rolls_samples.jpg'
+        id: 'emerald-rich',
+        name: 'الزمردي الملكي الفاخر',
+        colorHex: '#0F6B4F',
+        textureDesc: 'مخمل مضلع ناعم عاكس للضوء مع لمعة خفيفة',
+        image: './assets/salon-emerald-velvet.webp'
       },
       {
-        id: 'warm-ivory',
-        name: 'العاجي الدافئ والدمقس',
-        colorHex: '#faf7f2',
-        textureDesc: 'حرير عاجي ناعم بنقش دمشقي كلاسيكي',
-        image: './assets/craftsman_artisan.jpg'
+        id: 'cream-chesterfield',
+        name: 'العاجي اللؤلؤي الملكي',
+        colorHex: '#F2EAD8',
+        textureDesc: 'مخمل ناعم دافئ بتنجيد كبتونية راقٍ',
+        image: './assets/salon-cream-chesterfield.webp'
       },
       {
-        id: 'velveteen-chocolate',
-        name: 'الشوكولاتة الملكية والمعدن المذهب',
-        colorHex: '#5a3a22',
-        textureDesc: 'قاعدة داكنة مخملية متباينة مع الخيوط الذهبية',
-        image: './assets/arabic_majlis_luxury.jpg'
+        id: 'magenta-crushed',
+        name: 'المخمل التوتي والكرزي',
+        colorHex: '#A8114A',
+        textureDesc: 'مخمل كرزي غني بأرجل مذهبة لامعة',
+        image: './assets/salon-magenta-chesterfield.webp'
       },
       {
-        id: 'olive-laurel',
-        name: 'الزيتوني المتوسطي المذهب',
-        colorHex: '#4a5d4e',
-        textureDesc: 'لمسات زيتونية هادئة مستوحاة من حدائق البحر المتوسط',
-        image: './assets/grand_villa_curtains.jpg'
+        id: 'taupe-hairpin',
+        name: 'التوب والرمادي العصري',
+        colorHex: '#A89684',
+        textureDesc: 'قماش كتان معالج بأرجل معدنية عصرية',
+        image: './assets/salon-taupe-hairpin.webp'
       }
     ],
     features: [
-      'نسيج معالج ضد البقع وسهل التنظيف الموضعي',
-      'حياكة يدويّة متقنة تمنح ثنيات الستائر انسدالاً انسيابياً ملوكياً',
-      'ثبات كامل للألوان ضد أشعة الشمس المباشرة',
-      'معايير فندقية فاخرة للأقمشة المقاومة للاشتعال'
+      'هيكل متين من خشب الزان المعالج المقاوم للرطوبة وتقلبات الطقس',
+      'إسفنج ذو كثافة عالية 35 D ضغط عالي للراحة القصوى وثبات القوام لسنوات',
+      'خياطة وتضليع يدوي متقن بأعلى معايير الحرفية في ورشنا',
+      'إمكانية تفصيل ستائر متناسقة بنفس القماش واللون'
     ],
-    idealFor: 'الستائر الفاخرة للصالات الكبرى، تنجيد الأرائك الملكية، ومساند المجالس'
+    idealFor: 'صالات الاستقبال العصرية، الفلل والمنازل الراقية، والباحثين عن الراحة والأناقة'
   },
   {
-    id: 'grand-villa-velvet-curtains',
-    title: 'ستائر الفلل الشاهقة - مخمل ملكي وشيفون معالج',
-    category: 'curtains',
-    categoryArabic: 'ستائر القصور الفاخرة',
-    badge: 'تصميم حصري',
-    description: 'تشكيلة ستائر ممتدة من السقف إلى الأرضيات (Floor-to-Ceiling) بطبقات مزدوجة تجمع بين هيبة المخمل الإمبراطوري العازل للضوء ونعومة الشيفون الحريري المتدلي بنفاذية لطيفة لضوء النهار.',
-    composition: 'مخمل إيطالي 100% مع طبقة شيفون حريري',
-    weight: '640 جم / م²',
-    width: 'تفصيل حسب مقاسات الصالون',
-    origin: 'حياكة يدوية خاصة - أتيليه شركة الديباج',
-    abrasionResistance: 'عازل للصوت بنسبة 40% وعازل للحرارة',
-    mainImage: './assets/grand_villa_curtains.jpg',
-    featured: true,
-    swatches: [
-      {
-        id: 'champagne-velvet',
-        name: 'مخمل الشامبانيا والذهب',
-        colorHex: '#d8b26e',
-        textureDesc: 'مخمل ناعم ثقيل ببريق شامبانيا دافئ',
-        image: './assets/grand_villa_curtains.jpg'
-      },
-      {
-        id: 'deep-chocolate',
-        name: 'المخمل الكاكاو الداكن',
-        colorHex: '#3b2314',
-        textureDesc: 'مخمل داكن فاخر ذو عمق استثنائي',
-        image: './assets/arabic_majlis_luxury.jpg'
-      },
-      {
-        id: 'mediterranean-pearl',
-        name: 'شيفون اللؤلؤ المتوسطي',
-        colorHex: '#fcf9f4',
-        textureDesc: 'شيفون فائق النعومة بنسيم انسيابي ناعم',
-        image: './assets/luxury_living_salon.jpg'
-      }
-    ],
-    features: [
-      'تجهيز كامل مع نظام المسارات المخفية الذكية أو الأنابيب البرونزية المصمتة',
-      'شراشيب وأربطة ستائر برونزية يدوية الصنع متناسقة مع الهوية',
-      'عزل حراري ملموس يحافظ على برودة الصالونات في الصيف الليبي',
-      'حياكة متقنة بحواشي مزدوجة تمنع التمزق أو التهدل بمرور السنوات'
-    ],
-    idealFor: 'واجهات الزجاج البانورامية، الصالونات الشاهقة، وغرف الاستقبال الرسمية'
-  },
-  {
-    id: 'arabic-majlis-royal-upholstery',
-    title: 'طقم مجالس الأصالة - جاكار مذهب ومخمل مدمج',
+    id: 'majlis-carved-gold-damask',
+    title: 'مجلس الخشب المذهب والدمقس العاجي',
     category: 'majlis',
-    categoryArabic: 'أقمشة المجالس العربية',
-    badge: 'تراث ليبي مطوّر',
-    description: 'صُمم خصيصاً للجلسات الليبية والمجالس العربية التي تجمع بين فخامة التراث وراحة الجلوس الطويل. تطريز ذهبي متقن يزين مساند الظهر وأطراف الجلسات بألوان الكاميل والبرونز الدافئ.',
-    composition: '55% خيوط جاكار عالية المتانة، 45% مخمل كثيف',
-    weight: '580 جم / م²',
-    width: '145 سم (عرض التنجيد المتخصص)',
-    origin: 'أتيليه الديباج طرابلس',
-    abrasionResistance: '60,000 دورة مارتنديل (مخصص للجلسات العائلية الدائمة)',
-    mainImage: './assets/arabic_majlis_luxury.jpg',
+    categoryArabic: 'مجالس وجلسات عربية',
+    badge: 'تراث وأصالة',
+    description: 'مجلس عربي أصيل بهيكل خشب زان منحوت يدوياً ومطلي بلمسات الذهب، منجد بقماش الديباج الدمشقي الفاخر المنسوج بخيوط حريرية متينة.',
+    composition: 'قماش ديباج دمشقي مقاوم للاحتكاك، خشب زان حفر يدوي مذهب',
+    weight: 'إسفنج ضغط عالي 35 D مدعم',
+    width: 'تفصيل حسب مقاس الغرفة بالكامل',
+    origin: 'ورش ومصنع الديباج — سوق أبوسليم',
+    abrasionResistance: '55,000 دورة مارتنديل',
+    mainImage: './assets/majlis-carved-gold-damask.webp',
     featured: true,
     swatches: [
       {
-        id: 'majlis-camel-gold',
-        name: 'الذهب والكاميل التراثي',
-        colorHex: '#c08b3e',
-        textureDesc: 'جاكار تقليدي مع خيوط مذهبة وتبطين ناعم',
-        image: './assets/arabic_majlis_luxury.jpg'
+        id: 'carved-gold-ivory',
+        name: 'الذهب الملكي والعاجي الدمقسي',
+        colorHex: '#C9A227',
+        textureDesc: 'ديباج دمشقي مذهب فاخر مع خشب مذهب بالكامل',
+        image: './assets/majlis-carved-gold-damask.webp'
       },
       {
-        id: 'majlis-deep-brown',
-        name: 'البني الملكي المطرّز',
-        colorHex: '#4a2f1c',
-        textureDesc: 'نقش هندسي بارز بألوان متناغمة',
-        image: './assets/craftsman_artisan.jpg'
+        id: 'sage-chenille-floor',
+        name: 'الشينيل الزيتوني التراثي',
+        colorHex: '#9FB0A3',
+        textureDesc: 'شينيل بارز الملمس لجلسة أرضية مريحة وفخمة',
+        image: './assets/majlis-sage-chenille.webp'
       },
       {
-        id: 'majlis-laurel-green',
-        name: 'أخضر الغار المتوسطي',
-        colorHex: '#3a4c3e',
-        textureDesc: 'درجة مهدئة للأعصاب بنقوش مستوحاة من العمارة الإسلامية',
-        image: './assets/luxury_living_salon.jpg'
+        id: 'black-gold-ornate',
+        name: 'الأسود والمذهب الملكي',
+        colorHex: '#221C16',
+        textureDesc: 'تطريز ذهبي كلاسيكي متباين على أرضية سوداء فاخرة',
+        image: './assets/majlis-black-gold-ornate.webp'
       }
     ],
     features: [
-      'طبقة تبطين سفلية متماسكة تحافظ على شد القماش وتمنع الترهل',
-      'مقاومة ممتازة للاحتكاك وانسكاب السوائل اليومية',
-      'وسائد ومساند محشوة بأعلى كثافات الإسفنج والريش الفاخر',
-      'تصميم مخصص ليتناسب مع زوايا ومساحات المجالس الخاصة'
+      'حفر زخرفي بارز ودقيق من خشب الزان الطبيعي المطلي بذهب ناصع',
+      'تطريز دمشقي ملكي مقاوم للاهتراء والبهتان وسهل العناية',
+      'طاولات متناسقة محفورة ومذهبة تكتمل بها فخامة المجلس',
+      'جلسة متماسكة ومساند مريحة للغاية مصممة للضيافة الطويلة'
     ],
-    idealFor: 'المجالس العربية الأرضية والمرتفعة، غرف المعيشة الفسيحة، والصالونات التراثية'
+    idealFor: 'المجالس العربية الرسمية، مضافات الاستقبال، وصالونات التراث الليبي الأصيل'
   },
   {
-    id: 'contemporary-living-velvet',
-    title: 'مخمل الصالونات المعاصرة - فخامة اللمسة الحريرية',
-    category: 'velvet',
-    categoryArabic: 'المخمل الملكي',
-    badge: 'طراز عصري هادئ',
-    description: 'مخمل ناعم يتميز بلمعة لؤلؤية رقيقة تعكس الإضاءة المعمارية الحديثة، مصمم لتنجيد الكنب المودرن والكراسي الفردية (Armchairs) في الفلل الحديثة.',
-    composition: '100% ألياف مخملية دقيقة المعالجة ضد التكتل',
-    weight: '490 جم / م²',
-    width: '145 سم',
-    origin: 'بلجيكا - معالجة وتشطيب أتيليه الديباج',
+    id: 'salon-cream-chesterfield',
+    title: 'صالون تشسترفيلد الكلاسيكي العاجي',
+    category: 'salons',
+    categoryArabic: 'صالونات عصرية وفاخرة',
+    badge: 'طراز كلاسيكي ملكي',
+    description: 'صالون تشسترفيلد فاخر بتنجيد كبتونية عميق وأزرار مخملية متقنة، يضم أرائك 3 مقاعد واسعة مع كراسي برميلية مريحة وقاعدة خشبية صلبة.',
+    composition: 'مخمل لؤلؤي عاجي ناعم، خشب زان أحمر مصمت، أزرار كبتونية مشدودة يدوياً',
+    weight: 'إسفنج ضغط عالي 35 D مزدوج الطبقات',
+    width: 'تفصيل حسب المقاسات المطلوبة',
+    origin: 'ورش ومصنع الديباج — طرابلس',
+    abrasionResistance: '60,000 دورة مارتنديل',
+    mainImage: './assets/salon-cream-chesterfield.webp',
+    featured: true,
+    swatches: [
+      {
+        id: 'cream-ivory',
+        name: 'العاجي اللؤلؤي الدافئ',
+        colorHex: '#F2EAD8',
+        textureDesc: 'مخمل لؤلؤي ناعم دافئ بتنجيد كبتونية كلاسيكي',
+        image: './assets/salon-cream-chesterfield.webp'
+      },
+      {
+        id: 'magenta-deep',
+        name: 'التوتي والكرزي الفاخر',
+        colorHex: '#A8114A',
+        textureDesc: 'مخمل توتي فاخر يبرز تفاصيل الكبتونية',
+        image: './assets/salon-magenta-chesterfield.webp'
+      },
+      {
+        id: 'emerald-royal',
+        name: 'الزمردي الإمبراطوري',
+        colorHex: '#0F6B4F',
+        textureDesc: 'مخمل زمردي ناعم يمنح القطعة ثقلاً استثنائياً',
+        image: './assets/salon-emerald-velvet.webp'
+      }
+    ],
+    features: [
+      'تنجيد كبتونية يدوي كلاسيكي مشدود بدقة متناهية لمنع ارتخاء الأزرار',
+      'هيكل خشب زان مصمت يضمن ثباتاً مطلقاً وتحملاً للأوزان',
+      'وسائد جلوس قابلة للتدوير ومحشوة بطبقات إسفنج مريح للغاية',
+      'تناسق رائع مع الطاولات المذهبة والرخامية'
+    ],
+    idealFor: 'صالات المعيشة الفسيحة، صالونات الاستقبال الكلاسيكية، وفلل طرابلس الراقية'
+  },
+  {
+    id: 'majlis-sage-chenille',
+    title: 'جلسة الشينيل المرمري الأرضية',
+    category: 'majlis',
+    categoryArabic: 'مجالس وجلسات عربية',
+    badge: 'راحة وجلسة يومية',
+    description: 'جلسة عربية أرضية عصرية بقماش الشينيل البارز بلون المرمية والزيتون الهادئ، مصممة بأعلى مستويات الراحة والمتانة مع طاولة وسط محفورة بتقنية CNC.',
+    composition: 'قماش شينيل عالي المتانة، مساند إسفنج ضغط عالي، طاولة خشب CNC',
+    weight: 'إسفنج كثافة 35 D لضمان عدم الهبوط',
+    width: 'تفصيل حسب أطوال ومقاسات الحائط بالمتر',
+    origin: 'ورش ومصنع الديباج — سوق أبوسليم',
     abrasionResistance: '50,000 دورة مارتنديل',
-    mainImage: './assets/luxury_living_salon.jpg',
-    featured: false,
+    mainImage: './assets/majlis-sage-chenille.webp',
+    featured: true,
     swatches: [
       {
-        id: 'sand-gold',
-        name: 'رمال الذهب والصحراء',
-        colorHex: '#cf9d56',
-        textureDesc: 'ملمس ناعم كالحرير ولون دافئ للغاية',
-        image: './assets/luxury_living_salon.jpg'
+        id: 'sage-green',
+        name: 'المرمية والزيتون الهادئ',
+        colorHex: '#9FB0A3',
+        textureDesc: 'شينيل دافئ بلمسة مخملية ناعمة مقاوم للاتساخ',
+        image: './assets/majlis-sage-chenille.webp'
       },
       {
-        id: 'velvet-espresso',
-        name: 'إسبريسو الشوكولاتة الداكنة',
-        colorHex: '#2a1a11',
-        textureDesc: 'لون عميق يمنح القطعة ثقلاً وفخامة كلاسيكية',
-        image: './assets/arabic_majlis_luxury.jpg'
+        id: 'terracotta-charcoal',
+        name: 'التيراكوتا والفحم الدافئ',
+        colorHex: '#B45A3C',
+        textureDesc: 'ألوان ترابية غنية مستوحاة من البيوت الليبية الأصيلة',
+        image: './assets/majlis-terracotta-charcoal.webp'
       },
       {
-        id: 'stone-cream',
-        name: 'رخام الكريما العاجي',
-        colorHex: '#f0ede9',
-        textureDesc: 'حيادي فاخر يتماشى مع الأرضيات الرخامية والباركيه',
-        image: './assets/fabric_rolls_samples.jpg'
+        id: 'damask-gold',
+        name: 'الذهب والعاجي التراثي',
+        colorHex: '#C9A227',
+        textureDesc: 'ديباج دمشقي فاخر بجلسة أرضية مرتفعة',
+        image: './assets/majlis-carved-gold-damask.webp'
       }
     ],
     features: [
-      'خالٍ تماماً من الانعكاسات البلاستيكية الرخيصة، بريق طبيعي هادئ',
-      'مقاومة عالية للوبر وسهولة التمشيط بالفرشاة الجافة',
-      'مناسب جداً للقطع ذات الانحناءات الهندسية المعاصرة'
+      'حشوة إسفنج ضغط عالي متماسكة تضمن عدم هبوط الجلسة مع الاستخدام اليومي المستمر',
+      'أقمشة معالجة ضد البقع وسهلة التنظيف بالمسح الموضعي',
+      'مساند ظهر مريحة بزاوية ميلان مدروسة تريح الفقرات',
+      'تفصيل مخصص ليطابق زوايا الغرفة ومداخلها بدقة السنتيمتر'
     ],
-    idealFor: 'أطقم صالونات المعيشة المودرن، مقاعد الطعام الفاخرة، ورؤوس الأسرة المنجدة'
+    idealFor: 'المجالس العائلية اليومية، المضافات الشعبية الراقية، وغرف الاسترخاء'
   },
   {
-    id: 'mediterranean-natural-linen',
-    title: 'كتان حوض البحر المتوسط النقي - أناقة الطبيعة',
-    category: 'linen',
-    categoryArabic: 'الكتان المتوسطي',
-    badge: 'طبيعي 100%',
-    description: 'قماش كتان نقي منسوج بألياف طبيعية غير مبيضة، يعكس دفء شواطئ البحر الأبيض المتوسط ونقاء الضوء الطبيعي في المنازل والفيلات الصيفية.',
-    composition: '100% كتان طبيعي عالي النقاء',
-    weight: '380 جم / م²',
-    width: '290 سم',
-    origin: 'إسبانيا - تشطيب أتيليه الديباج',
-    abrasionResistance: '30,000 دورة مارتنديل',
-    mainImage: './assets/craftsman_artisan.jpg',
-    featured: false,
+    id: 'corner-boucle-showroom',
+    title: 'ركنية البوكليه العاجية الفاخرة',
+    category: 'corners',
+    categoryArabic: 'ركنيات تفصيل',
+    badge: 'طراز عصري مودرن',
+    description: 'كنبة ركنية عصرية بتصميم منحنٍ انسيابي وقماش البوكليه العاجي الدافئ المجعد، تمنح الصالة طابعاً أوروبياً عصرياً ولمسة دفء وراحة فائقة.',
+    composition: 'قماش بوكليه تيدي فاخر، هيكل خشب زان صلب، نوابض ميتاليك مدعمة',
+    weight: 'إسفنج ضغط عالي 35 D مع طبقة ألياف هوائية ناعمة',
+    width: 'تفصيل حسب مقاس زاوية صالتك (L-Shape أو U-Shape)',
+    origin: 'ورش ومصنع الديباج — طرابلس',
+    abrasionResistance: '50,000 دورة مارتنديل',
+    mainImage: './assets/corner-boucle-showroom.webp',
+    featured: true,
     swatches: [
       {
-        id: 'unbleached-sand',
-        name: 'الكتان الرملي الخام',
-        colorHex: '#dfd7ca',
-        textureDesc: 'نسيج ذو ملمس عضوي خشن قليلاً ومظهر طبيعي استثنائي',
-        image: './assets/craftsman_artisan.jpg'
+        id: 'boucle-ivory',
+        name: 'البوكليه العاجي الدافئ',
+        colorHex: '#FAF7F2',
+        textureDesc: 'نسيج بوكليه مجعد فاخر ناعم الملمس وسهل العناية',
+        image: './assets/corner-boucle-showroom.webp'
       },
       {
-        id: 'damask-ivory-linen',
-        name: 'العاجي النقي المغسول',
-        colorHex: '#faf7f2',
-        textureDesc: 'كتان مغسول بحجارة البحر لمنحه نعومة فائقة عند الملمس',
-        image: './assets/fabric_rolls_samples.jpg'
+        id: 'distressed-suede',
+        name: 'الشامواه البرونزي المعتق',
+        colorHex: '#3A3A38',
+        textureDesc: 'شامواه مقاوم للماء والخدوش بلون فحمي وبرونزي راقٍ',
+        image: './assets/corner-distressed-suede.webp'
       },
       {
-        id: 'sage-olive-linen',
-        name: 'المرمية والزيتون الهادئ',
-        colorHex: '#7a8c7e',
-        textureDesc: 'درجة مستوحاة من أشجار الزيتون في الساحل الليبي',
-        image: './assets/luxury_living_salon.jpg'
+        id: 'emerald-corner',
+        name: 'المخمل الزمردي الغني',
+        colorHex: '#0F6B4F',
+        textureDesc: 'مخمل إيطالي ناعم يمنح الركنية حضوراً استثنائياً',
+        image: './assets/salon-emerald-velvet.webp'
       }
     ],
     features: [
-      'تنفس ممتاز للأنسجة ومقاوم لتراكم الروائح أو الرطوبة',
-      'يزداد نعومة وجمالاً مع كل غسيل وعناية',
-      'خيار مثالي للتصاميم المعمارية البسيطة والفاخرة (Minimalist Luxury)'
+      'تصميم انسيابي حديث يوفر أكبر مساحة جلوس للعائلة دون إهدار للمساحة',
+      'خامات بوكليه ممتازة مقاومة للتوبير وسهلة التنظيف الجاف',
+      'إمكانية إضافة مسند للقدمين (بوف) وطاولات جانبية متناسقة',
+      'هيكل زان متين ومثبت ببراغي صناعية شديدة التحمل'
     ],
-    idealFor: 'الستائر الرومانية، الستائر الصيفية المنسدلة، وأغطية الأثاث القابلة للفك'
+    idealFor: 'صالات المعيشة المودرن، الشقق الحديثة، والفيلات ذات التصميم المفتوح'
+  },
+  {
+    id: 'corner-distressed-suede',
+    title: 'ركنية الشامواه المعاصرة L-Shape',
+    category: 'corners',
+    categoryArabic: 'ركنيات تفصيل',
+    badge: 'متانة فائقة للاستخدام اليومي',
+    description: 'ركنية عائلية عملية وفخمة من الشامواه المقاوم للماء والخدوش، بتصميم L-Shape حديث وألوان محايدة دافئة تناسب ديكورات البيوت العصرية.',
+    composition: 'قماش شامواه معالج ضد السوائل، هيكل خشب زان طبيعي',
+    weight: 'إسفنج ضغط عالي 35 D مريح وثابت',
+    width: 'تفصيل حسب اتجاه الزاوية (يمين أو يسار) وبالمقاس الدقيق',
+    origin: 'ورش ومصنع الديباج — طرابلس',
+    abrasionResistance: '65,000 دورة مارتنديل',
+    mainImage: './assets/corner-distressed-suede.webp',
+    featured: false,
+    swatches: [
+      {
+        id: 'suede-bronze',
+        name: 'الشامواه الفحمي والبرونزي',
+        colorHex: '#3A3A38',
+        textureDesc: 'ملمس ناعم كالمخمل مع متانة الجلد ومقاومة السوائل',
+        image: './assets/corner-distressed-suede.webp'
+      },
+      {
+        id: 'boucle-warm',
+        name: 'البوكليه العاجي',
+        colorHex: '#FAF7F2',
+        textureDesc: 'نسيج بوكليه ناعم لدفء إضافي',
+        image: './assets/corner-boucle-showroom.webp'
+      }
+    ],
+    features: [
+      'قماش عالي المقاومة للبقع ومقاوم لخدوش الأطفال والحيوانات الأليفة',
+      'مساند رأس اختيارية قابلة للتعديل لمزيد من الراحة أثناء المشاهدة',
+      'خياطة مزدوجة بخيوط بوليستر عالية المتانة تمنع تمزق الحواف',
+      'سعر اقتصادي ومدروس مع ضمان الجودة العالية'
+    ],
+    idealFor: 'غرف التلفزيون والمعيشة اليومية، غرف الشباب، والمساحات العملية'
+  },
+  {
+    id: 'curtains-matching-gold',
+    title: 'ستائر تفصيل متناسقة مع الصالونات',
+    category: 'curtains',
+    categoryArabic: 'ستائر مكملة للصالونات',
+    badge: 'خدمة تفصيل متكاملة',
+    description: 'خدمة تفصيل ستائر راقية بنفس قماش الصالون أو بدرجات ألوان متناغمة معه، بطبقات مخمل وشيفون حريري تضفي هيبة وتكاملاً ديكورياً على صالتك.',
+    composition: 'مخمل إيطالي ناعم مع طبقة شيفون حريري منسدلة',
+    weight: 'أقمشة ثقيلة لحجب الضوء وعزل الصوت',
+    width: 'تفصيل حسب مقاسات النوافذ وارتفاع السقف',
+    origin: 'ورش ومصنع الديباج — طرابلس',
+    abrasionResistance: 'حياكة يدوية متقنة بحواشي عريضة',
+    mainImage: './assets/curtains-matching-gold.webp',
+    featured: true,
+    swatches: [
+      {
+        id: 'curtain-gold-velvet',
+        name: 'المخمل الذهبي والعاجي',
+        colorHex: '#C9A227',
+        textureDesc: 'مخمل ناعم ببريق دافئ ينسدل بانسيابية ملوكية',
+        image: './assets/curtains-matching-gold.webp'
+      },
+      {
+        id: 'curtain-emerald-velvet',
+        name: 'المخمل الزمردي المتناسق',
+        colorHex: '#0F6B4F',
+        textureDesc: 'نفس خامة صالون المخمل الزمردي لتناغم ديكوري كامل',
+        image: './assets/salon-emerald-velvet.webp'
+      }
+    ],
+    features: [
+      'تفصيل الستائر متناسقة بنسبة 100% مع ألوان ونوعية قماش صالونك أو مجلسك',
+      'ثنيات مروحة أو ويف (Wave Fold) انسيابية مشدودة بحرفية',
+      'عزل ممتاز لأشعة الشمس والحرارة للمحافظة على برودة الصالة',
+      'تركيب متقن مع قضبان وإكسسوارات متينة تدوم طويلاً'
+    ],
+    idealFor: 'إكمال ديكور الصالونات والمجالس الجديدة، واجهات النوافذ الكبيرة، والفلل'
   }
 ];
 

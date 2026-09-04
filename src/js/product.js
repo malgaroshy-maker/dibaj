@@ -6,7 +6,7 @@ let currentSwatch = null;
 
 document.addEventListener('DOMContentLoaded', () => {
   const urlParams = new URLSearchParams(window.location.search);
-  const fabricId = urlParams.get('id') || 'imperial-damask-gold';
+  const fabricId = urlParams.get('id') || 'salon-emerald-velvet';
   currentFabric = getFabricById(fabricId);
   currentSwatch = currentFabric.swatches[0];
 
@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function renderProductDetails() {
-  document.title = `${currentFabric.title} | شركة الديباج للمنسوجات`;
+  document.title = `${currentFabric.title} | شركة الديباج لتصنيع وتفصيل الصالونات والمجالس`;
 
   // Breadcrumbs
   const breadcrumbCurrent = document.getElementById('breadcrumb-current-title');

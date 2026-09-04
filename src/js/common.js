@@ -11,8 +11,7 @@ export const DIBAJ_CONFIG = {
   phonePrimary: '+218 91 560 1703',
   phoneSecondary: '+218 92 141 1415',
   emailPrimary: 'aldibaj@yahoo.com',
-  emailSecondary: 'aldibaj.n.a.texone@gmail.com',
-  atelierLocation: 'طرابلس، ليبيا – أبوسليم (أمام المعهد الصحي بالقرب من صيدلية العاصمة)',
+  workshopLocation: 'طرابلس، ليبيا – سوق أبوسليم (محل 14 ومحل 76)',
   showroomHours: 'السبت - الخميس: 9:00 ص - 9:00 م | الجمعة: 4:30 م - 9:30 م',
   legal: {
     industrialRegistry: '002546000567',
@@ -35,7 +34,7 @@ export function buildWhatsAppUrl(details = {}) {
     dimensions = ''
   } = details;
 
-  let message = `مرحباً شركة الديباج للمنسوجات الفاخرة،\nأود الاستفسار والتنسيق مع مستشار الأتيليه بخصوص:`;
+  let message = `مرحباً شركة الديباج لصناعة الصالونات والمجالس،\nأود الاستفسار والتنسيق بخصوص:`;
   if (serviceType) message += `\n- الخدمة: ${serviceType}`;
   if (fabricTitle) message += `\n- القماش أو المجموعة: ${fabricTitle}`;
   if (swatchName) message += `\n- خيار العينة / اللون: ${swatchName}`;
@@ -72,11 +71,16 @@ export function initNavigation() {
   }
 
   // Active navigation highlight
-  const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+  const rawPath = window.location.pathname.split('/').pop() || 'index.html';
+  const currentPath = (rawPath === '' ? 'index.html' : rawPath).split('?')[0];
+
   document.querySelectorAll('.nav-link').forEach(link => {
-    const href = link.getAttribute('href');
-    if (href === currentPath || (currentPath === '' && href === 'index.html')) {
+    const rawHref = link.getAttribute('href') || '';
+    const cleanHref = rawHref.split('?')[0].split('/').pop();
+    if (cleanHref === currentPath || (currentPath === 'index.html' && (cleanHref === '' || cleanHref === 'index.html'))) {
       link.classList.add('active');
+    } else {
+      link.classList.remove('active');
     }
   });
 }
@@ -136,8 +140,7 @@ export function initConsultationModal() {
         notes: `الاسم: ${name} | هاتف: ${phone} | تفاصيل: ${notes}`
       });
 
-      // Show luxury confirmation toast
-      showToast(`شكراً لك أستاذ ${name}، تم تسجيل طلبكم وسيتواصل معكم خبير الأتيليه. جاري تحويلكم للمحادثة المباشرة...`);
+      showToast(`شكراً لك أستاذ ${name}، تم تسجيل طلبكم وسيتواصل معكم فريق التفصيل بشركة الديباج. جاري تحويلكم للمحادثة المباشرة...`);
       
       setTimeout(() => {
         window.closeConsultationModal();
