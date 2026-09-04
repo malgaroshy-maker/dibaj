@@ -11,6 +11,11 @@
 </head>
 <body>
 
+  <!-- Global Architectural Background Watermark -->
+  <div class="site-watermark-bg" aria-hidden="true">
+    <img src="./assets/logo_crest.png" alt="" />
+  </div>
+
   <!-- Top Header with NA Crest & Arabic Branding -->
   <header class="site-header">
     <div class="container header-inner">
@@ -78,8 +83,11 @@
 
   <main>
     <!-- Hero Section -->
-    <section class="section" style="padding-top: var(--space-2xl); background: radial-gradient(circle at 10% 20%, rgba(192, 139, 62, 0.08) 0%, transparent 40%);">
-      <div class="container">
+    <section class="section" style="position: relative; overflow: hidden; padding-top: var(--space-2xl); background: radial-gradient(circle at 10% 20%, rgba(192, 139, 62, 0.08) 0%, transparent 40%);">
+      <div class="hero-watermark" aria-hidden="true">
+        <img src="./assets/logo_crest.png" alt="" />
+      </div>
+      <div class="container" style="position: relative; z-index: 1;">
         <div class="grid-2" style="align-items: center;">
           <div class="fade-in-up">
             <span class="section-badge">صناعة وطنية 100% • سوق أبوسليم، طرابلس</span>
@@ -225,8 +233,11 @@
     </section>
 
     <!-- Consultation CTA Banner -->
-    <section class="section" style="padding-block: var(--space-2xl); background: var(--color-chocolate-dark); color: #ffffff;">
-      <div class="container" style="text-align: center;">
+    <section class="section" style="position: relative; overflow: hidden; padding-block: var(--space-2xl); background: var(--color-chocolate-dark); color: #ffffff;">
+      <div class="banner-watermark" aria-hidden="true">
+        <img src="./assets/logo_crest.png" alt="" />
+      </div>
+      <div class="container" style="position: relative; z-index: 1; text-align: center;">
         <span class="section-badge" style="background: rgba(192, 139, 62, 0.2); color: var(--color-gold-light); border-color: rgba(192, 139, 62, 0.4);">خدمة الكونسيرج الخاصة</span>
         <h2 style="color: #ffffff; margin-bottom: var(--space-sm);">هل ترغب في استشارة شخصية لمشروعك السكني أو التجاري؟</h2>
         <p style="color: #e5e2dd; max-width: 680px; margin-inline: auto; margin-bottom: var(--space-xl);">
