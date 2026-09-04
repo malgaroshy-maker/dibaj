@@ -93,9 +93,14 @@ function renderCatalogGrid() {
 
           <div class="card-footer">
             <span class="card-price-hint">${fabric.weight}</span>
-            <a href="product.html?id=${fabric.id}" class="btn btn-secondary-bespoke" style="padding: 0.45rem 1rem; font-size: 0.85rem;">
-              استعراض وتفصيل
-            </a>
+            ${fabric.category === 'curtains' 
+              ? `<button type="button" class="btn btn-secondary-bespoke" onclick="window.openConsultationModal('${fabric.title} — تفصيل ستائر مكملة للصالونات')" style="padding: 0.45rem 1rem; font-size: 0.85rem;">
+                  اطلب تفصيل الستائر
+                </button>`
+              : `<a href="product.html?id=${fabric.id}" class="btn btn-secondary-bespoke" style="padding: 0.45rem 1rem; font-size: 0.85rem;">
+                  استعراض وتفصيل
+                </a>`
+            }
           </div>
         </div>
       </article>

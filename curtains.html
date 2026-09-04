@@ -87,25 +87,120 @@
     </section>
 
     <!-- Content Section -->
-    <section class="catalog-section">
-      <div class="container" style="max-width: 900px;">
-        <div style="display: flex; flex-direction: column; gap: var(--space-xl);">
-          <article style="border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); overflow: hidden; background: var(--white);">
-            <img src="assets/images/curtains-matching-gold.webp" alt="صالون تقليدي مع ستائر منسقة بنفس اللون والقماش" style="width: 100%; max-height: 480px; object-fit: cover;" />
-            <div style="padding: var(--space-lg);">
-              <h2 style="font-family: var(--font-heritage); font-size: 1.7rem; margin-block-end: 0.5rem;">تناغم متكامل بين الجلسة والستارة</h2>
-              <p style="line-height: 1.8; color: #555; margin-block-end: 1rem;">
-                عند تفصيل صالونك أو مجلسك في الديباج، يمكنك طلب تفصيل الستائر من نفس لفة القماش أو من درجات متناسقة ومكملة (مثل الجاكار المذهب مع التول الخفيف، أو المخمل الزمردي الثقيل مع ستائر بيضاء شفافة).
+    <section class="catalog-section" style="padding-block: var(--space-2xl);">
+      <div class="container">
+        <!-- Lead Value Proposition -->
+        <div style="background: var(--surface-container-low, #fcf9f4); border: 1px solid var(--border-gold-subtle, #e5d8c3); border-radius: var(--radius-md, 8px); padding: 1.5rem 2rem; margin-bottom: var(--space-2xl); display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1.5rem;">
+          <div>
+            <h2 style="font-family: var(--font-heritage, 'Amiri', serif); font-size: 1.5rem; color: var(--color-chocolate-dark, #5a3a22); margin-bottom: 0.35rem;">
+              تنسيق متطابق 100% بين قماش الصالون والستارة
+            </h2>
+            <p style="color: #666; font-size: 1rem; line-height: 1.7; margin: 0;">
+              في الديباج نوفر لك ميزة حصرية: تفصيل ستائر صالتك من نفس لفة قماش الصالون أو بألوان متناغمة ومكملة، بحواشي عريضة ومجاري تعليق سلسة تمنح المكان هيبة وفخامة موحدة.
+            </p>
+          </div>
+          <button type="button" class="btn btn-gold" data-action="open-quote" data-product="استفسار عام عن تفصيل الستائر">
+            طلب استشارة تفصيل
+          </button>
+        </div>
+
+        <!-- Curtains Collection Grid -->
+        <div class="product-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: var(--space-xl);">
+          
+          <!-- Curtain 1 -->
+          <article class="product-card" style="border: 1px solid var(--border-subtle, #e0d8cd); border-radius: var(--radius-md, 8px); overflow: hidden; background: #fff; box-shadow: var(--shadow-sm, 0 2px 6px rgba(0,0,0,0.05)); display: flex; flex-direction: column;">
+            <div style="position: relative; overflow: hidden; height: 320px;">
+              <img src="assets/images/curtains-gold-damask.webp" alt="ستائر الدمقس الذهبي والعاجي الملكية" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy" />
+              <span style="position: absolute; top: 12px; right: 12px; background: rgba(90,58,34,0.85); color: #fff; padding: 4px 12px; border-radius: 4px; font-size: 0.8rem; font-weight: 600;">تنسيق مع المجالس المذهبة</span>
+            </div>
+            <div style="padding: 1.5rem; display: flex; flex-direction: column; flex-grow: 1;">
+              <h3 style="font-family: var(--font-heritage, 'Amiri', serif); font-size: 1.4rem; color: var(--color-chocolate-dark, #5a3a22); margin-bottom: 0.5rem;">
+                ستائر الدمقس الذهبي والعاجي الملكية
+              </h3>
+              <p style="color: #666; font-size: 0.95rem; line-height: 1.7; margin-bottom: 1rem; flex-grow: 1;">
+                ستائر طبقات فخمة منسوجة من قماش الجاكار الدمشقي الذهبي المترف، مصحوبة بستائر شيفون داخلية مطرزة وشرابات ذهبية مجدولة يدوياً متطابقة مع أقمشة المجالس العربية.
               </p>
-              <div style="background-color: var(--stone); padding: 1rem 1.25rem; border-radius: var(--radius-sm); margin-block-end: 1.5rem;">
-                <strong style="color: var(--ink);">💡 نصيحة عند الزيارة:</strong>
-                <span style="font-size: 0.95rem; color: #555;"> أحضر مقاسات النافذة (العرض والارتفاع) عند زيارة محلنا في سوق أبوسليم لمشاهدة عينات أقمشة الستائر المتوفرة لدينا.</span>
+              <div style="font-size: 0.82rem; color: var(--gold-deep, #9a7a18); font-weight: 700; margin-bottom: 1.25rem;">
+                ✓ جاكار دمشقي ثقيل + شيفون مطرز + شرابات ذهبية
               </div>
-              <button type="button" class="btn btn-gold" data-action="open-quote" data-product="تفصيل ستائر متناسقة">
-                طلب استشارة تفصيل ستائر
+              <button type="button" class="btn btn-gold" style="width: 100%; text-align: center;" data-action="open-quote" data-product="ستائر الدمقس الذهبي والعاجي الملكية">
+                طلب تفصيل هذا الموديل
               </button>
             </div>
           </article>
+
+          <!-- Curtain 2 -->
+          <article class="product-card" style="border: 1px solid var(--border-subtle, #e0d8cd); border-radius: var(--radius-md, 8px); overflow: hidden; background: #fff; box-shadow: var(--shadow-sm, 0 2px 6px rgba(0,0,0,0.05)); display: flex; flex-direction: column;">
+            <div style="position: relative; overflow: hidden; height: 320px;">
+              <img src="assets/images/curtains-emerald-silk.webp" alt="ستائر المخمل الزمردي والحرير المنسدل" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy" />
+              <span style="position: absolute; top: 12px; right: 12px; background: rgba(15,107,79,0.9); color: #fff; padding: 4px 12px; border-radius: 4px; font-size: 0.8rem; font-weight: 600;">تنسيق مع صالون الزمردي</span>
+            </div>
+            <div style="padding: 1.5rem; display: flex; flex-direction: column; flex-grow: 1;">
+              <h3 style="font-family: var(--font-heritage, 'Amiri', serif); font-size: 1.4rem; color: var(--color-chocolate-dark, #5a3a22); margin-bottom: 0.5rem;">
+                ستائر المخمل الزمردي والحرير المنسدل
+              </h3>
+              <p style="color: #666; font-size: 0.95rem; line-height: 1.7; margin-bottom: 1rem; flex-grow: 1;">
+                ستائر ممتدة من السقف إلى الأرض من المخمل الزمردي الإيطالي الفاخر، بثنيات بنش بليتس انسيابية تنسجم تماماً مع أقمشة صالون المخمل الزمردي المضلع.
+              </p>
+              <div style="font-size: 0.82rem; color: var(--gold-deep, #9a7a18); font-weight: 700; margin-bottom: 1.25rem;">
+                ✓ مخمل إيطالي زمردي + شيفون فوال دافئ + مجرى سقف
+              </div>
+              <button type="button" class="btn btn-gold" style="width: 100%; text-align: center;" data-action="open-quote" data-product="ستائر المخمل الزمردي والحرير المنسدل">
+                طلب تفصيل هذا الموديل
+              </button>
+            </div>
+          </article>
+
+          <!-- Curtain 3 -->
+          <article class="product-card" style="border: 1px solid var(--border-subtle, #e0d8cd); border-radius: var(--radius-md, 8px); overflow: hidden; background: #fff; box-shadow: var(--shadow-sm, 0 2px 6px rgba(0,0,0,0.05)); display: flex; flex-direction: column;">
+            <div style="position: relative; overflow: hidden; height: 320px;">
+              <img src="assets/images/curtains-sheer-bronze.webp" alt="ستائر الشيفون المطرز والبرونز المعتم" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy" />
+              <span style="position: absolute; top: 12px; right: 12px; background: rgba(90,58,34,0.85); color: #fff; padding: 4px 12px; border-radius: 4px; font-size: 0.8rem; font-weight: 600;">تنسيق مع الركنيات وصالون التوب</span>
+            </div>
+            <div style="padding: 1.5rem; display: flex; flex-direction: column; flex-grow: 1;">
+              <h3 style="font-family: var(--font-heritage, 'Amiri', serif); font-size: 1.4rem; color: var(--color-chocolate-dark, #5a3a22); margin-bottom: 0.5rem;">
+                ستائر الشيفون المطرز والبرونز المعتم
+              </h3>
+              <p style="color: #666; font-size: 0.95rem; line-height: 1.7; margin-bottom: 1rem; flex-grow: 1;">
+                ستائر صالون مزدوجة تجمع بين شيفون الشمبانيا المطرز بنقوش نباتية راقية، وألواح جانبية معتمة بلون التوب والبرونز مع مسكات جدارية نحاسية محفورة.
+              </p>
+              <div style="font-size: 0.82rem; color: var(--gold-deep, #9a7a18); font-weight: 700; margin-bottom: 1.25rem;">
+                ✓ شيفون فرنسي مطرز + قماش برونزي معتم + ماسكات جدارية
+              </div>
+              <button type="button" class="btn btn-gold" style="width: 100%; text-align: center;" data-action="open-quote" data-product="ستائر الشيفون المطرز والبرونز المعتم">
+                طلب تفصيل هذا الموديل
+              </button>
+            </div>
+          </article>
+
+          <!-- Curtain 4 -->
+          <article class="product-card" style="border: 1px solid var(--border-subtle, #e0d8cd); border-radius: var(--radius-md, 8px); overflow: hidden; background: #fff; box-shadow: var(--shadow-sm, 0 2px 6px rgba(0,0,0,0.05)); display: flex; flex-direction: column;">
+            <div style="position: relative; overflow: hidden; height: 320px;">
+              <img src="assets/images/curtains-royal-navy.webp" alt="ستائر البروكار الملكي الكحلي والمذهب" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy" />
+              <span style="position: absolute; top: 12px; right: 12px; background: rgba(27,58,140,0.9); color: #fff; padding: 4px 12px; border-radius: 4px; font-size: 0.8rem; font-weight: 600;">طراز ملكي للأقواس والقصور</span>
+            </div>
+            <div style="padding: 1.5rem; display: flex; flex-direction: column; flex-grow: 1;">
+              <h3 style="font-family: var(--font-heritage, 'Amiri', serif); font-size: 1.4rem; color: var(--color-chocolate-dark, #5a3a22); margin-bottom: 0.5rem;">
+                ستائر البروكار الملكي الكحلي والمذهب
+              </h3>
+              <p style="color: #666; font-size: 0.95rem; line-height: 1.7; margin-bottom: 1rem; flex-grow: 1;">
+                ستائر قصور ملكية من البروكار الكحلي المنسوج بخيوط ذهبية عتيقة، مع برقع علوي كلاسيكي وشراشيب مذهبة ناعمة تنسجم مع صالونات ومجالس الفخامة.
+              </p>
+              <div style="font-size: 0.82rem; color: var(--gold-deep, #9a7a18); font-weight: 700; margin-bottom: 1.25rem;">
+                ✓ بروكار كحلي ومذهب + بطانة ساتان عازلة + شراشيب يدوية
+              </div>
+              <button type="button" class="btn btn-gold" style="width: 100%; text-align: center;" data-action="open-quote" data-product="ستائر البروكار الملكي الكحلي والمذهب">
+                طلب تفصيل هذا الموديل
+              </button>
+            </div>
+          </article>
+
+        </div>
+
+        <!-- Measurement Note -->
+        <div style="background-color: var(--stone, #edeae4); padding: 1.25rem 1.5rem; border-radius: var(--radius-sm, 4px); margin-top: var(--space-2xl); border-right: 4px solid var(--color-gold-imperial, #c08b3e);">
+          <strong style="color: var(--ink, #221c16); font-size: 1.05rem;">💡 نصيحة عند زيارة صالات عرضنا:</strong>
+          <span style="font-size: 0.95rem; color: #555;"> أحضر معك أبعاد النوافذ والواجهات الزجاجية (العرض والارتفاع) عند زيارة محل 14 أو محل 76 في سوق أبوسليم لاختيار القماش والتول المناسب ومطابقة الألوان فورياً مع طاقم الصالون أو المجلس.</span>
         </div>
       </div>
     </section>
