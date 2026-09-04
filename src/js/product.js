@@ -6,6 +6,16 @@ let currentShape = 'l-shape';
 let currentFoam = '35D';
 let wantHomeMeasurement = true;
 
+let comparisonState = {
+  isActive: false,
+  mode: 'color', // 'color' | 'curtain'
+  targetSwatch: null,
+  targetCurtain: null,
+  sliderPos: 50,
+  includeCurtainsInOrder: true,
+  windowWidth: 3.0
+};
+
 const shapeState = {
   'l-shape': { sideA: 3.5, sideB: 2.5, depth: 85 },
   'u-shape': { sideA: 3.0, sideB: 4.0, sideC: 3.0, depth: 85 },
@@ -30,6 +40,7 @@ function initCustomizerStudio(initialId) {
   setupFoamSelector();
   setupHomeMeasurementToggle();
   setupInquiryActions();
+  setupComparisonStudio();
 
   selectModel(currentFabric.id, false);
 }
@@ -102,9 +113,15 @@ function selectModel(fabricId, updateUrl = true) {
     }
   });
 
+  // Initialize comparison targets for this model
+  comparisonState.targetSwatch = currentFabric.swatches.find(s => s.id !== currentSwatch.id) || currentFabric.swatches[0];
+  const curtains = getCuratedCurtainsForFabric(currentFabric);
+  comparisonState.targetCurtain = curtains[0];
+
   renderProductDetails();
   setupSwatchPicker();
   renderDimensionInputs();
+  updateComparisonUI();
   calculateCustomSpecs();
 }
 
@@ -196,6 +213,7 @@ function setupSwatchPicker() {
       if (swatchDescEl) swatchDescEl.textContent = currentSwatch.textureDesc;
 
       updateMainImage(currentSwatch.image, currentSwatch.name);
+      updateComparisonUI();
       calculateCustomSpecs();
     });
   });
@@ -403,10 +421,27 @@ function calculateCustomSpecs() {
   const metersEl = document.getElementById('calc-result-meters');
   const capacityEl = document.getElementById('calc-result-capacity');
   const daysEl = document.getElementById('calc-result-days');
+  const curtainBadge = document.getElementById('summary-curtains-badge');
+  const curtainValEl = document.getElementById('calc-result-curtains');
 
   if (metersEl) metersEl.textContent = `حوالي ${totalFabricMeters.toFixed(1)} متر طولي`;
   if (capacityEl) capacityEl.textContent = `${Math.max(1, capacity - 1)} - ${capacity + 1} أشخاص`;
   if (daysEl) daysEl.textContent = duration;
+
+  // Curtain coordination summary badge
+  const hasCurtain = comparisonState.mode === 'curtain' && 
+                     comparisonState.includeCurtainsInOrder && 
+                     comparisonState.targetCurtain;
+
+  if (curtainBadge && curtainValEl) {
+    if (hasCurtain) {
+      curtainBadge.style.display = 'flex';
+      const curtainMeters = (comparisonState.windowWidth * 2.2).toFixed(1);
+      curtainValEl.textContent = `مشمولة: ${comparisonState.targetCurtain.title} (${curtainMeters} م)`;
+    } else {
+      curtainBadge.style.display = 'none';
+    }
+  }
 
   updateActionLinks(totalFabricMeters, capacity, duration);
 }
@@ -441,6 +476,17 @@ function updateActionLinks(totalMeters = 12, capacity = 8, duration = '7 - 12 ي
     ? 'نعم، مطلوب زيارة فني لمعاينة الصالة ورفع المقاسات مجاناً في طرابلس' 
     : 'غير مطلوب حالياً، لدي المقاسات الدقيقة';
 
+  const hasCurtain = comparisonState.mode === 'curtain' && 
+                     comparisonState.includeCurtainsInOrder && 
+                     comparisonState.targetCurtain;
+
+  const curtainLines = hasCurtain ? [
+    ``,
+    `🪟 الستائر المرافقة المنسقة: ${comparisonState.targetCurtain.title}`,
+    `📐 عرض نافذة الستائر التقديري: ${comparisonState.windowWidth} متر`,
+    `🧵 أمتار قماش الستائر التقديرية: حوالي ${(comparisonState.windowWidth * 2.2).toFixed(1)} متر طولي (ثنيات 2.2×)`
+  ] : [];
+
   const waMessage = [
     `السلام عليكم شركة الديباج،`,
     `أرغب في الاستفسار وطلب تفصيل من استوديو التخصيص:`,
@@ -453,6 +499,7 @@ function updateActionLinks(totalMeters = 12, capacity = 8, duration = '7 - 12 ي
     `👥 سعة الجلوس التقديرية: ${capacity} أشخاص`,
     `🧵 أمتار القماش التقديرية: ${totalMeters.toFixed(1)} متر طولي`,
     `🏡 رفع مقاسات منزلية: ${measurementText}`,
+    ...curtainLines,
     ``,
     `يرجى التكرم بموافاتي بتقدير السعر المبدئي والمواعيد المتاحة للتنفيذ. شكراً لكم.`
   ].join('\n');
@@ -461,6 +508,293 @@ function updateActionLinks(totalMeters = 12, capacity = 8, duration = '7 - 12 ي
   if (waBtn) {
     waBtn.href = `https://wa.me/218915601703?text=${encodeURIComponent(waMessage)}`;
   }
+}
+
+/* --------------------------------------------------------------------------
+   Curated Curtains Matching Logic
+   -------------------------------------------------------------------------- */
+function getCuratedCurtainsForFabric(fabric) {
+  const allCurtains = FABRICS.filter(f => f.category === 'curtains');
+  if (!allCurtains.length) return [];
+  
+  let preferredId = 'curtains-emerald-silk';
+  const fid = (fabric?.id || '').toLowerCase();
+  if (fid.includes('emerald')) {
+    preferredId = 'curtains-emerald-silk';
+  } else if (fid.includes('boucle') || fid.includes('cream') || fid.includes('taupe') || fid.includes('suede')) {
+    preferredId = 'curtains-sheer-bronze';
+  } else if (fid.includes('navy') || fid.includes('majlis') || fid.includes('terracotta') || fid.includes('ornate')) {
+    preferredId = 'curtains-royal-navy';
+  } else {
+    preferredId = 'curtains-gold-damask';
+  }
+
+  return allCurtains.slice().sort((a, b) => {
+    if (a.id === preferredId) return -1;
+    if (b.id === preferredId) return 1;
+    return 0;
+  });
+}
+
+/* --------------------------------------------------------------------------
+   Comparison Studio Setup & Handlers
+   -------------------------------------------------------------------------- */
+function setupComparisonStudio() {
+  const toggleBtn = document.getElementById('toggle-comparison-btn');
+  const toolbar = document.getElementById('comparison-toolbar');
+  const controlsPanel = document.getElementById('comparison-controls-panel');
+  const splitWrapper = document.getElementById('comparison-split-wrapper');
+  const colorTab = document.getElementById('comp-mode-color-btn');
+  const curtainTab = document.getElementById('comp-mode-curtain-btn');
+  const curtainCard = document.getElementById('coordinated-curtains-card');
+  const curtainCheck = document.getElementById('include-curtain-order-check');
+  const windowWidthInput = document.getElementById('curtain-window-width');
+  const mainViewBox = document.getElementById('product-main-view-box');
+  const dividerLine = document.getElementById('comparison-divider-line');
+  const handle = document.getElementById('comparison-handle');
+  const overlay = document.getElementById('comparison-overlay');
+
+  if (!toggleBtn) return;
+
+  // Toggle button handler
+  toggleBtn.addEventListener('click', () => {
+    comparisonState.isActive = !comparisonState.isActive;
+    toggleBtn.classList.toggle('active', comparisonState.isActive);
+    toggleBtn.setAttribute('aria-pressed', comparisonState.isActive ? 'true' : 'false');
+    toolbar?.classList.toggle('active-mode', comparisonState.isActive);
+    
+    if (controlsPanel) controlsPanel.style.display = comparisonState.isActive ? 'flex' : 'none';
+    if (splitWrapper) splitWrapper.style.display = comparisonState.isActive ? 'block' : 'none';
+    
+    if (curtainCard) {
+      curtainCard.style.display = (comparisonState.isActive && comparisonState.mode === 'curtain') ? 'block' : 'none';
+    }
+
+    if (comparisonState.isActive) {
+      updateComparisonUI();
+    } else {
+      calculateCustomSpecs();
+    }
+  });
+
+  // Mode switcher
+  colorTab?.addEventListener('click', () => {
+    comparisonState.mode = 'color';
+    colorTab.classList.add('active');
+    curtainTab?.classList.remove('active');
+    if (curtainCard) curtainCard.style.display = 'none';
+    updateComparisonUI();
+  });
+
+  curtainTab?.addEventListener('click', () => {
+    comparisonState.mode = 'curtain';
+    curtainTab.classList.add('active');
+    colorTab?.classList.remove('active');
+    if (curtainCard && comparisonState.isActive) curtainCard.style.display = 'block';
+    updateComparisonUI();
+  });
+
+  // Curtain card controls
+  curtainCheck?.addEventListener('change', () => {
+    comparisonState.includeCurtainsInOrder = curtainCheck.checked;
+    calculateCustomSpecs();
+  });
+
+  windowWidthInput?.addEventListener('input', () => {
+    const val = parseFloat(windowWidthInput.value) || 3.0;
+    comparisonState.windowWidth = Math.max(0.5, val);
+    const hintEl = document.getElementById('curtain-meters-hint');
+    if (hintEl) {
+      hintEl.textContent = `(حوالي ${(comparisonState.windowWidth * 2.2).toFixed(1)} م قماش بثنيات 2.2×)`;
+    }
+    calculateCustomSpecs();
+  });
+
+  // Slider Dragging (Pointer Events)
+  let isDragging = false;
+
+  function updateSliderPosition(clientX) {
+    if (!mainViewBox || !overlay || !dividerLine || !handle) return;
+    const rect = mainViewBox.getBoundingClientRect();
+    if (rect.width <= 0) return;
+    let percentage = ((clientX - rect.left) / rect.width) * 100;
+    percentage = Math.max(5, Math.min(95, percentage));
+    comparisonState.sliderPos = percentage;
+
+    overlay.style.clipPath = `polygon(0 0, ${percentage}% 0, ${percentage}% 100%, 0 100%)`;
+    dividerLine.style.left = `${percentage}%`;
+    handle.setAttribute('aria-valuenow', Math.round(percentage));
+  }
+
+  function onPointerDown(e) {
+    isDragging = true;
+    updateSliderPosition(e.clientX);
+    if (handle) handle.setPointerCapture?.(e.pointerId);
+    e.preventDefault();
+  }
+
+  function onPointerMove(e) {
+    if (!isDragging) return;
+    updateSliderPosition(e.clientX);
+  }
+
+  function onPointerUp(e) {
+    if (isDragging) {
+      isDragging = false;
+      if (handle && handle.hasPointerCapture?.(e.pointerId)) {
+        handle.releasePointerCapture(e.pointerId);
+      }
+    }
+  }
+
+  handle?.addEventListener('pointerdown', onPointerDown);
+  dividerLine?.addEventListener('pointerdown', onPointerDown);
+  window.addEventListener('pointermove', onPointerMove);
+  window.addEventListener('pointerup', onPointerUp);
+
+  // Keyboard accessibility
+  handle?.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowUp') {
+      comparisonState.sliderPos = Math.min(95, comparisonState.sliderPos + 5);
+      updateSliderPositionFromState();
+      e.preventDefault();
+    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') {
+      comparisonState.sliderPos = Math.max(5, comparisonState.sliderPos - 5);
+      updateSliderPositionFromState();
+      e.preventDefault();
+    }
+  });
+
+  function updateSliderPositionFromState() {
+    if (!overlay || !dividerLine || !handle) return;
+    const p = comparisonState.sliderPos;
+    overlay.style.clipPath = `polygon(0 0, ${p}% 0, ${p}% 100%, 0 100%)`;
+    dividerLine.style.left = `${p}%`;
+    handle.setAttribute('aria-valuenow', Math.round(p));
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Comparison UI Refresh
+   -------------------------------------------------------------------------- */
+function updateComparisonUI() {
+  const targetBar = document.getElementById('comparison-target-bar');
+  const overlayImg = document.getElementById('comparison-overlay-image');
+  const baseLabel = document.getElementById('slider-base-text');
+  const compareLabel = document.getElementById('slider-compare-text');
+  const curtainCard = document.getElementById('coordinated-curtains-card');
+
+  if (baseLabel && currentSwatch) {
+    baseLabel.textContent = `الأساسي: ${currentSwatch.name}`;
+  }
+
+  if (comparisonState.mode === 'color') {
+    // Mode A: Color swatches of current fabric
+    const availableSwatches = currentFabric.swatches;
+    if (!comparisonState.targetSwatch || comparisonState.targetSwatch.id === currentSwatch?.id) {
+      comparisonState.targetSwatch = availableSwatches.find(s => s.id !== currentSwatch?.id) || availableSwatches[0];
+    }
+
+    if (targetBar) {
+      targetBar.innerHTML = `
+        <span style="font-size: 0.8rem; font-weight: 700; color: var(--color-chocolate-dark);">قارن مع درجة:</span>
+        ${availableSwatches.map(sw => {
+          const isActive = comparisonState.targetSwatch?.id === sw.id;
+          return `
+            <button type="button" class="comp-swatch-chip ${isActive ? 'active' : ''}" data-swatch-id="${sw.id}">
+              <span class="comp-swatch-dot" style="background-color: ${sw.colorHex};"></span>
+              <span>${sw.name}</span>
+            </button>
+          `;
+        }).join('')}
+      `;
+
+      targetBar.querySelectorAll('.comp-swatch-chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+          const swId = chip.getAttribute('data-swatch-id');
+          comparisonState.targetSwatch = availableSwatches.find(s => s.id === swId) || availableSwatches[0];
+          updateComparisonUI();
+        });
+      });
+    }
+
+    if (overlayImg && comparisonState.targetSwatch) {
+      overlayImg.src = comparisonState.targetSwatch.image;
+      overlayImg.alt = comparisonState.targetSwatch.name;
+    }
+
+    if (compareLabel && comparisonState.targetSwatch) {
+      compareLabel.textContent = `المقارنة: ${comparisonState.targetSwatch.name}`;
+    }
+
+    if (curtainCard) curtainCard.style.display = 'none';
+
+  } else {
+    // Mode B: Curated Curtains Coordination
+    const curtains = getCuratedCurtainsForFabric(currentFabric);
+    if (!comparisonState.targetCurtain || !curtains.find(c => c.id === comparisonState.targetCurtain.id)) {
+      comparisonState.targetCurtain = curtains[0];
+    }
+
+    if (targetBar) {
+      targetBar.innerHTML = `
+        <span style="font-size: 0.8rem; font-weight: 700; color: var(--color-chocolate-dark);">الستائر المطابقة:</span>
+        ${curtains.map(curt => {
+          const isActive = comparisonState.targetCurtain?.id === curt.id;
+          return `
+            <button type="button" class="comp-swatch-chip ${isActive ? 'active' : ''}" data-curtain-id="${curt.id}">
+              <span>🪟 ${curt.title.replace('ستائر ', '')}</span>
+            </button>
+          `;
+        }).join('')}
+      `;
+
+      targetBar.querySelectorAll('.comp-swatch-chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+          const cId = chip.getAttribute('data-curtain-id');
+          comparisonState.targetCurtain = curtains.find(c => c.id === cId) || curtains[0];
+          updateComparisonUI();
+        });
+      });
+    }
+
+    if (overlayImg && comparisonState.targetCurtain) {
+      overlayImg.src = comparisonState.targetCurtain.mainImage;
+      overlayImg.alt = comparisonState.targetCurtain.title;
+    }
+
+    if (compareLabel && comparisonState.targetCurtain) {
+      compareLabel.textContent = `ستارة مرافقة: ${comparisonState.targetCurtain.title}`;
+    }
+
+    // Update Curtains Customization Card
+    if (curtainCard && comparisonState.isActive) {
+      curtainCard.style.display = 'block';
+      const thumb = document.getElementById('curtain-card-thumb');
+      const titleEl = document.getElementById('curtain-card-title');
+      const descEl = document.getElementById('curtain-card-desc');
+      const hintEl = document.getElementById('curtain-meters-hint');
+
+      if (thumb) thumb.src = comparisonState.targetCurtain.mainImage;
+      if (titleEl) titleEl.textContent = comparisonState.targetCurtain.title;
+      if (descEl) descEl.textContent = comparisonState.targetCurtain.description;
+      if (hintEl) {
+        hintEl.textContent = `(حوالي ${(comparisonState.windowWidth * 2.2).toFixed(1)} م قماش بثنيات 2.2×)`;
+      }
+    }
+  }
+
+  // Ensure slider clipPath is applied
+  const overlay = document.getElementById('comparison-overlay');
+  const dividerLine = document.getElementById('comparison-divider-line');
+  const handle = document.getElementById('comparison-handle');
+  if (overlay && dividerLine) {
+    overlay.style.clipPath = `polygon(0 0, ${comparisonState.sliderPos}% 0, ${comparisonState.sliderPos}% 100%, 0 100%)`;
+    dividerLine.style.left = `${comparisonState.sliderPos}%`;
+    if (handle) handle.setAttribute('aria-valuenow', Math.round(comparisonState.sliderPos));
+  }
+
+  calculateCustomSpecs();
 }
 
 function setupInquiryActions() {

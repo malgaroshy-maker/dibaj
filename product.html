@@ -151,6 +151,366 @@
       margin-top: 0.5rem;
       font-size: 1.1rem;
     }
+
+    /* --------------------------------------------------------------------------
+       Interactive Comparison Toolbar & Split Slider
+       -------------------------------------------------------------------------- */
+    .comparison-toolbar {
+      margin-bottom: var(--space-sm);
+      background: var(--color-marble-white);
+      border: 1.5px solid var(--border-gold-subtle);
+      border-radius: var(--radius-lg);
+      padding: 0.6rem 0.85rem;
+      box-shadow: var(--shadow-warm-sm);
+      transition: all var(--transition-smooth);
+    }
+
+    .comparison-toolbar.active-mode {
+      border-color: var(--color-gold-imperial);
+      background: #fffdf9;
+      box-shadow: 0 4px 16px rgba(192, 139, 62, 0.15);
+    }
+
+    .comparison-toolbar-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .btn-comparison-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: linear-gradient(135deg, rgba(192, 139, 62, 0.12) 0%, rgba(229, 185, 114, 0.22) 100%);
+      color: var(--color-chocolate-dark);
+      border: 1.5px solid var(--color-gold-imperial);
+      padding: 0.45rem 0.95rem;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: all var(--transition-smooth);
+      font-family: inherit;
+    }
+
+    .btn-comparison-toggle:hover {
+      background: var(--color-gold-imperial);
+      color: #ffffff;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(192, 139, 62, 0.3);
+    }
+
+    .btn-comparison-toggle.active {
+      background: linear-gradient(135deg, var(--color-gold-deep) 0%, var(--color-gold-imperial) 100%);
+      color: #ffffff;
+      border-color: var(--color-gold-deep);
+      box-shadow: 0 4px 14px rgba(163, 114, 43, 0.35);
+    }
+
+    .btn-comparison-toggle .comparison-btn-icon {
+      display: flex;
+      align-items: center;
+      transition: transform 0.3s ease;
+    }
+
+    .btn-comparison-toggle.active .comparison-btn-icon {
+      transform: rotate(180deg);
+    }
+
+    .comparison-hint-badge {
+      font-size: 0.78rem;
+      color: var(--color-chocolate-medium);
+      font-weight: 600;
+    }
+
+    .comparison-controls-panel {
+      margin-top: 0.65rem;
+      padding-top: 0.65rem;
+      border-top: 1px dashed var(--border-gold-subtle);
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      animation: fadeIn 0.25s ease;
+    }
+
+    .comparison-mode-tabs {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .comp-tab-btn {
+      padding: 0.35rem 0.8rem;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-gold-subtle);
+      background: #ffffff;
+      color: var(--color-chocolate-dark);
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    .comp-tab-btn:hover {
+      border-color: var(--color-gold-imperial);
+      background: rgba(192, 139, 62, 0.08);
+    }
+
+    .comp-tab-btn.active {
+      background: var(--color-chocolate-dark);
+      color: var(--color-gold-light);
+      border-color: var(--color-chocolate-dark);
+    }
+
+    .comparison-target-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .comp-swatch-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.3rem 0.65rem;
+      border-radius: 999px;
+      border: 1.5px solid var(--border-gold-subtle);
+      background: #ffffff;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--color-chocolate-dark);
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    .comp-swatch-chip:hover {
+      border-color: var(--color-gold-imperial);
+      transform: translateY(-1px);
+    }
+
+    .comp-swatch-chip.active {
+      border-color: var(--color-gold-imperial);
+      background: rgba(192, 139, 62, 0.15);
+      font-weight: 700;
+      box-shadow: 0 2px 8px rgba(192, 139, 62, 0.2);
+    }
+
+    .comp-swatch-dot {
+      width: 13px;
+      height: 13px;
+      border-radius: 50%;
+      border: 1px solid rgba(0,0,0,0.15);
+      display: inline-block;
+    }
+
+    /* Comparison Split Wrapper */
+    .comparison-split-wrapper {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: auto;
+      user-select: none;
+      -webkit-user-select: none;
+      z-index: 5;
+    }
+
+    .comparison-overlay {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%);
+      z-index: 6;
+      transition: clip-path 0.04s linear;
+    }
+
+    .comparison-overlay img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .comparison-divider-line {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 3px;
+      background: linear-gradient(to bottom, #f5d77f, #c08b3e, #f3e5ab, #a3722b);
+      z-index: 10;
+      cursor: ew-resize;
+      touch-action: none;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.4), 0 0 5px rgba(229, 185, 114, 0.9);
+      transform: translateX(-50%);
+      transition: left 0.04s linear;
+    }
+
+    .comparison-handle {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #fffdf8 0%, #d4af37 60%, #996515 100%);
+      border: 2px solid #ffffff;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5), 0 0 14px rgba(212, 175, 55, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: ew-resize;
+      touch-action: none;
+      color: #221c16;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .comparison-handle:hover,
+    .comparison-handle:focus {
+      transform: translate(-50%, -50%) scale(1.1);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6), 0 0 18px rgba(229, 185, 114, 1);
+      outline: none;
+    }
+
+    .handle-crest-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #221c16;
+      margin-inline: 1px;
+    }
+
+    .comparison-badge-label {
+      position: absolute;
+      bottom: 12px;
+      z-index: 8;
+      background: rgba(22, 17, 13, 0.85);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      color: #ffffff;
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      border: 1px solid rgba(192, 139, 62, 0.4);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      pointer-events: none;
+      max-width: 45%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .comparison-badge-label.base-label {
+      right: 12px;
+    }
+
+    .comparison-badge-label.compare-label {
+      left: 12px;
+      border-color: rgba(229, 185, 114, 0.6);
+      color: var(--color-gold-light);
+    }
+
+    .comparison-badge-label .label-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--color-gold-imperial);
+      flex-shrink: 0;
+    }
+
+    /* Coordinated Curtains Card */
+    .coordinated-curtains-card {
+      margin-top: var(--space-md);
+      margin-bottom: var(--space-lg);
+      padding: var(--space-md);
+      background: linear-gradient(135deg, #fffdfa 0%, #fbf6ec 100%);
+      border: 1.5px solid var(--color-gold-imperial);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-warm-sm);
+      animation: fadeIn 0.3s ease;
+    }
+
+    .curtains-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      padding-bottom: 0.65rem;
+      border-bottom: 1px solid rgba(192, 139, 62, 0.25);
+      margin-bottom: 0.75rem;
+    }
+
+    .curtain-card-body {
+      display: grid;
+      grid-template-columns: 88px 1fr;
+      gap: 0.85rem;
+      align-items: center;
+    }
+
+    @media (max-width: 520px) {
+      .curtain-card-body {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .curtain-preview-thumb {
+      width: 88px;
+      height: 88px;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 1.5px solid var(--border-gold-subtle);
+      box-shadow: var(--shadow-warm-sm);
+    }
+
+    .curtain-preview-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .curtain-measure-row {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      margin-top: 0.4rem;
+    }
+
+    .curtain-meters-hint {
+      font-size: 0.78rem;
+      color: var(--color-gold-deep);
+      font-weight: 700;
+    }
+
+    .curtain-include-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--color-chocolate-dark);
+    }
+
+    .curtain-include-toggle input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--color-gold-imperial);
+    }
   </style>
 </head>
 <body>
@@ -255,9 +615,72 @@
     <div class="product-detail-layout">
       <!-- Media Gallery Showcase Column (Sticky) -->
       <div class="product-gallery-sticky">
-        <div class="product-main-view">
+        <!-- Interactive Comparison Toolbar -->
+        <div class="comparison-toolbar" id="comparison-toolbar">
+          <div class="comparison-toolbar-header">
+            <button type="button" class="btn-comparison-toggle" id="toggle-comparison-btn" aria-pressed="false">
+              <span class="comparison-btn-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/></svg>
+              </span>
+              <span class="comparison-btn-text">تفعيل مقارنة الخامات والستائر</span>
+            </button>
+            <span class="comparison-hint-badge" id="comparison-hint-badge">اسحب المقبض لمقارنة الألوان والستائر</span>
+          </div>
+
+          <!-- Expanded Controls when Comparison Mode is Active -->
+          <div class="comparison-controls-panel" id="comparison-controls-panel" style="display: none;">
+            <div class="comparison-mode-tabs">
+              <button type="button" class="comp-tab-btn active" data-mode="color" id="comp-mode-color-btn">
+                🎨 درجات ألوان الصالون
+              </button>
+              <button type="button" class="comp-tab-btn" data-mode="curtain" id="comp-mode-curtain-btn">
+                🪟 تنسيق ستائر مرافقة
+              </button>
+            </div>
+
+            <!-- Target Selector Container -->
+            <div class="comparison-target-bar" id="comparison-target-bar">
+              <!-- Rendered via product.js -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Product Main Gallery / Interactive Split View -->
+        <div class="product-main-view" id="product-main-view-box">
+          <!-- Base Image (Main / Underneath) -->
           <img id="product-main-image" src="./assets/salon-emerald-velvet.webp" alt="عرض موديل الصالون" />
-          <span class="card-tag" id="product-badge" style="position: absolute; top: 16px; right: 16px;"></span>
+          <span class="card-tag" id="product-badge" style="position: absolute; top: 16px; right: 16px; z-index: 15;"></span>
+
+          <!-- Interactive Split Comparison Layer (only active when comparison is toggled) -->
+          <div class="comparison-split-wrapper" id="comparison-split-wrapper" style="display: none;">
+            <!-- Overlay Container clipped horizontally -->
+            <div class="comparison-overlay" id="comparison-overlay">
+              <img id="comparison-overlay-image" src="./assets/salon-cream-chesterfield.webp" alt="معاينة المقارنة" />
+            </div>
+
+            <!-- Golden Draggable Divider Line & Handle -->
+            <div class="comparison-divider-line" id="comparison-divider-line">
+              <div class="comparison-handle" id="comparison-handle" role="slider" aria-label="مقبض مقارنة الخامات" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" tabindex="0">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+                <div class="handle-crest-dot"></div>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+              </div>
+            </div>
+
+            <!-- Corner Badges -->
+            <div class="comparison-badge-label base-label" id="slider-base-label">
+              <span class="label-dot"></span>
+              <span id="slider-base-text">الأساسي: الزمردي الملكي</span>
+            </div>
+            <div class="comparison-badge-label compare-label" id="slider-compare-label">
+              <span class="label-dot"></span>
+              <span id="slider-compare-text">المقارنة: العاجي اللؤلؤي</span>
+            </div>
+          </div>
         </div>
 
         <div style="margin-top: var(--space-md); padding: var(--space-md); background: var(--color-marble-white); border-radius: var(--radius-lg); border: 1.5px solid var(--border-gold-subtle); box-shadow: var(--shadow-warm-sm);">
@@ -378,6 +801,48 @@
           </label>
         </div>
 
+        <!-- Coordinated Curtains Customization Card -->
+        <div class="coordinated-curtains-card" id="coordinated-curtains-card" style="display: none;">
+          <div class="curtains-card-header">
+            <div style="display: flex; align-items: center; gap: 0.6rem;">
+              <span style="font-size: 1.3rem;">🪟</span>
+              <div>
+                <h4 style="margin: 0; font-size: 0.98rem; color: var(--color-chocolate-dark);">تنسيق الستائر المرافقة (مصنع باب بن غشير)</h4>
+                <div style="font-size: 0.78rem; color: var(--color-chocolate-medium);">تفصيل ستائر ملكية متناسقة مع لون وخامة صالونك</div>
+              </div>
+            </div>
+            <label class="curtain-include-toggle">
+              <input type="checkbox" id="include-curtain-order-check" checked />
+              <span class="toggle-text">✓ تضمين بالطلب</span>
+            </label>
+          </div>
+
+          <div class="curtain-card-body">
+            <div class="curtain-preview-thumb">
+              <img id="curtain-card-thumb" src="./assets/curtains-emerald-silk.webp" alt="ستارة مرافقة" />
+            </div>
+            <div class="curtain-card-info">
+              <strong id="curtain-card-title" style="color: var(--color-chocolate-dark); font-size: 0.92rem; display: block;">ستائر الحرير والدمقس الزمردي</strong>
+              <p id="curtain-card-desc" style="font-size: 0.8rem; color: var(--color-chocolate-medium); margin-block: 0.25rem 0.5rem; line-height: 1.5;">
+                حرير إيطالي زمردي ناعم ينسجم بانسيابية مع الصالون المخملي.
+              </p>
+              
+              <div class="curtain-measure-row">
+                <label for="curtain-window-width" style="font-size: 0.82rem; font-weight: 700; color: var(--color-chocolate-dark);">
+                  عرض جدار النافذة:
+                </label>
+                <div class="input-unit-group" style="max-width: 130px;">
+                  <input type="number" id="curtain-window-width" class="form-control" value="3.0" step="0.5" min="1.0" max="15.0" />
+                  <span class="input-unit-tag">متر</span>
+                </div>
+                <span class="curtain-meters-hint" id="curtain-meters-hint">
+                  (حوالي 6.6 م قماش بثنيات 2.2×)
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- Live Customization Summary Badges -->
         <div style="margin-top: var(--space-md); margin-bottom: var(--space-lg);">
           <h3 style="font-size: 1.05rem; color: var(--color-chocolate-dark); margin-bottom: 0.35rem; font-weight: 800;">ملخص التخصيص والتقديرات المبدئية:</h3>
@@ -393,6 +858,10 @@
             <div class="summary-badge-item">
               <span class="summary-badge-label">مدة الإنجاز بمصنع باب بن غشير</span>
               <span class="summary-badge-value" id="calc-result-days">7 - 12 يوم عمل</span>
+            </div>
+            <div class="summary-badge-item" id="summary-curtains-badge" style="display: none;">
+              <span class="summary-badge-label">الستائر المرافقة</span>
+              <span class="summary-badge-value" id="calc-result-curtains">مشمولة بالطلب (6.6 م)</span>
             </div>
           </div>
         </div>
