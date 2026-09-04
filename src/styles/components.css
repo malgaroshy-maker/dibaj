@@ -820,3 +820,265 @@ textarea.form-control {
   object-fit: contain;
 }
 
+/* --------------------------------------------------------------------------
+   14. Customizer Studio Styles ("تخصيص الصالون")
+   -------------------------------------------------------------------------- */
+.studio-header-card {
+  background: linear-gradient(135deg, rgba(250, 247, 242, 0.9) 0%, rgba(245, 238, 227, 0.95) 100%);
+  border: 1px solid var(--border-gold-subtle);
+  border-radius: var(--radius-xl);
+  padding: var(--space-lg);
+  margin-bottom: var(--space-xl);
+  box-shadow: var(--shadow-warm-sm);
+  position: relative;
+  overflow: hidden;
+}
+
+.studio-category-filters {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: var(--space-md);
+}
+
+.studio-filter-btn {
+  padding: 0.4rem 1rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  border: 1px solid var(--border-gold-subtle);
+  background: #ffffff;
+  color: var(--color-chocolate-dark);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.studio-filter-btn:hover {
+  border-color: var(--color-gold-imperial);
+  background: var(--surface-container-low);
+}
+
+.studio-filter-btn.active {
+  background: var(--color-chocolate-dark);
+  color: var(--color-gold-light);
+  border-color: var(--color-gold-imperial);
+  box-shadow: 0 2px 8px rgba(34, 28, 22, 0.15);
+}
+
+.model-ribbon {
+  display: flex;
+  gap: 0.85rem;
+  overflow-x: auto;
+  padding-bottom: 0.75rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-gold-subtle) transparent;
+}
+
+.model-ribbon::-webkit-scrollbar {
+  height: 6px;
+}
+
+.model-ribbon::-webkit-scrollbar-thumb {
+  background: var(--color-gold-subtle);
+  border-radius: 4px;
+}
+
+.model-ribbon-card {
+  flex: 0 0 160px;
+  background: #ffffff;
+  border: 2px solid rgba(0, 0, 0, 0.06);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+}
+
+.model-ribbon-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--color-gold-imperial);
+  box-shadow: var(--shadow-warm-md);
+}
+
+.model-ribbon-card.active {
+  border-color: var(--color-gold-imperial);
+  box-shadow: 0 4px 16px rgba(192, 139, 62, 0.3);
+  background: #fffdfa;
+}
+
+.model-ribbon-thumb {
+  width: 100%;
+  height: 95px;
+  object-fit: cover;
+  display: block;
+}
+
+.model-ribbon-info {
+  padding: 0.5rem 0.6rem;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.model-ribbon-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--color-chocolate-dark);
+  line-height: 1.3;
+  margin-bottom: 0.25rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.model-ribbon-category {
+  font-size: 0.7rem;
+  color: var(--color-gold-deep);
+  font-weight: 600;
+}
+
+/* Shape Selector */
+.shape-selector-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 0.75rem;
+  margin-top: 0.6rem;
+  margin-bottom: var(--space-md);
+}
+
+.shape-card {
+  background: #ffffff;
+  border: 2px solid rgba(0, 0, 0, 0.07);
+  border-radius: var(--radius-md);
+  padding: 0.75rem 0.5rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.shape-card:hover {
+  border-color: var(--color-gold-imperial);
+  background: var(--surface-container-low);
+}
+
+.shape-card.active {
+  border-color: var(--color-gold-imperial);
+  background: linear-gradient(180deg, #fffdf8 0%, #fff7eb 100%);
+  box-shadow: 0 4px 14px rgba(192, 139, 62, 0.22);
+}
+
+.shape-card-icon {
+  font-size: 1.5rem;
+  color: var(--color-chocolate-dark);
+}
+
+.shape-card.active .shape-card-icon {
+  color: var(--color-gold-deep);
+}
+
+.shape-card-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--color-chocolate-dark);
+}
+
+.shape-card-desc {
+  font-size: 0.7rem;
+  color: var(--color-chocolate-medium);
+}
+
+/* Dimension Inputs Panel */
+.dimension-panel {
+  background: #ffffff;
+  border: 1px solid var(--border-gold-subtle);
+  border-radius: var(--radius-lg);
+  padding: 1rem;
+  margin-bottom: var(--space-md);
+  box-shadow: var(--shadow-warm-sm);
+}
+
+.dimension-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 0.85rem;
+}
+
+.input-unit-group {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-unit-group input {
+  padding-left: 2.4rem;
+}
+
+.input-unit-tag {
+  position: absolute;
+  left: 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--color-chocolate-medium);
+  pointer-events: none;
+}
+
+/* Live Customization Summary Badges */
+.summary-badges-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 0.6rem;
+  margin-top: 1rem;
+}
+
+.summary-badge-item {
+  background: var(--color-chocolate-dark);
+  color: #ffffff;
+  padding: 0.6rem 0.8rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-gold-subtle);
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.summary-badge-label {
+  font-size: 0.72rem;
+  color: var(--color-gold-light);
+  font-weight: 600;
+}
+
+.summary-badge-value {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+/* Home Measurement Toggle */
+.home-measurement-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 1rem;
+  background: linear-gradient(135deg, rgba(240, 247, 240, 0.9) 0%, rgba(230, 243, 230, 0.9) 100%);
+  border: 1.5px dashed #2e7d32;
+  border-radius: var(--radius-md);
+  margin-top: var(--space-md);
+  margin-bottom: var(--space-md);
+}
+
+.home-measurement-text {
+  font-size: 0.85rem;
+  color: #1b5e20;
+  font-weight: 700;
+}
+
+
