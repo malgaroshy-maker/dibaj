@@ -11,7 +11,10 @@ export const DIBAJ_CONFIG = {
   phonePrimary: '+218 91 560 1703',
   phoneSecondary: '+218 92 141 1415',
   emailPrimary: 'aldibaj@yahoo.com',
-  workshopLocation: 'طرابلس، ليبيا – سوق أبوسليم (محل 14 ومحل 76)',
+  workshopLocation: 'مصنع وورش الديباج المركزية: باب بن غشير | صالات العرض: 5 محلات متخصصة بسوق أبوسليم',
+  factoryLocation: 'طرابلس، ليبيا – باب بن غشير (مجمع تصنيع الهياكل والإسفنج والتفصيل)',
+  showroomsLocation: 'طرابلس، ليبيا – سوق أبوسليم (سلسلة 5 صالات عرض متخصصة)',
+  serviceScope: 'خدمة وتفصيل وتوريد لكافة المدن الليبية (طرابلس، بنغازي، مصراتة، الزاوية، وكافة المناطق)',
   showroomHours: 'السبت - الخميس: 9:00 ص - 9:00 م | الجمعة: 4:30 م - 9:30 م',
   legal: {
     industrialRegistry: '002546000567',

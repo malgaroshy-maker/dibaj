@@ -54,28 +54,29 @@ Phase 7: Full Automated Playwright Verification & Vite Live Validation
 - [ ] Split Majlis Customisation Feature Card ("خدمة التخصيص الكامل للمجالس").
 - [ ] Dark Chocolate Concierge Consultation Banner ("هل ترغب في استشارة شخصية لمشروعك السكني أو التجاري؟").
 - [ ] Payment Guarantee Banner: نقبل الشيكات المصدقة والحوالات والبطاقة المصرفية بنفس القيمة.
-- [ ] Abu Salim Showroom Cards (محل 14 ومحل 76).
+- [x] Abu Salim Showrooms (5 صالات عرض متخصصة) & مصنع باب بن غشير المركزي.
+- [x] صرح استيراد وتوريد الأقمشة النادرة والحصرية في ليبيا (4 ركائز فخامة).
 
 ---
 
 ### Phase 4: Product Catalog (`catalog.html`)
-- [ ] Interactive Category Tabs:
+- [x] Interactive Category Tabs:
   - صالونات فاخرة (Salons)
   - مجالس وجلسات عربية (Majlis)
   - ركنيات عصرية (Corners)
   - ستائر ملكية مكملة (Curtains)
-- [ ] Product cards with high-res studio assets, fabric specifications, and consultation triggers.
+- [x] Product cards with high-res studio assets, fabric specifications, and consultation triggers.
 
 ---
 
 ### Phase 5: Visual Customizer (`product.html`)
-- [ ] Interactive customizer with real-time swatch picker, room preview, and yardage/seating calculator.
+- [x] Interactive customizer with real-time swatch picker, room preview, and yardage/seating calculator.
 
 ---
 
 ### Phase 6: Contact & Showrooms (`contact.html`)
-- [ ] Equal visual weight for WhatsApp (`wa.me`), Facebook Messenger (`m.me`), and direct phone calls.
-- [ ] Showroom cards for محل 14 ومحل 76 سوق أبوسليم مع أرقام السجلين التجاري والصناعي.
+- [x] Equal visual weight for WhatsApp (`wa.me`), Facebook Messenger (`m.me`), and direct phone calls.
+- [x] Two-tier departmental structure: Tier 1 Bab Bin Ghashir Central Factory + Tier 2 5 Specialized Abu Salim Showrooms مع أرقام السجلين التجاري والصناعي.
 
 ---
 
