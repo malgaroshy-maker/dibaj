@@ -310,17 +310,31 @@ export const FABRICS = [
     swatches: [
       {
         id: 'boucle-ivory',
-        name: 'البوكليه العاجي الدافئ',
+        name: 'البوكليه العاجي — الإطلالة الكاملة',
         colorHex: '#FAF7F2',
-        textureDesc: 'نسيج بوكليه مجعد فاخر ناعم الملمس وسهل العناية',
+        textureDesc: 'ركنية انسيابية واسعة بقماش بوكليه تيدي عاجي مع وسائد تيراكوتا وطاولة خشب زان محفورة',
         image: './assets/corner-boucle-showroom.webp'
       },
       {
-        id: 'distressed-suede',
-        name: 'الشامواه البرونزي المعتق',
-        colorHex: '#3A3A38',
-        textureDesc: 'شامواه مقاوم للماء والخدوش بلون فحمي وبرونزي راقٍ',
-        image: './assets/corner-distressed-suede.webp'
+        id: 'boucle-detail',
+        name: 'تفاصيل النسيج والحياكة (Macro Detail)',
+        colorHex: '#EAE6DD',
+        textureDesc: 'عقد بوكليه ناعمة مجعدة مريحة مع حياكة إيطالية دقيقة ووسائد هندسية أنيقة',
+        image: './assets/corner-boucle-detail.webp'
+      },
+      {
+        id: 'boucle-villa',
+        name: 'إطلالة صالة الفيلا المفتوحة (Villa Suite)',
+        colorHex: '#D8D0C4',
+        textureDesc: 'تصميم عائلي ملكي مفتوح لغرف المعيشة الكبيرة والفلل الراقية مع ستائر منسدلة متطابقة',
+        image: './assets/corner-boucle-villa.webp'
+      },
+      {
+        id: 'boucle-evening',
+        name: 'أجواء المساء الدافئة (Ambient Lounge)',
+        colorHex: '#C5B7A0',
+        textureDesc: 'إضاءة دافئة تبرز عمق ودفء نسيج البوكليه ولمسات طاولة القهوة المضيئة بالشموع',
+        image: './assets/corner-boucle-evening.webp'
       }
     ],
     features: [
