@@ -9,15 +9,30 @@ BASE_URL = "https://malgaroshy-maker.github.io/dibaj"
 BRAIN_DIR = r"C:\Users\masal\.gemini\antigravity-ide\brain\cf35d584-d262-41ba-a73c-5b07c8154c1d"
 
 def check_images(page, page_name):
-    page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
-    page.wait_for_timeout(600)
+    page.evaluate("""async () => {
+        await new Promise(resolve => {
+            let totalHeight = 0;
+            let distance = 400;
+            let timer = setInterval(() => {
+                let scrollHeight = document.body.scrollHeight;
+                window.scrollBy(0, distance);
+                totalHeight += distance;
+                if (totalHeight >= scrollHeight) {
+                    clearInterval(timer);
+                    resolve();
+                }
+            }, 80);
+        });
+    }""")
+    page.wait_for_load_state("networkidle")
+    page.wait_for_timeout(800)
     images = page.query_selector_all("img")
     broken = []
     total = len(images)
     for img in images:
-        src = img.get_attribute("src") or ""
         nw = img.evaluate("el => el.naturalWidth")
         if nw == 0:
+            src = img.get_attribute("src") or ""
             broken.append(src)
     print(f"[{page_name}] Checked {total} images. Broken: {len(broken)}")
     if broken:
@@ -67,7 +82,7 @@ def run():
         print(f"Testing {len(swatches)} swatches/angles on live product page...")
         for i, sw in enumerate(swatches):
             sw.click()
-            page.wait_for_timeout(350)
+            page.wait_for_function("el => el.complete && el.naturalWidth > 0", arg=main_img, timeout=6000)
             src = main_img.get_attribute("src")
             nw = main_img.evaluate("el => el.naturalWidth")
             print(f"  Swatch {i+1}: src={src} | naturalWidth={nw}")

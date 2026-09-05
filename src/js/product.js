@@ -213,6 +213,18 @@ function renderProductDetails() {
   }
 
   updateMainImage(currentSwatch.image, currentSwatch.name);
+
+  // Sync Lightbox triggers for Product Studio
+  const mainImg = document.getElementById('product-main-image');
+  const zoomBtn = document.getElementById('product-studio-zoom-btn');
+  if (mainImg) {
+    mainImg.setAttribute('data-lightbox-product', currentFabric.id);
+    mainImg.setAttribute('data-image-index', '0');
+  }
+  if (zoomBtn) {
+    zoomBtn.setAttribute('data-lightbox-product', currentFabric.id);
+    zoomBtn.setAttribute('data-image-index', '0');
+  }
 }
 
 function updateMainImage(imgUrl, altText) {
@@ -248,7 +260,7 @@ function setupSwatchPicker() {
   if (swatchNameEl) swatchNameEl.textContent = currentSwatch.name;
   if (swatchDescEl) swatchDescEl.textContent = currentSwatch.textureDesc;
 
-  swatchContainer.querySelectorAll('.swatch-btn').forEach(btn => {
+  swatchContainer.querySelectorAll('.swatch-btn').forEach((btn, bIdx) => {
     btn.addEventListener('click', () => {
       swatchContainer.querySelectorAll('.swatch-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
@@ -258,6 +270,12 @@ function setupSwatchPicker() {
 
       if (swatchNameEl) swatchNameEl.textContent = currentSwatch.name;
       if (swatchDescEl) swatchDescEl.textContent = currentSwatch.textureDesc;
+
+      // Update Lightbox image index to match selected swatch
+      const mainImg = document.getElementById('product-main-image');
+      const zoomBtn = document.getElementById('product-studio-zoom-btn');
+      if (mainImg) mainImg.setAttribute('data-image-index', String(bIdx));
+      if (zoomBtn) zoomBtn.setAttribute('data-image-index', String(bIdx));
 
       updateMainImage(currentSwatch.image, currentSwatch.name);
       updateComparisonUI();

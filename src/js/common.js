@@ -3,6 +3,10 @@
  * Shared across all pages: Header, Navigation, Consultation Modal, WhatsApp Concierge
  */
 
+import { initLightbox, openLightbox, closeLightbox } from './lightbox.js';
+
+export { openLightbox, closeLightbox };
+
 export const DIBAJ_CONFIG = {
   nameArabic: 'شركة الديباج لصناعة المنسوجات والستائر والجلسات والصالونات (ذ.م.م)',
   nameEnglish: 'ALDIBAJ CO. (Limited liability)',
@@ -238,4 +242,5 @@ export function showToast(message) {
 document.addEventListener('DOMContentLoaded', () => {
   initNavigation();
   initConsultationModal();
+  initLightbox();
 });
