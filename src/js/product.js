@@ -26,14 +26,34 @@ const shapeState = {
 
 document.addEventListener('DOMContentLoaded', () => {
   const urlParams = new URLSearchParams(window.location.search);
-  const initialId = urlParams.get('id') || 'salon-emerald-velvet';
+  const requestedId = urlParams.get('id');
+  const initialId = requestedId || 'salon-emerald-velvet';
 
-  initCustomizerStudio(initialId);
+  initCustomizerStudio(initialId, requestedId);
 });
 
-function initCustomizerStudio(initialId) {
+function initCustomizerStudio(initialId, requestedId) {
+  const isKnown = FABRICS.some(f => f.id === initialId);
   currentFabric = getFabricById(initialId);
   currentSwatch = currentFabric.swatches[0];
+
+  const recoveryBanner = document.getElementById('product-recovery-banner');
+  if (recoveryBanner) {
+    if (requestedId && !isKnown) {
+      recoveryBanner.style.display = 'flex';
+      recoveryBanner.innerHTML = `
+        <div style="display: flex; align-items: center; gap: 0.6rem;">
+          <span style="font-size: 1.25rem;">⚠️</span>
+          <span>المنتج المطلوب غير متوفر حالياً أو تم تحديثه في الكتالوج. تم عرض <strong>${currentFabric.title}</strong> بدلاً منه لتخصيصه.</span>
+        </div>
+        <a href="catalog.html" class="btn btn-secondary-bespoke" style="padding: 0.4rem 0.9rem; font-size: 0.82rem;">
+          تصفح كافة منتجات الكتالوج
+        </a>
+      `;
+    } else {
+      recoveryBanner.style.display = 'none';
+    }
+  }
 
   setupCategoryFilters();
   renderModelRibbon('all');
@@ -103,6 +123,9 @@ function selectModel(fabricId, updateUrl = true) {
     const newUrl = new URL(window.location);
     newUrl.searchParams.set('id', currentFabric.id);
     window.history.replaceState(null, '', newUrl);
+
+    const recoveryBanner = document.getElementById('product-recovery-banner');
+    if (recoveryBanner) recoveryBanner.style.display = 'none';
   }
 
   // Update Ribbon active card

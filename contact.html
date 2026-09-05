@@ -197,7 +197,7 @@
             <div style="border-top: 1px solid var(--surface-container-high); padding-top: var(--space-md); display: flex; flex-direction: column; gap: 0.6rem; font-size: 0.95rem;">
               <div>
                 <strong style="color: var(--color-chocolate-dark);">أوقات العمل في صالات أبوسليم:</strong>
-                <span style="color: var(--color-chocolate-medium); margin-right: 6px;">السبت – الخميس: 9:30 ص – 1:30 ظ ومن 4:30 ع – 9:30 م | الجمعة: عطلة</span>
+                <span style="color: var(--color-chocolate-medium); margin-right: 6px;" class="contact-hours-val">السبت – الخميس: 9:30 ص – 1:30 ظ ومن 4:30 ع – 9:30 م | الجمعة: 4:30 م – 9:30 م (فترة مسائية)</span>
               </div>
               <div>
                 <strong style="color: var(--color-chocolate-dark);">هاتف ليبيانا المباشر:</strong>
@@ -227,21 +227,16 @@
 
         <!-- Interactive Appointment & Inquiry Form -->
         <div style="background: var(--color-marble-white); border: 1.5px solid var(--border-gold-subtle); border-radius: var(--radius-xl); padding: var(--space-xl); box-shadow: var(--shadow-warm-md);">
-          <span class="section-badge">طلب تفصيل أو استفسار</span>
-          <h2 style="font-size: 1.5rem; margin-bottom: 0.5rem;">تواصل مع فريق المبيعات والتفصيل</h2>
+          <span class="section-badge">طلب تفصيل أو استفسار رسمي</span>
+          <h2 style="font-size: 1.5rem; margin-bottom: 0.5rem;">تجهيز استفسار أو طلب عرض سعر</h2>
           <p style="color: var(--color-chocolate-medium); font-size: 0.95rem; margin-bottom: var(--space-lg);">
-            املأ النموذج أدناه وسيقوم فريق شركة الديباج بالتواصل معكم مباشرة عبر الهاتف أو الواتساب لتنسيق المقاسات وعرض السعر.
+            حدد تفاصيل طلبك أو مقاساتك الأولية، وسيقوم النموذج بتجهيز مسودة رسمية منظمة لمراجعتها وإرسالها مباشرة عبر محادثة واتساب الرسمية مع إدارة المبيعات.
           </p>
 
           <form id="main-contact-form">
             <div class="form-group">
-              <label class="form-label" for="contact-name">الاسم الثلاثي *</label>
-              <input type="text" id="contact-name" class="form-control" placeholder="أدخل اسمك الكريم" required />
-            </div>
-
-            <div class="form-group">
-              <label class="form-label" for="contact-phone">رقم الهاتف الليبي (واتساب) *</label>
-              <input type="tel" id="contact-phone" class="form-control" placeholder="091xxxxxxx أو 092xxxxxxx" required />
+              <label class="form-label" for="contact-name">الاسم الكريم (اختياري)</label>
+              <input type="text" id="contact-name" class="form-control" placeholder="أدخل اسمك الكريم أو صفتك (مثال: أ. محمد)" />
             </div>
 
             <div class="grid-2" style="gap: var(--space-sm);">
@@ -268,26 +263,51 @@
               </div>
 
               <div class="form-group">
-                <label class="form-label" for="contact-service">نوع الطلب</label>
+                <label class="form-label" for="contact-service">نوع الطلب أو الخدمة</label>
                 <select id="contact-service" class="form-control">
-                  <option value="تفصيل صالون عصري">تفصيل صالون عصري</option>
+                  <option value="تفصيل صالون عصري فاخر">تفصيل صالون عصري فاخر</option>
                   <option value="تفصيل مجلس عربي أو جلسة أرضية">تفصيل مجلس عربي أو جلسة أرضية</option>
                   <option value="تفصيل ركنية عائلية على المقاس">تفصيل ركنية عائلية على المقاس</option>
-                  <option value="تفصيل ستائر متناسقة مع الصالون">تفصيل ستائر متناسقة مع الصالون</option>
-                  <option value="زيارة المعرض بسوق أبوسليم">زيارة المعرض بسوق أبوسليم</option>
+                  <option value="تفصيل ستائر ملكية متناسقة">تفصيل ستائر ملكية متناسقة</option>
+                  <option value="استفسار توريد أقمشة جملة أو قطاعي">استفسار توريد أقمشة (ورش ومحلات وأفراد)</option>
+                  <option value="زيارة صالات العرض بسوق أبوسليم">زيارة صالات العرض بسوق أبوسليم</option>
                 </select>
               </div>
             </div>
 
             <div class="form-group">
-              <label class="form-label" for="contact-message">ملاحظات إضافية أو مقاسات أولية</label>
-              <textarea id="contact-message" class="form-control" placeholder="اكتب طول الصالة أو الموديل واللون الذي تفضله..."></textarea>
+              <label class="form-label" for="contact-phone">رقم الهاتف الليبي (اختياري)</label>
+              <input type="tel" id="contact-phone" class="form-control" placeholder="091xxxxxxx أو 092xxxxxxx (اختياري للتضمين بالمسودة)" />
             </div>
 
-            <button type="submit" class="btn btn-primary" style="width: 100%; padding: 1rem; font-size: 1.05rem;">
-              إرسال الطلب والتواصل المباشر عبر واتساب
+            <div class="form-group">
+              <label class="form-label" for="contact-message">ملاحظات إضافية أو مقاسات الغرفة</label>
+              <textarea id="contact-message" class="form-control" rows="3" placeholder="أدخل أبعاد الصالة التقريبية، خامة القماش المفضلة، أو أي تفاصيل خاصة..."></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary" id="contact-submit-btn" style="width: 100%; padding: 1rem; font-size: 1.05rem;">
+              متابعة الاستفسار عبر واتساب
             </button>
+            <p style="font-size: 0.82rem; color: var(--color-chocolate-medium); margin-top: 0.5rem; text-align: center; margin-bottom: 0;">
+              * ستفتح محادثة واتساب الرسمية لمراجعة نص الرسالة وإرسالها بنفسك. لا يتم تخزين أي بيانات في الموقع.
+            </p>
           </form>
+
+          <!-- Fallback Manual Copy Container -->
+          <div id="contact-fallback-container" style="display: none; margin-top: 1rem; padding: 1rem; background: var(--surface-container-low); border: 1px dashed var(--color-gold-deep); border-radius: var(--radius-md);">
+            <div style="font-size: 0.88rem; font-weight: 700; color: var(--color-chocolate-dark); margin-bottom: 0.4rem;">
+              📄 مسودة الرسالة الجاهزة:
+            </div>
+            <textarea id="contact-fallback-text" class="form-control" rows="5" readonly style="font-size: 0.85rem; resize: none; background: #fff;"></textarea>
+            <div style="display: flex; gap: 0.5rem; margin-top: 0.75rem; flex-wrap: wrap;">
+              <button type="button" id="contact-copy-btn" class="btn btn-secondary-bespoke" style="flex: 1; min-width: 140px; padding: 0.6rem; font-size: 0.88rem;">
+                📋 نسخ نص الرسالة
+              </button>
+              <a id="contact-retry-link" href="#" target="_blank" class="btn btn-whatsapp" style="flex: 1; min-width: 140px; padding: 0.6rem; font-size: 0.88rem;">
+                فتح واتساب الآن
+              </a>
+            </div>
+          </div>
 
           <div style="margin-top: var(--space-lg); text-align: center;">
             <a href="https://wa.me/218915601703" target="_blank" class="btn btn-whatsapp" style="width: 100%; padding: 0.9rem;">

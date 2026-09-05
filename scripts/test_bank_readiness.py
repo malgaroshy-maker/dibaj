@@ -115,9 +115,57 @@ def run_tests():
         assert p_scroll <= p_client, f"Horizontal overflow on product.html: scrollWidth {p_scroll} > clientWidth {p_client}"
         print(f"✓ product.html mobile viewport 390px has ZERO horizontal overflow ({p_scroll} == {p_client})")
 
+        print("=== Test 6: Verify Reconciled Showroom Hours & Friday Evening Schedule ===")
+        page.goto(f"{BASE_URL}/contact.html", wait_until="networkidle")
+        contact_html = page.content()
+        assert "الجمعة: 4:30 م – 9:30 م" in contact_html or "الجمعة: 4:30 م - 9:30 م" in contact_html, "Friday evening schedule missing from contact.html"
+        assert "الجمعة: عطلة" not in contact_html, "Obsolete 'الجمعة: عطلة' still found in contact.html"
+        print("✓ contact.html correctly displays unified hours with Friday evening schedule")
+
+        print("=== Test 7: Verify Contact Form Flow & Truthful WhatsApp Fallback ===")
+        # Fill in contact form
+        page.fill("#contact-name", "أ. عبد الرحمن")
+        page.select_option("#contact-city", "طرابلس - أبوسليم")
+        page.select_option("#contact-service", "تفصيل صالون عصري فاخر")
+        page.fill("#contact-phone", "0915554433")
+        page.fill("#contact-message", "استفسار بخصوص تفصيل صالون 4x5 متر")
+
+        # Listen to dialogs or toast
+        page.click("#contact-submit-btn")
+        
+        # Verify NO false "تم تسجيل طلبك" claim exists in page DOM or toasts
+        assert "تم تسجيل طلبك" not in page.content(), "False claim 'تم تسجيل طلبك' found!"
+        
+        # Verify fallback container became visible and populated
+        fallback_container = page.locator("#contact-fallback-container")
+        assert fallback_container.is_visible(), "#contact-fallback-container should be visible after submit"
+        
+        fallback_text = page.locator("#contact-fallback-text").input_value()
+        assert "مرحباً شركة الديباج" in fallback_text, f"Expected greeting in draft, got: {fallback_text}"
+        assert "عبد الرحمن" in fallback_text, f"Expected name in draft, got: {fallback_text}"
+        assert "تفصيل صالون عصري فاخر" in fallback_text, f"Expected service in draft, got: {fallback_text}"
+        assert page.locator("#contact-copy-btn").is_visible(), "#contact-copy-btn should be visible"
+        print("✓ Contact form generates truthful draft and fallback without false registration claims")
+
+        print("=== Test 8: Verify Unknown Product ID Graceful Recovery Banner ===")
+        page.goto(f"{BASE_URL}/product.html?id=nonexistent-model-xyz", wait_until="networkidle")
+        recovery_banner = page.locator("#product-recovery-banner")
+        assert recovery_banner.is_visible(), "#product-recovery-banner should be visible for unknown ID"
+        banner_text = recovery_banner.text_content()
+        assert "غير متوفر حالياً" in banner_text, f"Expected recovery text in banner, got: {banner_text}"
+        print(f"✓ product.html gracefully handled invalid ID with banner: {banner_text.strip()[:60]}...")
+
+        print("=== Test 9: Verify Recovery Banner Dismissal on User Selection ===")
+        # Click the 2nd model card in ribbon
+        ribbon_cards = page.locator(".model-ribbon-card")
+        assert ribbon_cards.count() >= 2, "Expected at least 2 ribbon cards"
+        ribbon_cards.nth(1).click()
+        assert not recovery_banner.is_visible(), "#product-recovery-banner should be hidden after selecting a model"
+        print("✓ Recovery banner cleanly dismissed when user selected an active model")
+
         browser.close()
         print("\n=======================================================")
-        print("   ALL BANK REVIEW READINESS TESTS PASSED SUCCESSFULLY! ")
+        print("   ALL 9 BANK REVIEW READINESS TESTS PASSED 100%!     ")
         print("=======================================================")
 
 if __name__ == "__main__":

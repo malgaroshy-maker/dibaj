@@ -33,4 +33,5 @@ __pycache__/
 test-results/
 playwright-report/
 improvement/
+.impeccable/
 
