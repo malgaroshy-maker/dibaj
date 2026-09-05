@@ -93,14 +93,9 @@ function renderCatalogGrid() {
 
           <div class="card-footer">
             <span class="card-price-hint">${fabric.weight}</span>
-            ${fabric.category === 'curtains' 
-              ? `<button type="button" class="btn btn-secondary-bespoke" onclick="window.openConsultationModal('${fabric.title} — تفصيل ستائر مكملة للصالونات')" style="padding: 0.45rem 1rem; font-size: 0.85rem;">
-                  اطلب تفصيل الستائر
-                </button>`
-              : `<a href="product.html?id=${fabric.id}" class="btn btn-secondary-bespoke" style="padding: 0.45rem 1rem; font-size: 0.85rem;">
-                  استعراض وتفصيل
-                </a>`
-            }
+            <a href="product.html?id=${fabric.id}" class="btn btn-secondary-bespoke" style="padding: 0.45rem 1rem; font-size: 0.85rem;">
+              ${fabric.category === 'curtains' ? 'تفصيل وتخصيص الستائر' : 'استعراض وتفصيل'}
+            </a>
           </div>
         </div>
       </article>
@@ -127,6 +122,93 @@ function setupSearchAndFilters() {
     searchInput.addEventListener('input', (e) => {
       searchQuery = e.target.value.trim();
       renderCatalogGrid();
+    });
+  }
+
+  setupFabricInquiryModal();
+}
+
+function setupFabricInquiryModal() {
+  const openBtn = document.getElementById('open-fabric-inquiry-btn');
+  const modal = document.getElementById('fabric-inquiry-modal');
+  const closeBtn = document.getElementById('fabric-modal-close-btn');
+  const form = document.getElementById('fabric-inquiry-form');
+  const fallbackContainer = document.getElementById('fabric-fallback-container');
+  const fallbackTextarea = document.getElementById('fabric-fallback-text');
+  const copyBtn = document.getElementById('fabric-copy-btn');
+  const directLink = document.getElementById('fabric-direct-link');
+
+  if (!modal) return;
+
+  const openModal = () => {
+    if (fallbackContainer) fallbackContainer.style.display = 'none';
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  };
+
+  const closeModal = () => {
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+  };
+
+  if (openBtn) openBtn.addEventListener('click', openModal);
+  if (closeBtn) closeBtn.addEventListener('click', closeModal);
+
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) closeModal();
+  });
+
+  if (form) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const clientType = document.getElementById('fabric-client-type')?.value || '';
+      const texture = document.getElementById('fabric-texture-choice')?.value || '';
+      const quantity = document.getElementById('fabric-quantity')?.value?.trim() || 'غير محددة بدقة (بحاجة لكتالوج واستشارة)';
+      const city = document.getElementById('fabric-city')?.value?.trim() || 'طرابلس';
+      const notes = document.getElementById('fabric-notes')?.value?.trim() || 'لا توجد ملاحظات إضافية';
+
+      const waLines = [
+        'السلام عليكم ورحمة الله — إدارة توريد الأقمشة بشركة الديباج،',
+        'أرغب في الاستفسار عن توريد وعينات الأقمشة المستوردة بالمواصفات التالية:',
+        '',
+        `🏢 صفة الطلب: ${clientType}`,
+        `✨ الخامة / النسيج المطلوب: ${texture}`,
+        `📏 الكمية التقديرية: ${quantity}`,
+        `📍 المدينة والتوصيل: ${city}`,
+        `📝 ملاحظات خاصة: ${notes}`,
+        '',
+        'يرجى التكرم بتزويدي بكتالوج العينات المعتمد والأسعار المتاحة للتوريد. شكراً لكم.'
+      ];
+
+      const waMessage = waLines.join('\n');
+      const waUrl = `https://wa.me/218915601703?text=${encodeURIComponent(waMessage)}`;
+
+      if (fallbackContainer && fallbackTextarea) {
+        fallbackContainer.style.display = 'block';
+        fallbackTextarea.value = waMessage;
+        if (directLink) directLink.href = waUrl;
+      }
+
+      if (window.showToast) {
+        window.showToast('جاري فتح محادثة واتساب الرسمية مع مسودة استفسار الأقمشة لمراجعتها...');
+      }
+
+      setTimeout(() => {
+        window.open(waUrl, '_blank');
+      }, 700);
+    });
+  }
+
+  if (copyBtn && fallbackTextarea) {
+    copyBtn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(fallbackTextarea.value);
+        if (window.showToast) window.showToast('✓ تم نسخ مسودة طلب الأقمشة بنجاح.');
+      } catch (err) {
+        fallbackTextarea.select();
+        document.execCommand('copy');
+        if (window.showToast) window.showToast('✓ تم نسخ نص المسودة.');
+      }
     });
   }
 }

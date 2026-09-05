@@ -164,9 +164,9 @@
               تستورد شركة الديباج مباشرة أفخم خامات المخمل الإيطالي، الجاكار الدمشقي، والبوكليه الأوروبي. نوفر أمتار التنجيد والستائر للأفراد لتفصيل منازلهم، ولأصحاب ورش ومصانع الأثاث المحلية في ليبيا، ولمحلات الأقمشة بكتالوجات عينات معتمدة.
             </p>
           </div>
-          <a href="https://wa.me/218915601703?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%20%D8%B4%D8%B1%D9%83%D8%A9%20%D8%A7%D9%84%D8%AF%D9%8A%D8%A8%D8%A7%D8%AC%D8%8C%20%D8%A3%D8%B1%D8%BA%D8%A8%20%D9%81%D9%8A%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D8%AA%D9%88%D8%B1%D9%8A%D8%AF%20%D9%88%D8%B9%D9%8A%D9%86%D8%A7%D8%AA%20%D8%A7%D9%84%D8%A3%D9%82%D9%85%D8%B4%D8%A9%20%D8%A7%D9%84%D9%85%D8%B3%D8%AA%D9%88%D8%B1%D8%AF%D8%A9" target="_blank" class="btn btn-secondary-bespoke" style="color: #ffffff; border-color: var(--color-gold-imperial); white-space: nowrap; padding: 0.7rem 1.3rem;">
+          <button type="button" id="open-fabric-inquiry-btn" class="btn btn-secondary-bespoke" style="color: #ffffff; border-color: var(--color-gold-imperial); white-space: nowrap; padding: 0.7rem 1.3rem;">
             طلب عينات واستفسار توريد أقمشة
-          </a>
+          </button>
         </div>
       </div>
 
@@ -298,41 +298,138 @@
     </div>
   </footer>
 
-  <!-- Modal -->
+  <!-- Global Consultation Modal -->
   <div class="modal-backdrop" id="consultation-modal">
     <div class="modal-dialog">
       <div class="modal-header">
-        <h3 class="modal-title">طلب استشارة وعرض سعر تفصيل</h3>
+        <h3 class="modal-title">تجهيز استفسار وطلب تفصيل</h3>
         <button class="modal-close-btn" aria-label="إغلاق">✕</button>
       </div>
       <div class="modal-body">
+        <p style="font-size: 0.92rem; color: var(--color-chocolate-medium); margin-bottom: var(--space-md); line-height: 1.6;">
+          أدخل تفاصيل طلبك ليتم إعداد مسودة استفسار منظمة لفتحها ومراجعتها مباشرة في محادثة واتساب الرسمية مع إدارة المبيعات.
+        </p>
         <form id="consultation-form">
           <input type="hidden" id="consultation-product-field" value="" />
           <div class="form-group">
-            <label class="form-label" for="client-name">الاسم الكريم *</label>
-            <input type="text" id="client-name" class="form-control" placeholder="أدخل اسمك الكريم" required />
+            <label class="form-label" for="client-name">الاسم الكريم (اختياري)</label>
+            <input type="text" id="client-name" class="form-control" placeholder="أدخل اسمك الكريم أو صفتك" />
           </div>
           <div class="form-group">
-            <label class="form-label" for="client-phone">رقم الهاتف الليبي (واتساب) *</label>
-            <input type="tel" id="client-phone" class="form-control" placeholder="مثال: 0915601703" required />
+            <label class="form-label" for="client-phone">رقم الهاتف للتواصل (اختياري)</label>
+            <input type="tel" id="client-phone" class="form-control" placeholder="مثال: 0915601703 أو 0921411415" dir="ltr" />
           </div>
           <div class="form-group">
-            <label class="form-label" for="client-service">نوع المنتج المطلوب</label>
+            <label class="form-label" for="client-service">نوع الخدمة أو الموديل</label>
             <select id="client-service" class="form-control">
               <option value="تفصيل صالون عصري">تفصيل صالون عصري</option>
               <option value="تنجيد مجلس عربي أو جلسة أرضية">تنجيد مجلس عربي أو جلسة أرضية</option>
               <option value="تفصيل ركنية عائلية على المقاس">تفصيل ركنية عائلية على المقاس</option>
               <option value="تفصيل ستائر متناسقة مع الصالون">تفصيل ستائر متناسقة مع الصالون</option>
+              <option value="توريد أقمشة فاخرة للأفراد والورش">توريد أقمشة فاخرة للأفراد والورش</option>
             </select>
           </div>
           <div class="form-group">
-            <label class="form-label" for="client-notes">ملاحظات إضافية</label>
-            <textarea id="client-notes" class="form-control" placeholder="اكتب مقاس صالتك أو الموديل الذي يعجبك..."></textarea>
+            <label class="form-label" for="client-notes">ملاحظات أو مقاسات أولية</label>
+            <textarea id="client-notes" class="form-control" rows="3" placeholder="اكتب عدد المقاعد، أبعاد الصالة، أو نوع القماش المطلوب..."></textarea>
           </div>
-          <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.9rem;">
-            تأكيد الطلب والمتابعة عبر واتساب
+          <button type="submit" class="btn btn-whatsapp" style="width: 100%; padding: 0.95rem; justify-content: center; font-size: 1rem;">
+            متابعة الطلب عبر واتساب
           </button>
+          <div style="font-size: 0.8rem; color: var(--color-chocolate-medium); text-align: center; margin-top: 0.5rem;">
+            💡 ستفتح رسالة جاهزة في واتساب لمراجعتها وإرسالها مباشرة.
+          </div>
         </form>
+
+        <!-- Fallback Container if WhatsApp popup is blocked -->
+        <div id="consultation-fallback-container" style="display: none; margin-top: 1rem; padding: 0.85rem; background: var(--surface-container-low); border-radius: var(--radius-md); border: 1.5px dashed var(--color-gold-imperial);">
+          <div style="font-weight: 700; font-size: 0.88rem; color: var(--color-chocolate-dark); margin-bottom: 0.35rem;">
+            📋 مسودة الرسالة الجاهزة للإرسال:
+          </div>
+          <textarea id="consultation-fallback-text" class="form-control" rows="4" readonly style="font-size: 0.82rem; line-height: 1.5; background: #ffffff;"></textarea>
+          <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem;">
+            <button type="button" id="consultation-copy-btn" class="btn btn-secondary-bespoke" style="flex: 1; padding: 0.45rem; font-size: 0.82rem; justify-content: center;">
+              نسخ نص الرسالة
+            </button>
+            <a href="#" id="consultation-direct-link" target="_blank" class="btn btn-whatsapp" style="flex: 1; padding: 0.45rem; font-size: 0.82rem; justify-content: center;">
+              فتح واتساب مباشرة
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dedicated Fabric Supply & B2B Inquiry Modal -->
+  <div class="modal-backdrop" id="fabric-inquiry-modal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title">استفسار توريد وعينات أقمشة</h3>
+        <button class="modal-close-btn" id="fabric-modal-close-btn" aria-label="إغلاق">✕</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size: 0.92rem; color: var(--color-chocolate-medium); margin-bottom: var(--space-md); line-height: 1.6;">
+          تستورد شركة الديباج مباشرة أرقى الأقمشة الأوروبية والتركية. حدد متطلباتك وسيقوم النموذج بإعداد مسودة استفسار توريد مخصصة لمراجعتها عبر واتساب المبيعات.
+        </p>
+        <form id="fabric-inquiry-form">
+          <div class="form-group">
+            <label class="form-label" for="fabric-client-type">صفة الطلب أو العميل *</label>
+            <select id="fabric-client-type" class="form-control">
+              <option value="أفراد (تأثيث فيلا / منزل خاص)">أفراد (تأثيث فيلا / منزل خاص)</option>
+              <option value="صاحب ورشة أو مصنع أثاث وتنجيد">صاحب ورشة أو مصنع أثاث وتنجيد</option>
+              <option value="محل تجزئة ومعرض أقمشة ومفروشات">محل تجزئة ومعرض أقمشة ومفروشات</option>
+              <option value="مهندس ديكور أو مقاول مشاريع">مهندس ديكور أو مقاول مشاريع</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="fabric-texture-choice">نوع الخامة أو النسيج المطلوب</label>
+            <select id="fabric-texture-choice" class="form-control">
+              <option value="مخمل إيطالي فاخر (Velvet)">مخمل إيطالي فاخر (Velvet)</option>
+              <option value="جاكار دمشقي ملكي (Damask Jacquard)">جاكار دمشقي ملكي (Damask Jacquard)</option>
+              <option value="بوكليه أوروبي ناعم (Bouclé)">بوكليه أوروبي ناعم (Bouclé)</option>
+              <option value="شامواه معالج عالي التحمل (Suede)">شامواه معالج عالي التحمل (Suede)</option>
+              <option value="كتان طبيعي وتربروف (Linen)">كتان طبيعي وتربروف (Linen)</option>
+              <option value="ستائر شيفون وبروكار مطرز">ستائر شيفون وبروكار مطرز</option>
+              <option value="طلب كتالوج العينات الكامل للتوريد">طلب كتالوج العينات الكامل للتوريد</option>
+            </select>
+          </div>
+          <div class="grid-2" style="gap: var(--space-sm);">
+            <div class="form-group">
+              <label class="form-label" for="fabric-quantity">الكمية التقديرية (اختياري)</label>
+              <input type="text" id="fabric-quantity" class="form-control" placeholder="مثال: 35 متر، أو 2 رول" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="fabric-city">المدينة / المنطقة</label>
+              <input type="text" id="fabric-city" class="form-control" value="طرابلس" placeholder="المدينة في ليبيا" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="fabric-notes">ملاحظات إضافية حول التوريد أو الألوان</label>
+            <textarea id="fabric-notes" class="form-control" rows="2" placeholder="اكتب درجات الألوان المفضلة، موعد الاستلام، أو تفاصيل الورشة..."></textarea>
+          </div>
+          <button type="submit" class="btn btn-whatsapp" style="width: 100%; padding: 0.95rem; justify-content: center; font-size: 1rem;">
+            تجهيز ومتابعة استفسار الأقمشة عبر واتساب
+          </button>
+          <div style="font-size: 0.8rem; color: var(--color-chocolate-medium); text-align: center; margin-top: 0.5rem;">
+            💡 ستفتح رسالة تجارية جاهزة في واتساب لمراجعتها وإرسالها مباشرة لإدارة التوريد.
+          </div>
+        </form>
+
+        <!-- Fabric Fallback Container -->
+        <div id="fabric-fallback-container" style="display: none; margin-top: 1rem; padding: 0.85rem; background: var(--surface-container-low); border-radius: var(--radius-md); border: 1.5px dashed var(--color-gold-imperial);">
+          <div style="font-weight: 700; font-size: 0.88rem; color: var(--color-chocolate-dark); margin-bottom: 0.35rem;">
+            📋 مسودة رسالة توريد الأقمشة الجاهزة:
+          </div>
+          <textarea id="fabric-fallback-text" class="form-control" rows="5" readonly style="font-size: 0.82rem; line-height: 1.5; background: #ffffff;"></textarea>
+          <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem;">
+            <button type="button" id="fabric-copy-btn" class="btn btn-secondary-bespoke" style="flex: 1; padding: 0.45rem; font-size: 0.82rem; justify-content: center;">
+              نسخ نص الرسالة
+            </button>
+            <a href="#" id="fabric-direct-link" target="_blank" class="btn btn-whatsapp" style="flex: 1; padding: 0.45rem; font-size: 0.82rem; justify-content: center;">
+              فتح واتساب مباشرة
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   </div>

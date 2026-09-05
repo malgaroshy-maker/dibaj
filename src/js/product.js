@@ -60,6 +60,7 @@ function initCustomizerStudio(initialId, requestedId) {
   setupShapeSelector();
   setupDimensionModeSelector();
   setupFoamSelector();
+  setupCurtainsCustomizer();
   setupHomeMeasurementToggle();
   setupInquiryActions();
   setupComparisonStudio();
@@ -142,6 +143,27 @@ function selectModel(fabricId, updateUrl = true) {
   comparisonState.targetSwatch = currentFabric.swatches.find(s => s.id !== currentSwatch.id) || currentFabric.swatches[0];
   const curtains = getCuratedCurtainsForFabric(currentFabric);
   comparisonState.targetCurtain = curtains[0];
+
+  // Adapt UI for curtains vs furniture
+  const isCurtain = currentFabric.category === 'curtains';
+  const shapeSec = document.getElementById('furniture-shape-section');
+  const dimSec = document.getElementById('furniture-dimensions-section');
+  const foamSec = document.getElementById('furniture-foam-section');
+  const curtainSec = document.getElementById('curtains-customizer-section');
+  const coordinatedCard = document.getElementById('coordinated-curtains-card');
+
+  if (isCurtain) {
+    if (shapeSec) shapeSec.style.display = 'none';
+    if (dimSec) dimSec.style.display = 'none';
+    if (foamSec) foamSec.style.display = 'none';
+    if (curtainSec) curtainSec.style.display = 'block';
+    if (coordinatedCard) coordinatedCard.style.display = 'none';
+  } else {
+    if (shapeSec) shapeSec.style.display = 'block';
+    if (dimSec) dimSec.style.display = 'block';
+    if (foamSec) foamSec.style.display = 'block';
+    if (curtainSec) curtainSec.style.display = 'none';
+  }
 
   renderProductDetails();
   setupSwatchPicker();
@@ -427,6 +449,29 @@ function setupFoamSelector() {
   });
 }
 
+function setupCurtainsCustomizer() {
+  const widthInput = document.getElementById('curtain-wall-width');
+  const heightInput = document.getElementById('curtain-wall-height');
+  const hangingSelect = document.getElementById('curtain-hanging-style');
+  const layersSelect = document.getElementById('curtain-layers-style');
+
+  [widthInput, heightInput].forEach(input => {
+    if (input) {
+      input.addEventListener('input', () => {
+        calculateCustomSpecs();
+      });
+    }
+  });
+
+  [hangingSelect, layersSelect].forEach(select => {
+    if (select) {
+      select.addEventListener('change', () => {
+        calculateCustomSpecs();
+      });
+    }
+  });
+}
+
 function setupHomeMeasurementToggle() {
   const check = document.getElementById('home-measurement-check');
   if (check) {
@@ -438,6 +483,46 @@ function setupHomeMeasurementToggle() {
 }
 
 function calculateCustomSpecs() {
+  const isCurtain = currentFabric && currentFabric.category === 'curtains';
+
+  if (isCurtain) {
+    const widthVal = parseFloat(document.getElementById('curtain-wall-width')?.value) || 3.0;
+    const heightVal = parseFloat(document.getElementById('curtain-wall-height')?.value) || 2.8;
+    const hangingVal = document.getElementById('curtain-hanging-style')?.value || 'مجرى سقف مخفي انسيابي';
+    const layersVal = document.getElementById('curtain-layers-style')?.value || 'طبقتان: قماش رئيسي فخم + شيفون ناعم مطرز';
+
+    const fabricEl = document.getElementById('summary-spec-fabric');
+    const shapeEl = document.getElementById('summary-spec-shape');
+    const dimEl = document.getElementById('summary-spec-dimensions');
+    const foamEl = document.getElementById('summary-spec-foam');
+    const curtainBadge = document.getElementById('summary-curtains-badge');
+
+    const shapeLabel = document.getElementById('summary-label-shape');
+    const dimLabel = document.getElementById('summary-label-dimensions');
+    const foamLabel = document.getElementById('summary-label-foam');
+
+    if (shapeLabel) shapeLabel.textContent = 'نمط التعليق والمسار';
+    if (dimLabel) dimLabel.textContent = 'أبعاد جدار النافذة';
+    if (foamLabel) foamLabel.textContent = 'تكوين طبقات الستارة';
+
+    if (fabricEl) fabricEl.textContent = `${currentSwatch ? currentSwatch.name : currentFabric.title} (${currentFabric.title})`;
+    if (shapeEl) shapeEl.textContent = `نمط التعليق: ${hangingVal.split('(')[0].trim()}`;
+    if (dimEl) dimEl.textContent = `عرض: ${widthVal}م × ارتفاع: ${heightVal}م`;
+    if (foamEl) foamEl.textContent = `الطبقات: ${layersVal.split(':')[0].trim()}`;
+    if (curtainBadge) curtainBadge.style.display = 'none';
+
+    updateActionLinksForCurtains(widthVal, heightVal, hangingVal, layersVal);
+    return;
+  }
+
+  const shapeLabel = document.getElementById('summary-label-shape');
+  const dimLabel = document.getElementById('summary-label-dimensions');
+  const foamLabel = document.getElementById('summary-label-foam');
+
+  if (shapeLabel) shapeLabel.textContent = 'الشكل الهندسي المختار';
+  if (dimLabel) dimLabel.textContent = 'المقاسات المطلوبة';
+  if (foamLabel) foamLabel.textContent = 'نوع الإسفنج والضغط';
+
   const shapeNames = {
     'l-shape': 'شكل زاوية (L-Shape)',
     'u-shape': 'شكل حدوة (U-Shape)',
@@ -495,6 +580,27 @@ function calculateCustomSpecs() {
   }
 
   updateActionLinks(dimText, shapeNames, foamLabels);
+}
+
+function updateActionLinksForCurtains(widthVal, heightVal, hangingVal, layersVal) {
+  const waMessage = [
+    'السلام عليكم ورحمة الله — شركة الديباج،',
+    'أرغب في طلب عرض سعر رسمي لتفصيل ستائر بالمواصفات التالية:',
+    '',
+    `🪟 موديل الستارة: ${currentFabric.title} (${currentFabric.categoryArabic})`,
+    `🎨 القماش واللون المختار: ${currentSwatch ? currentSwatch.name : ''}`,
+    `📐 المقاسات: عرض جدار النافذة ${widthVal} متر × الارتفاع ${heightVal} متر`,
+    `🧵 نمط التعليق: ${hangingVal}`,
+    `✨ تكوين الطبقات: ${layersVal}`,
+    wantHomeMeasurement ? '🏡 أرغب في زيارة فني الديباج لرفع المقاسات ومعاينة الصالة مجاناً في طرابلس' : '',
+    '',
+    'يرجى التكرم بموافاتي بعرض السعر الرسمي ومواعيد التنفيذ بمصنع باب بن غشير. شكراً لكم.'
+  ].filter(Boolean).join('\n');
+
+  const waBtn = document.getElementById('product-wa-btn');
+  if (waBtn) {
+    waBtn.href = `https://wa.me/218915601703?text=${encodeURIComponent(waMessage)}`;
+  }
 }
 
 function updateActionLinks(dimText, shapeNames, foamLabels) {

@@ -7,43 +7,43 @@ export const DIBAJ_CONFIG = {
   nameArabic: 'شركة الديباج لصناعة المنسوجات والستائر والجلسات والصالونات (ذ.م.م)',
   nameEnglish: 'ALDIBAJ CO. (Limited liability)',
   facebookUrl: 'https://www.facebook.com/profile.php?id=100083410961417',
+  nameShort: 'شركة الديباج',
+  tagline: 'صناعة وتفصيل الصالونات والمجالس الفاخرة واستيراد أرقى خامات الأقمشة',
+  primaryPhone: '+218915601703',
+  primaryPhoneFormatted: '091 560 1703',
+  phonePrimary: '091 560 1703',
+  secondaryPhone: '+218921411415',
+  secondaryPhoneFormatted: '092 141 1415',
   whatsappNumber: '218915601703',
-  phonePrimary: '+218 91 560 1703',
-  phoneSecondary: '+218 92 141 1415',
-  emailPrimary: 'aldibaj@yahoo.com',
-  workshopLocation: 'مصنع وورش الديباج المركزية: باب بن غشير | صالات العرض: 5 محلات متخصصة بسوق أبوسليم',
-  factoryLocation: 'طرابلس، ليبيا – باب بن غشير (مجمع تصنيع الهياكل والإسفنج والتفصيل)',
-  showroomsLocation: 'طرابلس، ليبيا – سوق أبوسليم (سلسلة 5 صالات عرض متخصصة)',
-  serviceScope: 'خدمة وتفصيل وتوريد لكافة المدن الليبية (طرابلس، بنغازي، مصراتة، الزاوية، وكافة المناطق)',
+  commercialRegistry: '0501020247477',
+  industrialRegistry: '002546000567',
+  workingHours: 'السبت – الخميس: 9:30 ص – 1:30 ظ ومن 4:30 ع – 9:30 م | الجمعة: 4:30 م – 9:30 م (فترة مسائية)',
   showroomHours: 'السبت – الخميس: 9:30 ص – 1:30 ظ ومن 4:30 ع – 9:30 م | الجمعة: 4:30 م – 9:30 م (فترة مسائية)',
-  legal: {
-    industrialRegistry: '002546000567',
-    licenseNumber: '72361',
-    chamberOfCommerce: '3883',
-    commercialRegistry: '0501020247477',
-    companyType: 'شركة ذات مسؤولية محدودة (ذ.م.م)'
+  locations: {
+    factory: 'طرابلس، ليبيا – باب بن غشير (مجمع تصنيع الهياكل والإسفنج والتفصيل والرقابة الفنية)',
+    showrooms: 'طرابلس، ليبيا – سوق أبوسليم (مجمع صالات العرض - 5 وحدات متخصصة أمام المعهد الصحي)'
   }
 };
 
 /**
- * Builds an authentic Arabic WhatsApp Concierge message and URL
+ * Builds an authentic, truthful WhatsApp inquiry URL
  */
 export function buildWhatsAppUrl(details = {}) {
   const {
     fabricTitle = '',
     swatchName = '',
-    serviceType = 'استشارة تفصيل أقمشة وستائر',
+    serviceType = 'استشارة تفصيل أقمشة ومفروشات',
     notes = '',
     dimensions = ''
   } = details;
 
-  let message = `مرحباً شركة الديباج لصناعة الصالونات والمجالس،\nأود الاستفسار والتنسيق بخصوص:`;
-  if (serviceType) message += `\n- الخدمة: ${serviceType}`;
-  if (fabricTitle) message += `\n- القماش أو المجموعة: ${fabricTitle}`;
+  let message = `السلام عليكم ورحمة الله — شركة الديباج،\nأود الاستفسار والتنسيق بخصوص:`;
+  if (serviceType) message += `\n- نوع الخدمة: ${serviceType}`;
+  if (fabricTitle) message += `\n- الموديل أو القماش: ${fabricTitle}`;
   if (swatchName) message += `\n- خيار العينة / اللون: ${swatchName}`;
   if (dimensions) message += `\n- المقاسات التقديرية: ${dimensions}`;
-  if (notes) message += `\n- ملاحظات إضافية: ${notes}`;
-  message += `\n\nيرجى تزويدي بالموعد المتاح لزيارة الصالون أو تحديد موعد لرفع المقاسات.`;
+  if (notes) message += `\n- تفاصيل إضافية: ${notes}`;
+  message += `\n\nيرجى التكرم بموافاتي بالموعد المتاح للتنسيق أو زيارة صالات العرض بأبوسليم. شكراً لكم.`;
 
   return `https://wa.me/${DIBAJ_CONFIG.whatsappNumber}?text=${encodeURIComponent(message)}`;
 }
@@ -61,17 +61,24 @@ export function initNavigation() {
       drawer.classList.add('open');
       document.body.style.overflow = 'hidden';
     });
+  }
 
-    const closeDrawer = () => {
+  if (closeBtn && drawer) {
+    closeBtn.addEventListener('click', () => {
       drawer.classList.remove('open');
       document.body.style.overflow = '';
-    };
-
-    if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
-    drawer.addEventListener('click', (e) => {
-      if (e.target === drawer) closeDrawer();
     });
   }
+
+  // Close when clicking outside drawer
+  document.addEventListener('click', (e) => {
+    if (drawer && drawer.classList.contains('open')) {
+      if (!drawer.contains(e.target) && !toggleBtn?.contains(e.target)) {
+        drawer.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+    }
+  });
 
   // Active navigation highlight
   const rawPath = window.location.pathname.split('/').pop() || 'index.html';
@@ -89,7 +96,7 @@ export function initNavigation() {
 }
 
 /**
- * Initializes the Global Consultation Modal
+ * Initializes the Global Consultation Modal with truthful WhatsApp handoff and fallback
  */
 export function initConsultationModal() {
   const modal = document.querySelector('#consultation-modal');
@@ -98,9 +105,14 @@ export function initConsultationModal() {
   const closeBtn = modal.querySelector('.modal-close-btn');
   const form = modal.querySelector('#consultation-form');
   const productInput = modal.querySelector('#consultation-product-field');
+  const fallbackContainer = modal.querySelector('#consultation-fallback-container');
+  const fallbackTextarea = modal.querySelector('#consultation-fallback-text');
+  const copyBtn = modal.querySelector('#consultation-copy-btn');
+  const directLink = modal.querySelector('#consultation-direct-link');
 
   window.openConsultationModal = (productName = '') => {
     if (productInput) productInput.value = productName || 'استشارة عامة في الأقمشة والمفروشات';
+    if (fallbackContainer) fallbackContainer.style.display = 'none';
     modal.classList.add('open');
     document.body.style.overflow = 'hidden';
   };
@@ -130,25 +142,51 @@ export function initConsultationModal() {
   if (form) {
     form.addEventListener('submit', (e) => {
       e.preventDefault();
-      const name = form.querySelector('#client-name')?.value || '';
-      const phone = form.querySelector('#client-phone')?.value || '';
+      const name = form.querySelector('#client-name')?.value?.trim() || '';
+      const phone = form.querySelector('#client-phone')?.value?.trim() || '';
       const service = form.querySelector('#client-service')?.value || '';
       const product = productInput?.value || '';
-      const notes = form.querySelector('#client-notes')?.value || '';
+      const notes = form.querySelector('#client-notes')?.value?.trim() || '';
 
-      // Direct option to open WhatsApp with these exact filled details
+      const detailsList = [
+        name ? `الاسم: ${name}` : '',
+        phone ? `الهاتف: ${phone}` : '',
+        notes ? `ملاحظات: ${notes}` : ''
+      ].filter(Boolean);
+
       const waUrl = buildWhatsAppUrl({
         fabricTitle: product,
         serviceType: service,
-        notes: `الاسم: ${name} | هاتف: ${phone} | تفاصيل: ${notes}`
+        notes: detailsList.join(' | ')
       });
 
-      showToast(`شكراً لك أستاذ ${name}، تم تسجيل طلبكم وسيتواصل معكم فريق التفصيل بشركة الديباج. جاري تحويلكم للمحادثة المباشرة...`);
-      
+      const messageText = decodeURIComponent(waUrl.split('?text=')[1] || '');
+
+      // Populate fallback container in case popup is blocked
+      if (fallbackContainer && fallbackTextarea) {
+        fallbackContainer.style.display = 'block';
+        fallbackTextarea.value = messageText;
+        if (directLink) directLink.href = waUrl;
+      }
+
+      showToast('جاري تحويلكم لمحادثة واتساب الرسمية مع مسودة طلبكم لمراجعتها وإرسالها...');
+
       setTimeout(() => {
-        window.closeConsultationModal();
         window.open(waUrl, '_blank');
-      }, 1400);
+      }, 700);
+    });
+  }
+
+  if (copyBtn && fallbackTextarea) {
+    copyBtn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(fallbackTextarea.value);
+        showToast('✓ تم نسخ نص المسودة بنجاح. يمكنك الآن لصقها في واتساب.');
+      } catch (err) {
+        fallbackTextarea.select();
+        document.execCommand('copy');
+        showToast('✓ تم نسخ نص المسودة.');
+      }
     });
   }
 }

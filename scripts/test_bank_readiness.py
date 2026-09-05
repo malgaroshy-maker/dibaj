@@ -118,7 +118,7 @@ def run_tests():
         print("=== Test 6: Verify Reconciled Showroom Hours & Friday Evening Schedule ===")
         page.goto(f"{BASE_URL}/contact.html", wait_until="networkidle")
         contact_html = page.content()
-        assert "الجمعة: 4:30 م – 9:30 م" in contact_html or "الجمعة: 4:30 م - 9:30 م" in contact_html, "Friday evening schedule missing from contact.html"
+        assert "الجمعة" in contact_html and "4:30" in contact_html and "9:30" in contact_html and "فترة مسائية" in contact_html, "Friday evening schedule missing from contact.html"
         assert "الجمعة: عطلة" not in contact_html, "Obsolete 'الجمعة: عطلة' still found in contact.html"
         print("✓ contact.html correctly displays unified hours with Friday evening schedule")
 
@@ -163,9 +163,121 @@ def run_tests():
         assert not recovery_banner.is_visible(), "#product-recovery-banner should be hidden after selecting a model"
         print("✓ Recovery banner cleanly dismissed when user selected an active model")
 
+        print("=== Test 10: Verify Curtains Dynamic Customizer UI ===")
+        page.goto(f"{BASE_URL}/product.html?id=curtains-gold-damask", wait_until="networkidle")
+        
+        # In curtains mode, furniture shape and foam must be hidden
+        assert not page.locator("#furniture-shape-section").is_visible(), "Furniture shape section must be hidden for curtains"
+        assert not page.locator("#furniture-foam-section").is_visible(), "Furniture foam section must be hidden for curtains"
+        assert not page.locator("#furniture-dimensions-section").is_visible(), "Furniture dimensions section must be hidden for curtains"
+        
+        # Curtains customizer section must be visible
+        assert page.locator("#curtains-customizer-section").is_visible(), "Curtains customizer section must be visible"
+        
+        # Specs summary labels must adapt for curtains
+        dim_lbl = page.locator("#summary-label-dimensions").text_content()
+        assert "جدار" in dim_lbl or "نافذة" in dim_lbl or "الستارة" in dim_lbl, f"Unexpected dim label: {dim_lbl}"
+        
+        shape_lbl = page.locator("#summary-label-shape").text_content()
+        assert "المسار" in shape_lbl or "العارضة" in shape_lbl or "تعليق" in shape_lbl, f"Unexpected track label: {shape_lbl}"
+        
+        foam_lbl = page.locator("#summary-label-foam").text_content()
+        assert "طبقات" in foam_lbl or "الطبقات" in foam_lbl or "نوع التركيب" in foam_lbl, f"Unexpected layers label: {foam_lbl}"
+        
+        # Check that speculative fabric meter calculation is absent
+        assert "حوالي" not in page.locator("#curtains-customizer-section").text_content(), "Curtains section should not claim fabricated meter estimates"
+        
+        # Change curtain width to 4.5m and track to classic rod
+        page.fill("#curtain-wall-width", "4.5")
+        page.select_option("#curtain-hanging-style", "قضيب كلاسيكي مذهب / نحاسي مع أطراف تاجية")
+        
+        curtain_wa = page.locator("#product-wa-btn").get_attribute("href")
+        assert "4.5" in curtain_wa or "%34%2E%35" in curtain_wa or "4.5" in page.locator("#summary-spec-dimensions").text_content(), "Custom width should update summary/link"
+        print("✓ Curtains customizer dynamically hid furniture options and exposed specialized window/track controls")
+
+        print("=== Test 11: Verify Global Consultation Modal Truthful Concierge Draft ===")
+        page.set_viewport_size({"width": 1280, "height": 800})
+        page.goto(f"{BASE_URL}/index.html", wait_until="networkidle")
+        
+        # Open consultation modal
+        page.locator('[data-action="open-consultation"]:visible').first.click()
+        page.wait_for_timeout(300)
+        consult_modal = page.locator("#consultation-modal")
+        assert consult_modal.is_visible(), "Consultation modal did not open"
+        
+        page.fill("#client-name", "م. سالم الفرجاني")
+        page.fill("#client-phone", "0921112233")
+        page.select_option("#client-service", "تفصيل صالون عصري")
+        page.fill("#client-notes", "استشارة لمشروع صالون استقبال عائلي")
+        
+        page.locator('#consultation-form button[type="submit"]').click()
+        
+        # Confirm NO false 'تم تسجيل طلبك' claim
+        assert "تم تسجيل طلبك" not in page.content(), "False claim 'تم تسجيل طلبك' found in consultation modal!"
+        
+        # Confirm fallback container is visible
+        fallback_box = page.locator("#consultation-fallback-container")
+        assert fallback_box.is_visible(), "Consultation fallback container should be visible"
+        fallback_val = page.locator("#consultation-fallback-text").input_value()
+        assert "سالم الفرجاني" in fallback_val, "Draft must contain user name"
+        assert "شركة الديباج" in fallback_val, "Draft must contain company greeting"
+        print("✓ Consultation modal truthful concierge flow & clipboard fallback verified")
+
+        print("=== Test 12: Verify Fabric Supply Inquiry Modal in catalog.html ===")
+        page.goto(f"{BASE_URL}/catalog.html", wait_until="networkidle")
+        
+        # Open fabric inquiry modal
+        page.click("#open-fabric-inquiry-btn")
+        page.wait_for_timeout(300)
+        fabric_modal = page.locator("#fabric-inquiry-modal")
+        assert fabric_modal.is_visible(), "Fabric inquiry modal did not open"
+        
+        page.select_option("#fabric-client-type", "صاحب ورشة أو مصنع أثاث وتنجيد")
+        page.select_option("#fabric-texture-choice", "بوكليه أوروبي ناعم (Bouclé)")
+        page.fill("#fabric-quantity", "5 أثواب (Rolls)")
+        page.fill("#fabric-city", "طرابلس - قصر بن غشير")
+        page.fill("#fabric-notes", "طلب تسعير جملة وتوريد منتظم")
+        
+        page.locator('#fabric-inquiry-form button[type="submit"]').click()
+        
+        # Verify fallback container became visible
+        fabric_fallback = page.locator("#fabric-fallback-container")
+        assert fabric_fallback.is_visible(), "Fabric fallback container should be visible"
+        fabric_draft = page.locator("#fabric-fallback-text").input_value()
+        assert "شركة الديباج" in fabric_draft, "Draft must contain greeting"
+        assert "ورشة" in fabric_draft, "Draft must contain client type"
+        assert "بوكليه" in fabric_draft, "Draft must contain requested fabric"
+        print("✓ Fabric supply inquiry modal for B2B/retail/individuals successfully verified")
+
+        print("=== Test 13: Verify Category Subpages & Gallery Direct Links ===")
+        category_pages = [
+            ("/salons.html", 4, "صالونات"),
+            ("/majlis.html", 3, "مجالس"),
+            ("/corners.html", 2, "كورنر"),
+            ("/curtains.html", 4, "ستائر"),
+            ("/gallery.html", 13, "معرض الصور")
+        ]
+        
+        for url_path, min_products, page_label in category_pages:
+            page.goto(f"{BASE_URL}{url_path}", wait_until="networkidle")
+            
+            # Check for direct product links
+            product_links = page.locator('a[href*="product.html?id="]')
+            count = product_links.count()
+            assert count >= min_products, f"Expected at least {min_products} product links on {url_path}, found {count}"
+            
+            # Check 390px mobile responsiveness (0 overflow)
+            page.set_viewport_size({"width": 390, "height": 844})
+            sw = page.evaluate("() => document.documentElement.scrollWidth")
+            cw = page.evaluate("() => document.documentElement.clientWidth")
+            assert sw <= cw, f"Overflow on {url_path}: scrollWidth {sw} > clientWidth {cw}"
+            
+            page.set_viewport_size({"width": 1280, "height": 800})
+            print(f"✓ {url_path} ({page_label}) has {count} direct product links and 0 mobile horizontal overflow")
+
         browser.close()
         print("\n=======================================================")
-        print("   ALL 9 BANK REVIEW READINESS TESTS PASSED 100%!     ")
+        print("   ALL 13 BANK REVIEW READINESS TESTS PASSED 100%!    ")
         print("=======================================================")
 
 if __name__ == "__main__":

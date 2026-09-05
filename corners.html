@@ -3,34 +3,33 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ركنيات وسكشنال مودرن | شركة الديباج – طرابلس</title>
-  <meta name="description" content="تشكيلة الركنيات والسكشنال العائلية من الديباج في سوق أبوسليم: ركنيات بوكليه وشمواه ومخمل للمساحات المفتوحة، مفصلة حسب مقاسات صالتك بالضبط." />
-
-  <link rel="preload" href="assets/fonts/amiri-700.woff2" as="font" type="font/woff2" crossorigin />
-  <link rel="preload" href="assets/fonts/ibm-plex-sans-arabic-400.woff2" as="font" type="font/woff2" crossorigin />
-  <link rel="stylesheet" href="assets/css/main.css" />
-  <link rel="icon" type="image/png" href="assets/images/logo_crest.png" />
+  <title>ركنيات تفصيل عائلية فاخرة | شركة الديباج طرابلس</title>
+  <meta name="description" content="تشكيلة ركنيات الديباج العائلية التفصيل L-Shape وU-Shape: أقمشة بوكليه عاجي وشامواه معتق معالج ضد البقع، إسفنج ضغط عالي 35 D وهياكل زان متينة بمصنع باب بن غشير." />
+  <link rel="icon" type="image/png" href="./assets/logo_crest.png" />
+  <link rel="stylesheet" href="/src/styles/main.css" />
+  <link rel="stylesheet" href="/src/styles/components.css" />
 </head>
 <body>
 
-  <!-- Global Architectural Background Watermark (NA Royal Crest) -->
+  <!-- Watermark background -->
   <div class="site-watermark-bg" aria-hidden="true">
-    <img src="assets/images/logo_crest.png" alt="" />
+    <img src="./assets/logo_crest.png" alt="" />
   </div>
 
   <!-- Header -->
   <header class="site-header">
     <div class="container header-inner">
-      <a href="index.html" class="brand-identity" aria-label="الديباج - الصفحة الرئيسية">
-        <img src="assets/images/logo_crest.png" alt="شعار شركة الديباج" class="brand-crest" width="48" height="48" />
+      <a href="index.html" class="brand-identity">
+        <img src="./assets/logo_crest.png" alt="شعار شركة الديباج" class="brand-crest" />
         <div class="brand-text">
-          <span class="brand-name">شركة الديباج</span>
-          <span class="brand-subtitle">لصناعة الصالونات والجلسات</span>
+          <span class="brand-title">شركة الديباج</span>
+          <span class="brand-tagline">لصناعة الصالونات والمجالس الفاخرة</span>
         </div>
       </a>
 
-            <nav aria-label="القائمة الرئيسية">
-        <ul class="nav-desktop">
+      <!-- Desktop Navigation -->
+      <nav aria-label="التنقل الرئيسي">
+        <ul class="nav-menu">
           <li><a href="index.html" class="nav-link">الرئيسية</a></li>
           <li><a href="about.html" class="nav-link">عن الشركة</a></li>
           <li><a href="catalog.html" class="nav-link active">المنتجات والخدمات</a></li>
@@ -38,270 +37,268 @@
         </ul>
       </nav>
 
-      <div class="header-cta-group">
-        <button type="button" class="btn btn-gold" data-action="open-quote" data-product="استفسار عن الركنيات">
-          اطلب عرض سعر
+      <div class="header-actions">
+        <button type="button" class="btn btn-primary" data-action="open-consultation" data-product="استفسار عن تفصيل الركنيات">
+          طلب تفصيل وعرض سعر
         </button>
         <button type="button" class="mobile-toggle" aria-label="فتح القائمة">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-            <line x1="3" y1="6" x2="21" y2="6"></line>
-            <line x1="3" y1="12" x2="21" y2="12"></line>
-            <line x1="3" y1="18" x2="21" y2="18"></line>
-          </svg>
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
         </button>
       </div>
     </div>
+    <div class="wave-ribbon"></div>
   </header>
 
   <!-- Mobile Drawer -->
-  <div class="mobile-drawer-backdrop" aria-hidden="true"></div>
-  <aside class="mobile-drawer" aria-label="القائمة الجانبية">
-    <div style="display: flex; justify-content: space-between; align-items: center;">
-      <div style="display: flex; align-items: center; gap: 0.5rem;">
-        <img src="assets/images/logo_crest.png" alt="الديباج" width="40" height="40" />
-        <span style="font-family: var(--font-heritage); font-weight: 700; font-size: 1.2rem;">شركة الديباج</span>
+  <div class="mobile-drawer" id="mobile-drawer">
+    <div class="mobile-drawer-content">
+      <div style="display: flex; align-items: center; justify-content: space-between;">
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <img src="./assets/logo_crest.png" alt="الديباج" style="width: 54px; height: 54px; object-fit: contain;" />
+          <span style="font-weight: 800; font-size: 1.2rem; color: var(--color-chocolate-dark);">شركة الديباج</span>
+        </div>
+        <button class="modal-close-btn mobile-drawer-close" aria-label="إغلاق القائمة">✕</button>
       </div>
-      <button type="button" class="mobile-drawer-close" aria-label="إغلاق القائمة" style="background:none; border:none; font-size: 1.4rem; cursor:pointer;">✕</button>
+      <ul style="list-style: none; display: flex; flex-direction: column; gap: 1.2rem; margin-top: 1.5rem;">
+        <li><a href="index.html" class="nav-link">الرئيسية</a></li>
+        <li><a href="about.html" class="nav-link">عن الشركة والبيانات الرسمية</a></li>
+        <li><a href="catalog.html" class="nav-link active">المنتجات والخدمات</a></li>
+        <li><a href="contact.html" class="nav-link">المواقع والتواصل</a></li>
+      </ul>
+      <div style="margin-top: auto; display: flex; flex-direction: column; gap: 0.75rem;">
+        <button class="btn btn-primary" data-action="open-consultation">طلب تفصيل وعرض سعر</button>
+        <a href="https://wa.me/218915601703" target="_blank" class="btn btn-whatsapp">تواصل عبر واتساب</a>
+      </div>
     </div>
-        <ul class="mobile-drawer-links">
-      <li><a href="index.html">الرئيسية</a></li>
-      <li><a href="about.html">عن الشركة</a></li>
-      <li><a href="catalog.html">المنتجات والخدمات</a></li>
-      <li><a href="contact.html">المواقع والتواصل</a></li>
-    </ul>
-  </aside>
+  </div>
 
-  <main>
-    <!-- Page Header -->
-    <section class="page-header">
-      <div class="container">
-        <h1>ركنيات وسكشنال الديباج</h1>
-        <p>حلول ذكية للمساحات العائلية والصالات المفتوحة، تجمع بين راحة الجلوس اليومي وأناقة المظهر، مع إمكانية تفصيل الركنية باتجاه اليمين أو اليسار حسب تصميم صالتك.</p>
+  <main class="section">
+    <div class="container">
+      <!-- Breadcrumb & Header -->
+      <div style="margin-bottom: var(--space-md); font-size: 0.88rem; color: var(--color-chocolate-medium);">
+        <a href="index.html" style="color: var(--color-chocolate-dark);">الرئيسية</a> /
+        <a href="catalog.html" style="color: var(--color-chocolate-dark);">الكتالوج العام</a> /
+        <span style="color: var(--color-gold-deep); font-weight: 700;">ركنيات تفصيل</span>
       </div>
-    </section>
 
-    <!-- Catalog Section (No tabs per brief) -->
-    <section class="catalog-section">
-      <div class="container">
-        <div class="catalog-grid">
-          <!-- Card 1: Boucle Studio -->
-          <article class="product-card">
-            <div class="product-img-wrap">
-              <span class="product-tag">بوكليه عاجي فاخر</span>
-              <img src="assets/images/corner-boucle-showroom.webp" alt="ركنية البوكليه العاجية الفاخرة" loading="lazy" width="1200" height="896" />
-            </div>
-            <div class="product-body">
-              <h2 class="product-title">ركنية البوكليه العاجية الفاخرة</h2>
-              <p class="product-desc">كنبة ركنية عصرية بتصميم منحنٍ انسيابي وقماش البوكليه العاجي المجعد، مع وسائد هندسية دافئة وطاولة خشب زان محفورة.</p>
-              <div class="product-colors-bar">
-                <span class="color-dots-label">الألوان المتوفرة:</span>
-                <div class="color-dots">
-                  <span class="color-dot" style="background-color: #FAF7F2;" title="عاجي دافئ"></span>
-                  <span class="color-dot" style="background-color: #EDEAE4;" title="بيج فاتح"></span>
-                  <span class="color-dot" style="background-color: #A89684;" title="رملي هادئ"></span>
-                </div>
-              </div>
-              <button type="button" class="btn btn-outline" data-action="open-quote" data-product="ركنية البوكليه العاجية الفاخرة">
-                اسأل عن السعر
-              </button>
-            </div>
-          </article>
-
-          <!-- Card 1b: Bouclé Villa Panorama Suite -->
-          <article class="product-card">
-            <div class="product-img-wrap">
-              <span class="product-tag">أجنحة الفلل الملكية</span>
-              <img src="assets/images/corner-boucle-villa.webp" alt="ركنية صالة الفيلا المفتوحة بقماش البوكليه العاجي" loading="lazy" width="1200" height="896" />
-            </div>
-            <div class="product-body">
-              <h2 class="product-title">ركنية صالة الفيلا المفتوحة (Villa Suite)</h2>
-              <p class="product-desc">تصميم موديولار متكامل واسع للصالات الكبيرة والفلل، متناسق مع الستائر المنسدلة وطاولات الضيافة الخشبية.</p>
-              <div class="product-colors-bar">
-                <span class="color-dots-label">الألوان المتوفرة:</span>
-                <div class="color-dots">
-                  <span class="color-dot" style="background-color: #FAF7F2;" title="عاجي ملكي"></span>
-                  <span class="color-dot" style="background-color: #D8D0C4;" title="حجري دافئ"></span>
-                  <span class="color-dot" style="background-color: #3A3A38;" title="فحمي مكمل"></span>
-                </div>
-              </div>
-              <button type="button" class="btn btn-outline" data-action="open-quote" data-product="ركنية صالة الفيلا المفتوحة بوكليه">
-                اسأل عن السعر
-              </button>
-            </div>
-          </article>
-
-          <!-- Card 2 -->
-          <article class="product-card">
-            <div class="product-img-wrap">
-              <span class="product-tag">شمواه كلاسيك</span>
-              <img src="assets/images/corner-distressed-suede.webp" alt="ركنية شمواه برونزي وفحمي بأزرار كبتونية" loading="lazy" width="825" height="510" />
-            </div>
-            <div class="product-body">
-              <h2 class="product-title">ركنية شمواه برونزي وفحمي</h2>
-              <p class="product-desc">قماش شمواه بملمس عتيق عملي ومقاوم للاستخدام اليومي، مع لمسات أزرار ذهبية وقاعدة خشبية صلبة.</p>
-              <div class="product-colors-bar">
-                <span class="color-dots-label">الألوان المتوفرة:</span>
-                <div class="color-dots">
-                  <span class="color-dot" style="background-color: #A89684;" title="برونزي معتق"></span>
-                  <span class="color-dot" style="background-color: #3A3A38;" title="فحمي"></span>
-                  <span class="color-dot" style="background-color: #B45A3C;" title="طوبي"></span>
-                </div>
-              </div>
-              <button type="button" class="btn btn-outline" data-action="open-quote" data-product="ركنية شمواه برونزي وفحمي">
-                اسأل عن السعر
-              </button>
-            </div>
-          </article>
-
-          <!-- Card 3 -->
-          <article class="product-card">
-            <div class="product-img-wrap">
-              <span class="product-tag">مخمل شسترفيلد</span>
-              <img src="assets/images/salon-magenta-chesterfield.webp" alt="ركنية شسترفيلد توتية بأرجل ذهبية" loading="lazy" width="1200" height="896" />
-            </div>
-            <div class="product-body">
-              <h2 class="product-title">ركنية شسترفيلد توتية بأرجل مذهبة</h2>
-              <p class="product-desc">قطعة فنية تجمع فخامة التنجيد الإنجليزي بالأزرار الغائرة مع حيوية المخمل التوتي الجريء وأرجل ذهبية أنيقة.</p>
-              <div class="product-colors-bar">
-                <span class="color-dots-label">الألوان المتوفرة:</span>
-                <div class="color-dots">
-                  <span class="color-dot" style="background-color: #A8114A;" title="توتي كرزي"></span>
-                  <span class="color-dot" style="background-color: #1B3A8C;" title="ملكي"></span>
-                  <span class="color-dot" style="background-color: #0F6B4F;" title="زمردي"></span>
-                </div>
-              </div>
-              <button type="button" class="btn btn-outline" data-action="open-quote" data-product="ركنية شسترفيلد توتية">
-                اسأل عن السعر
-              </button>
-            </div>
-          </article>
-
-          <!-- Card 4 -->
-          <article class="product-card">
-            <div class="product-img-wrap">
-              <span class="product-tag">مخمل مضلع</span>
-              <img src="assets/images/salon-taupe-hairpin.webp" alt="صالون ركنة توبي بأرجل نحاسية" loading="lazy" width="1200" height="896" />
-            </div>
-            <div class="product-body">
-              <h2 class="product-title">ركنية توبي مودرن بقوائم نحاسية</h2>
-              <p class="product-desc">تنجيد مضلع ناعم للمساحات الحديثة بارتفاع مريح عن الأرض لتسهيل التنظيف وقوائم نحاسية خفيفة وأنيقة.</p>
-              <div class="product-colors-bar">
-                <span class="color-dots-label">الألوان المتوفرة:</span>
-                <div class="color-dots">
-                  <span class="color-dot" style="background-color: #A89684;" title="توبي"></span>
-                  <span class="color-dot" style="background-color: #EDEAE4;" title="أوف وايت"></span>
-                  <span class="color-dot" style="background-color: #3A3A38;" title="فحمي"></span>
-                </div>
-              </div>
-              <button type="button" class="btn btn-outline" data-action="open-quote" data-product="ركنية توبي مودرن بقوائم نحاسية">
-                اسأل عن السعر
-              </button>
-            </div>
-          </article>
-        </div>
+      <div class="section-header" style="text-align: right; max-width: 100%; margin-bottom: var(--space-xl);">
+        <span class="section-badge">تفصيل دقيق حسب زوايا غرفتك</span>
+        <h1 style="margin-bottom: 0.5rem;">تشكيلة الركنيات العائلية والأطقم الزاوية</h1>
+        <p style="color: var(--color-chocolate-medium); font-size: 1.1rem; margin-bottom: 0; max-width: 820px;">
+          ركنيات عملية وفخمة تفصل بالمليمتر لتلائم مقاسات جدران صالتك أو غرفة المعيشة، بأقمشة بوكليه ناعمة وشامواه معالج عالي التحمل ومقاوم للسوائل لسنوات من الاستخدام اليومي.
+        </p>
       </div>
-    </section>
 
-    <!-- Payment Banner -->
-    <section class="payment-section">
-      <div class="container">
-        <div class="payment-inner">
-          <div>
-            <h2 class="payment-title">طرق الدفع بنفس القيمة</h2>
-            <p class="payment-desc">نقبل الشيكات المصدّقة، الحوالات المصرفية، وبطاقات الدفع المصرفي — بدون أي عمولة أو زيادة على السعر النقدي.</p>
+      <!-- Quick Category Switcher Pills -->
+      <div style="display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: var(--space-xl);">
+        <a href="catalog.html" class="btn btn-secondary-bespoke" style="padding: 0.45rem 1rem; font-size: 0.88rem;">جميع التشكيلات (13)</a>
+        <a href="salons.html" class="btn btn-secondary-bespoke" style="padding: 0.45rem 1rem; font-size: 0.88rem;">صالونات عصرية (4)</a>
+        <a href="majlis.html" class="btn btn-secondary-bespoke" style="padding: 0.45rem 1rem; font-size: 0.88rem;">مجالس وجلسات (3)</a>
+        <a href="corners.html" class="btn btn-primary" style="padding: 0.45rem 1rem; font-size: 0.88rem;">ركنيات تفصيل (2)</a>
+        <a href="curtains.html" class="btn btn-secondary-bespoke" style="padding: 0.45rem 1rem; font-size: 0.88rem;">ستائر منسقة (4)</a>
+      </div>
+
+      <!-- Corners Grid -->
+      <div class="grid-2" style="gap: var(--space-xl); margin-bottom: var(--space-2xl);">
+        
+        <!-- Corner 1 -->
+        <article class="catalog-card" style="display: flex; flex-direction: column;">
+          <div class="card-media-wrapper" style="height: 320px;">
+            <img src="./assets/corner-boucle-showroom.webp" alt="ركنية البوكليه العاجية الفاخرة" class="card-img" loading="lazy" />
+            <span class="card-tag">الأعلى طلباً • ركنيات</span>
           </div>
-          <button type="button" class="btn btn-gold" data-action="open-quote" data-product="طلب تفصيل ركنية">اطلب عرض سعر الآن</button>
-        </div>
+          <div class="card-content" style="flex: 1; display: flex; flex-direction: column;">
+            <span class="card-category">ركنيات تفصيل عصرية</span>
+            <h2 class="card-title" style="font-size: 1.35rem; margin-bottom: 0.5rem;">ركنية البوكليه العاجية الفاخرة</h2>
+            <p class="card-desc" style="line-height: 1.7; margin-bottom: var(--space-md);">
+              ركنية زاوية مودرن مكسوة بنسيج البوكليه الأوروبي الصوفي الفاخر بلون عاجي دافئ، مع وسائد مريحة تمنح غرفة المعيشة الدفء والفخامة الاسكندنافية العصرية.
+            </p>
+            <div style="background: var(--surface-container-low); padding: 0.75rem; border-radius: var(--radius-md); font-size: 0.85rem; color: var(--color-chocolate-dark); margin-bottom: var(--space-md);">
+              🪵 هيكل زان مصمت • 🧽 إسفنج 35 D طبي • 📐 تفصيل حسب زاوية الغرفة (يمين أو يسار)
+            </div>
+            <div class="card-footer" style="margin-top: auto; padding-top: var(--space-md); border-top: 1px solid var(--surface-container-high); display: flex; gap: 0.5rem; flex-wrap: wrap;">
+              <a href="product.html?id=corner-boucle-ivory" class="btn btn-primary" style="flex: 1; justify-content: center; padding: 0.75rem;">
+                تخصيص وتفصيل الركنية
+              </a>
+              <button type="button" class="btn btn-whatsapp" onclick="window.openConsultationModal('ركنية البوكليه العاجية الفاخرة')" style="padding: 0.75rem 1rem;">
+                واتساب
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Corner 2 -->
+        <article class="catalog-card" style="display: flex; flex-direction: column;">
+          <div class="card-media-wrapper" style="height: 320px;">
+            <img src="./assets/corner-distressed-suede.webp" alt="ركنية الشامواه المعتق والبرونز L-Shape" class="card-img" loading="lazy" />
+            <span class="card-tag">مقاومة للسوائل • ركنيات</span>
+          </div>
+          <div class="card-content" style="flex: 1; display: flex; flex-direction: column;">
+            <span class="card-category">ركنيات عملية عائلية</span>
+            <h2 class="card-title" style="font-size: 1.35rem; margin-bottom: 0.5rem;">ركنية الشامواه المعتق والبرونز L-Shape</h2>
+            <p class="card-desc" style="line-height: 1.7; margin-bottom: var(--space-md);">
+              ركنية عائلية عملية وفخمة من الشامواه البرونزي المعتق والفحمي المقاوم للماء والبقع والخدوش، بتنجيد كبتونية مضلع متقن وأرجل هيربين نحاسية مزدوجة.
+            </p>
+            <div style="background: var(--surface-container-low); padding: 0.75rem; border-radius: var(--radius-md); font-size: 0.85rem; color: var(--color-chocolate-dark); margin-bottom: var(--space-md);">
+              🪵 هيكل خشب زان • 🧽 إسفنج 35 D • 🛡️ شامواه معالج ضد الماء والبقع وسهل التنظيف
+            </div>
+            <div class="card-footer" style="margin-top: auto; padding-top: var(--space-md); border-top: 1px solid var(--surface-container-high); display: flex; gap: 0.5rem; flex-wrap: wrap;">
+              <a href="product.html?id=corner-distressed-suede" class="btn btn-primary" style="flex: 1; justify-content: center; padding: 0.75rem;">
+                تخصيص وتفصيل الركنية
+              </a>
+              <button type="button" class="btn btn-whatsapp" onclick="window.openConsultationModal('ركنية الشامواه المعتق والبرونز')" style="padding: 0.75rem 1rem;">
+                واتساب
+              </button>
+            </div>
+          </div>
+        </article>
+
       </div>
-    </section>
+
+    </div>
   </main>
 
-  <!-- Footer -->
+  <!-- Payment Guarantee Band -->
+  <section style="background: linear-gradient(135deg, #221C16 0%, #3D2617 100%); color: #ffffff; padding-block: var(--space-lg); border-top: 2px solid var(--color-gold-imperial); border-bottom: 1px solid rgba(192, 139, 62, 0.3);">
+    <div class="container" style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem;">
+      <div>
+        <span style="display: inline-block; background: rgba(192, 139, 62, 0.25); color: var(--color-gold-light); font-size: 0.8rem; font-weight: 700; padding: 0.2rem 0.75rem; border-radius: 999px; margin-bottom: 0.35rem; border: 1px solid rgba(192, 139, 62, 0.4);">تسهيلات الدفع المعتمدة</span>
+        <h3 style="color: #ffffff; margin-bottom: 0; font-size: 1.25rem;">الدفع بالشيك المصدّق، الحوالة المصرفية، والبطاقة المصرفية — بنفس القيمة وبدون أي زيادة</h3>
+      </div>
+      <div style="display: flex; gap: 0.75rem; align-items: center; justify-content: center; flex-wrap: wrap;">
+        <span style="background: rgba(255,255,255,0.08); padding: 0.4rem 0.9rem; border-radius: var(--radius-sm); border: 1px solid rgba(192, 139, 62, 0.3); font-size: 0.85rem; font-weight: 600;">💳 بطاقة مصرفية</span>
+        <span style="background: rgba(255,255,255,0.08); padding: 0.4rem 0.9rem; border-radius: var(--radius-sm); border: 1px solid rgba(192, 139, 62, 0.3); font-size: 0.85rem; font-weight: 600;">🏛️ شيك مصدّق</span>
+        <span style="background: rgba(255,255,255,0.08); padding: 0.4rem 0.9rem; border-radius: var(--radius-sm); border: 1px solid rgba(192, 139, 62, 0.3); font-size: 0.85rem; font-weight: 600;">📱 حوالات فورية</span>
+        <span style="background: rgba(192, 139, 62, 0.2); color: var(--color-gold-light); padding: 0.4rem 0.9rem; border-radius: var(--radius-sm); border: 1px solid var(--color-gold-imperial); font-size: 0.85rem; font-weight: 700;">✓ بدون أي زيادة</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Site Footer -->
   <footer class="site-footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-brand">
-          <h4>شركة الديباج</h4>
-          <p>صرح صناعي وطني ليبي — مصنعنا المركزي في باب بن غشير و5 صالات عرض متخصصة بسوق أبوسليم، رواد استيراد وتوريد أرقى الأقمشة الحصرية النادرة لكافة مدن ليبيا.</p>
-          <p style="color: var(--gold); font-size: 0.9rem; margin-top: 0.5rem;">#الديباج_لصناعة_الصالونات_والجلسات</p>
+    <div class="wave-ribbon"></div>
+    <div class="container footer-main">
+      <div class="grid-4">
+        <div class="footer-col-brand">
+          <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
+            <img src="./assets/logo_crest.png" alt="الديباج" style="width: 64px; height: 64px; object-fit: contain; filter: drop-shadow(0 2px 8px rgba(192, 139, 62, 0.35));" />
+            <div>
+              <div style="font-weight: 800; font-size: 1.3rem; color: #ffffff;">شركة الديباج</div>
+              <div style="font-size: 0.8rem; color: var(--color-gold-light);">لصناعة الصالونات والمجالس واستيراد الأقمشة</div>
+            </div>
+          </div>
+          <p>
+            صرح وطني ليبي رائد — مجمع مصانعنا في باب بن غشير و5 صالات عرض متخصصة بسوق أبوسليم، وريادة استيراد وتوريد أرقى الأقمشة النادرة لكافة أنحاء ليبيا.
+          </p>
         </div>
-                <div>
-          <div class="footer-nav-title">روابط الشركة والمعرض</div>
+
+        <div>
+          <h4 class="footer-col-title">روابط سريعة</h4>
           <ul class="footer-links">
-            <li><a href="index.html">الرئيسية</a></li>
-            <li><a href="about.html">عن الشركة والتسجيل التجاري</a></li>
-            <li><a href="catalog.html">الكتالوج الشامل</a></li>
-            <li><a href="gallery.html">معرض الأعمال الحية</a></li>
-            <li><a href="contact.html">المواقع والتواصل</a></li>
+            <li><a href="index.html" class="footer-link">الرئيسية</a></li>
+            <li><a href="about.html" class="footer-link">عن الشركة والبيانات الرسمية</a></li>
+            <li><a href="catalog.html" class="footer-link">الكتالوج العام (13 موديل)</a></li>
+            <li><a href="contact.html" class="footer-link">المواقع والتواصل المباشر</a></li>
           </ul>
         </div>
+
         <div>
-          <div class="footer-nav-title">التواصل والمحلات</div>
+          <h4 class="footer-col-title">المواقع الرسمية</h4>
           <ul class="footer-links">
-            <li>🏭 المصنع المركزي: باب بن غشير، طرابلس</li>
-            <li>🏬 المعارض: 5 صالات بسوق أبوسليم (منها 14 و76)</li>
-            <li>🚚 التوصيل: طرابلس وكافة مدن ليبيا</li>
-            <li>واتساب: <a href="https://wa.me/218915601703" target="_blank" dir="ltr">+218 91 560 1703</a></li>
-            <li>هاتف: <a href="tel:+218921411415" dir="ltr">+218 92 141 1415</a></li>
-            <li><a href="https://www.facebook.com/profile.php?id=100083410961417" target="_blank">صفحتنا على فيسبوك (8,600+ متابع)</a></li>
+            <li><strong>المصنع المركزي:</strong> طرابلس – باب بن غشير</li>
+            <li><strong>صالات العرض:</strong> طرابلس – سوق أبوسليم (5 معارض)</li>
+            <li><strong>أوقات المعارض:</strong> السبت – الخميس: 9:30 ص – 1:30 ظ ومن 4:30 ع – 9:30 م</li>
+            <li><strong>الجمعة:</strong> 4:30 م – 9:30 م (فترة مسائية)</li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">التواصل والمبيعات</h4>
+          <ul class="footer-links">
+            <li>هاتف ليبيانا: <a href="tel:+218915601703" dir="ltr" class="footer-link">+218 91 560 1703</a></li>
+            <li>هاتف المدار: <a href="tel:+218921411415" dir="ltr" class="footer-link">+218 92 141 1415</a></li>
+            <li>واتساب: <a href="https://wa.me/218915601703" target="_blank" dir="ltr" class="footer-link">+218 91 560 1703</a></li>
+            <li>الشحن: توصيل وتركيب لكافة المدن والمناطق الليبية</li>
           </ul>
         </div>
       </div>
-      <div class="footer-legal-bar">
-        <div>السجل التجاري: <span dir="ltr">0501020247477</span> · السجل الصناعي: <span dir="ltr">002546000567</span></div>
-        <div>© 2026 شركة الديباج ذ.م.م. جميع الحقوق محفوظة.</div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="container">
+        © 2026 شركة الديباج لصناعة وتفصيل الصالونات والمجالس واستيراد الأقمشة (ش.ذ.م.م) — السجل التجاري: 0501020247477 • السجل الصناعي: 002546000567.
       </div>
     </div>
   </footer>
 
-  <!-- Modal -->
-  <div class="modal-overlay" id="quoteModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <!-- Global Consultation Modal -->
+  <div class="modal-backdrop" id="consultation-modal">
     <div class="modal-dialog">
-      <button type="button" class="modal-close" aria-label="إغلاق النافذة">✕</button>
-      <h3 id="modalTitle" style="font-family: var(--font-heritage); font-size: 1.6rem; margin-block-end: 0.5rem;">طلب استشارة وعرض سعر</h3>
-      <p style="font-size: 0.9rem; color: #666; margin-block-end: 1.2rem;">اكتب تفاصيل طلبك وسنقوم بالرد عليك مباشرة بالموديلات المقترحة وعرض السعر.</p>
+      <div class="modal-header">
+        <h3 class="modal-title">تجهيز استفسار وطلب تفصيل</h3>
+        <button class="modal-close-btn" aria-label="إغلاق">✕</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size: 0.92rem; color: var(--color-chocolate-medium); margin-bottom: var(--space-md); line-height: 1.6;">
+          أدخل تفاصيل طلبك ليتم إعداد مسودة استفسار منظمة لفتحها ومراجعتها مباشرة في محادثة واتساب الرسمية مع إدارة المبيعات.
+        </p>
+        <form id="consultation-form">
+          <input type="hidden" id="consultation-product-field" value="" />
+          <div class="form-group">
+            <label class="form-label" for="client-name">الاسم الكريم (اختياري)</label>
+            <input type="text" id="client-name" class="form-control" placeholder="أدخل اسمك الكريم أو صفتك" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="client-phone">رقم الهاتف للتواصل (اختياري)</label>
+            <input type="tel" id="client-phone" class="form-control" placeholder="مثال: 0915601703 أو 0921411415" dir="ltr" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="client-service">نوع الخدمة أو الموديل</label>
+            <select id="client-service" class="form-control">
+              <option value="تفصيل ركنية عائلية على المقاس">تفصيل ركنية عائلية على المقاس</option>
+              <option value="تفصيل صالون عصري">تفصيل صالون عصري</option>
+              <option value="تنجيد مجلس عربي أو جلسة أرضية">تنجيد مجلس عربي أو جلسة أرضية</option>
+              <option value="تفصيل ستائر متناسقة مع الصالون">تفصيل ستائر متناسقة مع الصالون</option>
+              <option value="توريد أقمشة فاخرة للأفراد والورش">توريد أقمشة فاخرة للأفراد والورش</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="client-notes">ملاحظات أو مقاسات أولية</label>
+            <textarea id="client-notes" class="form-control" rows="3" placeholder="اكتب أبعاد الجدران، اتجاه الزاوية (يمين أو يسار)، أو اللون المفضل..."></textarea>
+          </div>
+          <button type="submit" class="btn btn-whatsapp" style="width: 100%; padding: 0.95rem; justify-content: center; font-size: 1rem;">
+            متابعة الطلب عبر واتساب
+          </button>
+          <div style="font-size: 0.8rem; color: var(--color-chocolate-medium); text-align: center; margin-top: 0.5rem;">
+            💡 ستفتح رسالة جاهزة في واتساب لمراجعتها وإرسالها مباشرة.
+          </div>
+        </form>
 
-      <form id="quoteForm" onsubmit="return false;">
-        <div class="form-group">
-          <label class="form-label" for="quoteName">الاسم الكريم</label>
-          <input type="text" id="quoteName" class="form-control" placeholder="اسمك أو اللقب" required />
+        <!-- Fallback Container if WhatsApp popup is blocked -->
+        <div id="consultation-fallback-container" style="display: none; margin-top: 1rem; padding: 0.85rem; background: var(--surface-container-low); border-radius: var(--radius-md); border: 1.5px dashed var(--color-gold-imperial);">
+          <div style="font-weight: 700; font-size: 0.88rem; color: var(--color-chocolate-dark); margin-bottom: 0.35rem;">
+            📋 مسودة الرسالة الجاهزة للإرسال:
+          </div>
+          <textarea id="consultation-fallback-text" class="form-control" rows="4" readonly style="font-size: 0.82rem; line-height: 1.5; background: #ffffff;"></textarea>
+          <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem;">
+            <button type="button" id="consultation-copy-btn" class="btn btn-secondary-bespoke" style="flex: 1; padding: 0.45rem; font-size: 0.82rem; justify-content: center;">
+              نسخ نص الرسالة
+            </button>
+            <a href="#" id="consultation-direct-link" target="_blank" class="btn btn-whatsapp" style="flex: 1; padding: 0.45rem; font-size: 0.82rem; justify-content: center;">
+              فتح واتساب مباشرة
+            </a>
+          </div>
         </div>
-
-        <div class="form-group">
-          <label class="form-label" for="quotePhone">رقم الهاتف للتواصل</label>
-          <input type="tel" id="quotePhone" class="form-control" placeholder="091XXXXXXX" dir="ltr" />
-        </div>
-
-        <div class="form-group">
-          <label class="form-label" for="quoteProduct">نوع المنتج المطلوب</label>
-          <select id="quoteProduct" class="form-control">
-            <option value="ركنية وسكشنال">ركنية وسكشنال</option>
-            <option value="صالون عصري">صالون عصري</option>
-            <option value="صالون تراثي كلاسيك">صالون تراثي كلاسيك</option>
-            <option value="جلسة عربية أرضية">جلسة عربية أرضية</option>
-            <option value="ستائر منسقة">ستائر منسقة</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label" for="quoteFabric">القماش واللون المفضل (اختياري)</label>
-          <input type="text" id="quoteFabric" class="form-control" placeholder="مثال: بوكليه بيج، شمواه برونزي..." />
-        </div>
-
-        <div class="form-group">
-          <label class="form-label" for="quoteNotes">ملاحظات أو مقاسات الصالة التقريبية</label>
-          <textarea id="quoteNotes" class="form-control" rows="3" placeholder="اكتب مقاسات الركنية (مثال: 3×2.5 متر)..."></textarea>
-        </div>
-
-        <div class="modal-actions">
-          <button type="button" class="btn btn-whatsapp" id="sendWhatsapp" style="width: 100%;">إرسال الطلب عبر واتساب</button>
-          <button type="button" class="btn btn-messenger" id="sendMessenger" style="width: 100%;">مراسلتنا عبر مسنجر فيسبوك</button>
-        </div>
-      </form>
+      </div>
     </div>
   </div>
 
-  <!-- Shared Javascript -->
-  <script type="module" src="assets/js/main.js"></script>
+  <!-- Floating WhatsApp -->
+  <a href="https://wa.me/218915601703" target="_blank" class="floating-concierge" aria-label="تواصل واتساب المباشر">
+    <svg class="floating-concierge-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.699c.974.553 1.776.848 2.796.848 3.181 0 5.767-2.586 5.767-5.766.001-3.18-2.585-5.767-5.767-5.767zm7.502 5.766c-.001 4.14-3.363 7.502-7.502 7.502-1.258 0-2.483-.314-3.57-.91l-3.961 1.039 1.057-3.864c-.658-1.144-1.026-2.433-1.025-3.767.001-4.14 3.363-7.502 7.502-7.502s7.499 3.363 7.499 7.502z"/></svg>
+    <span class="floating-concierge-text">استشارة فورية عبر واتساب</span>
+  </a>
+
+  <script type="module" src="/src/js/common.js"></script>
 </body>
 </html>

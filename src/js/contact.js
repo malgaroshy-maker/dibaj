@@ -73,13 +73,15 @@ function setupContactPageForm() {
 function renderShowroomDetails() {
   const phoneLinks = document.querySelectorAll('.contact-phone-val');
   phoneLinks.forEach(link => {
-    link.textContent = DIBAJ_CONFIG.phonePrimary;
-    link.href = `tel:${DIBAJ_CONFIG.phonePrimary.replace(/\s+/g, '')}`;
+    const phone = DIBAJ_CONFIG.primaryPhoneFormatted || DIBAJ_CONFIG.phonePrimary || '091 560 1703';
+    const raw = DIBAJ_CONFIG.primaryPhone || '+218915601703';
+    link.textContent = phone;
+    link.href = `tel:${raw.replace(/\s+/g, '')}`;
   });
 
   const hoursEls = document.querySelectorAll('.contact-hours-val');
   hoursEls.forEach(el => {
-    el.textContent = DIBAJ_CONFIG.showroomHours;
+    el.textContent = DIBAJ_CONFIG.workingHours || DIBAJ_CONFIG.showroomHours;
   });
 }
 
