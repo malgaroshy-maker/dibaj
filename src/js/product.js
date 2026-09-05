@@ -5,6 +5,7 @@ let currentSwatch = null;
 let currentShape = 'l-shape';
 let currentFoam = '35D';
 let wantHomeMeasurement = true;
+let dimensionMode = 'manual'; // 'manual' | 'help'
 
 let comparisonState = {
   isActive: false,
@@ -37,6 +38,7 @@ function initCustomizerStudio(initialId) {
   setupCategoryFilters();
   renderModelRibbon('all');
   setupShapeSelector();
+  setupDimensionModeSelector();
   setupFoamSelector();
   setupHomeMeasurementToggle();
   setupInquiryActions();
@@ -373,6 +375,25 @@ function syncDimensionsFromInputs() {
   }
 }
 
+function setupDimensionModeSelector() {
+  const radios = document.querySelectorAll('input[name="dim-mode"]');
+  radios.forEach(radio => {
+    radio.addEventListener('change', () => {
+      dimensionMode = radio.value;
+      const dynamicInputs = document.getElementById('dynamic-dimension-inputs');
+      const helpNotice = document.getElementById('dimension-help-notice');
+      if (dimensionMode === 'help') {
+        if (dynamicInputs) dynamicInputs.style.display = 'none';
+        if (helpNotice) helpNotice.style.display = 'block';
+      } else {
+        if (dynamicInputs) dynamicInputs.style.display = 'block';
+        if (helpNotice) helpNotice.style.display = 'none';
+      }
+      calculateCustomSpecs();
+    });
+  });
+}
+
 function setupFoamSelector() {
   const radios = document.querySelectorAll('input[name="foam-density"]');
   radios.forEach(radio => {
@@ -388,45 +409,53 @@ function setupHomeMeasurementToggle() {
   if (check) {
     check.addEventListener('change', () => {
       wantHomeMeasurement = check.checked;
-      updateActionLinks();
+      calculateCustomSpecs();
     });
   }
 }
 
 function calculateCustomSpecs() {
-  const s = shapeState[currentShape];
-  let totalFabricMeters = 0;
-  let capacity = 0;
+  const shapeNames = {
+    'l-shape': 'شكل زاوية (L-Shape)',
+    'u-shape': 'شكل حدوة (U-Shape)',
+    'classic-set': 'طقم كلاسيك مستقل',
+    'majlis-floor': 'مجلس عربي متصل'
+  };
 
-  if (currentShape === 'l-shape') {
-    const totalLength = s.sideA + s.sideB;
-    totalFabricMeters = totalLength * 1.8;
-    capacity = Math.max(4, Math.round(totalLength / 0.65));
-  } else if (currentShape === 'u-shape') {
-    const totalLength = s.sideA + s.sideB + s.sideC;
-    totalFabricMeters = totalLength * 1.8;
-    capacity = Math.max(6, Math.round(totalLength / 0.65));
-  } else if (currentShape === 'classic-set') {
-    totalFabricMeters = (s.sofa3 * 6.5) + (s.sofa2 * 4.8) + (s.chair1 * 2.5);
-    capacity = (s.sofa3 * 3) + (s.sofa2 * 2) + (s.chair1 * 1);
-  } else if (currentShape === 'majlis-floor') {
-    totalFabricMeters = s.perimeter * 1.5;
-    capacity = Math.max(6, Math.round(s.perimeter / 0.65));
+  const foamLabels = {
+    '35D': 'إسفنج 35 D ضغط عالي معتمد',
+    'RoyalSoft': 'حشوة سوفت رويال مزدوجة فاخرة',
+    '30D': 'إسفنج 30 D ضغط متوسط'
+  };
+
+  const s = shapeState[currentShape];
+  let dimText = '';
+  if (dimensionMode === 'help') {
+    dimText = 'معاينة فنية لرفع المقاسات بالمنزل (طرابلس)';
+  } else {
+    if (currentShape === 'l-shape') {
+      dimText = `ضلع A: ${s.sideA}م × ضلع B: ${s.sideB}م (عمق: ${s.depth}سم)`;
+    } else if (currentShape === 'u-shape') {
+      dimText = `ضلع A: ${s.sideA}م × وسط B: ${s.sideB}م × ضلع C: ${s.sideC}م (عمق: ${s.depth}سم)`;
+    } else if (currentShape === 'classic-set') {
+      dimText = `ثلاثية: ${s.sofa3} قطع، ثنائية: ${s.sofa2} قطع، مفرد: ${s.chair1} قطع`;
+    } else if (currentShape === 'majlis-floor') {
+      dimText = `محيط المجلس: ${s.perimeter}م (عمق: ${s.depth}سم)`;
+    }
   }
 
-  // Adjust duration based on size
-  const duration = totalFabricMeters > 25 ? '10 - 15 يوم عمل' : '7 - 12 يوم عمل';
-
-  // Update UI badges
-  const metersEl = document.getElementById('calc-result-meters');
-  const capacityEl = document.getElementById('calc-result-capacity');
-  const daysEl = document.getElementById('calc-result-days');
+  // Update Technical Specification Summary Cards
+  const fabricEl = document.getElementById('summary-spec-fabric');
+  const shapeEl = document.getElementById('summary-spec-shape');
+  const dimEl = document.getElementById('summary-spec-dimensions');
+  const foamEl = document.getElementById('summary-spec-foam');
   const curtainBadge = document.getElementById('summary-curtains-badge');
-  const curtainValEl = document.getElementById('calc-result-curtains');
+  const curtainValEl = document.getElementById('summary-spec-curtains');
 
-  if (metersEl) metersEl.textContent = `حوالي ${totalFabricMeters.toFixed(1)} متر طولي`;
-  if (capacityEl) capacityEl.textContent = `${Math.max(1, capacity - 1)} - ${capacity + 1} أشخاص`;
-  if (daysEl) daysEl.textContent = duration;
+  if (fabricEl) fabricEl.textContent = `${currentSwatch ? currentSwatch.name : currentFabric.title} (${currentFabric.title})`;
+  if (shapeEl) shapeEl.textContent = shapeNames[currentShape] || currentShape;
+  if (dimEl) dimEl.textContent = dimText;
+  if (foamEl) foamEl.textContent = foamLabels[currentFoam] || currentFoam;
 
   // Curtain coordination summary badge
   const hasCurtain = comparisonState.mode === 'curtain' && 
@@ -436,72 +465,38 @@ function calculateCustomSpecs() {
   if (curtainBadge && curtainValEl) {
     if (hasCurtain) {
       curtainBadge.style.display = 'flex';
-      const curtainMeters = (comparisonState.windowWidth * 2.2).toFixed(1);
-      curtainValEl.textContent = `مشمولة: ${comparisonState.targetCurtain.title} (${curtainMeters} م)`;
+      curtainValEl.textContent = `مشمولة: ${comparisonState.targetCurtain.title} (عرض ${comparisonState.windowWidth} م)`;
     } else {
       curtainBadge.style.display = 'none';
     }
   }
 
-  updateActionLinks(totalFabricMeters, capacity, duration);
+  updateActionLinks(dimText, shapeNames, foamLabels);
 }
 
-function updateActionLinks(totalMeters = 12, capacity = 8, duration = '7 - 12 يوم عمل') {
-  const shapeNames = {
-    'l-shape': 'شكل زاوية (L-Shape)',
-    'u-shape': 'شكل حدوة (U-Shape)',
-    'classic-set': 'طقم كلاسيك مستقل',
-    'majlis-floor': 'مجلس عربي أرضي متصل'
-  };
-
-  const foamLabels = {
-    '35D': 'إسفنج 35 D ضغط عالي ممتاز (معتمد الورشة)',
-    'RoyalSoft': 'حشوة سوفت رويال مزدوجة (35 D + فايبر ناعم)',
-    '30D': 'إسفنج 30 D ضغط متوسط'
-  };
-
-  const s = shapeState[currentShape];
-  let dimText = '';
-  if (currentShape === 'l-shape') {
-    dimText = `ضلع A: ${s.sideA}م × ضلع B: ${s.sideB}م (عمق: ${s.depth}سم)`;
-  } else if (currentShape === 'u-shape') {
-    dimText = `ضلع A: ${s.sideA}م × وسط B: ${s.sideB}م × ضلع C: ${s.sideC}م (عمق: ${s.depth}سم)`;
-  } else if (currentShape === 'classic-set') {
-    dimText = `ثلاثية: ${s.sofa3} قطع، ثنائية: ${s.sofa2} قطع، مفرد: ${s.chair1} قطع`;
-  } else if (currentShape === 'majlis-floor') {
-    dimText = `محيط المجلس: ${s.perimeter}م (عمق: ${s.depth}سم)`;
-  }
-
-  const measurementText = wantHomeMeasurement 
-    ? 'نعم، مطلوب زيارة فني لمعاينة الصالة ورفع المقاسات مجاناً في طرابلس' 
-    : 'غير مطلوب حالياً، لدي المقاسات الدقيقة';
-
+function updateActionLinks(dimText, shapeNames, foamLabels) {
   const hasCurtain = comparisonState.mode === 'curtain' && 
                      comparisonState.includeCurtainsInOrder && 
                      comparisonState.targetCurtain;
 
   const curtainLines = hasCurtain ? [
-    ``,
+    '',
     `🪟 الستائر المرافقة المنسقة: ${comparisonState.targetCurtain.title}`,
-    `📐 عرض نافذة الستائر التقديري: ${comparisonState.windowWidth} متر`,
-    `🧵 أمتار قماش الستائر التقديرية: حوالي ${(comparisonState.windowWidth * 2.2).toFixed(1)} متر طولي (ثنيات 2.2×)`
+    `📐 عرض جدار النافذة: ${comparisonState.windowWidth} متر`
   ] : [];
 
   const waMessage = [
-    `السلام عليكم شركة الديباج،`,
-    `أرغب في الاستفسار وطلب تفصيل من استوديو التخصيص:`,
-    ``,
+    'السلام عليكم ورحمة الله — شركة الديباج،',
+    'أرغب في طلب عرض سعر رسمي للمواصفات التالية:',
+    '',
     `🛋️ الموديل: ${currentFabric.title} (${currentFabric.categoryArabic})`,
-    `🎨 خامة ولون التنجيد: ${currentSwatch.name}`,
+    `🎨 القماش واللون المختار: ${currentSwatch ? currentSwatch.name : ''}`,
     `📐 شكل الجلسة: ${shapeNames[currentShape]}`,
-    `📏 الأبعاد والمقاسات: ${dimText}`,
+    `📏 المقاسات: ${dimText}`,
     `🧽 نوع الإسفنج: ${foamLabels[currentFoam]}`,
-    `👥 سعة الجلوس التقديرية: ${capacity} أشخاص`,
-    `🧵 أمتار القماش التقديرية: ${totalMeters.toFixed(1)} متر طولي`,
-    `🏡 رفع مقاسات منزلية: ${measurementText}`,
     ...curtainLines,
-    ``,
-    `يرجى التكرم بموافاتي بتقدير السعر المبدئي والمواعيد المتاحة للتنفيذ. شكراً لكم.`
+    '',
+    'يرجى التكرم بموافاتي بعرض السعر الرسمي والمواعيد المتاحة للتنفيذ بمصنع باب بن غشير. شكراً لكم.'
   ].join('\n');
 
   const waBtn = document.getElementById('product-wa-btn');
